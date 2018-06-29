@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+<!--  / header  -->
+<div class="header_longevity">
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">资讯评论</div>
+    <div class="header_shop_longevity">
+        <span>评论</span>
+        <img src="images/pinlun1.png" alt="" width="15">
+        
+    </div>   
+</div>
+<!--  / header  -->
+
+
+<div class="InformationDetails8">
+    <div class="InformationDetails7">
+      <div class="InformationDetails7_f1 clearfix">
+        <div class="InformationDetails7_f1_left InformationDetails7_f1_left1">
+            <a href="##"><img src="images/user-1.jpg" alt="" width="100%"></a>
+            <span>老王</span>
+        </div>
+        <div class="InformationDetails7_f1_right InformationDetails7_f1_right1">2018-03-06 11:45:50</div> 
+      </div>
+      <div class="InformationDetails7_f2">
+          运送丰东股份的是竟然跑上官飞干扰她申达股份四大四方达颠三倒四第三方第四方
+      </div>
+      <!-- <div class="InformationDetails7_f3">
+          <div class="row">
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="##" class="InformationDetails7_f3_f1">阅<span>0</span></a>
+              </div>
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="##" class="InformationDetails7_f3_f2">
+                      <img src="images/pinglun-zan.png" alt="" width="20">
+                      <span>0</span>
+                  </a>
+              </div>
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="##" class="InformationDetails7_f3_f3">
+                      <img src="images/pinglun-pl.png" alt="" width="16">
+                      <span>0</span>
+                  </a>
+              </div>
+          </div>
+      </div>  -->      
+    </div>
+
+</div>
+
+
+<!--  / footer  -->
+<!-- <div class="footer1 footer1_news">
+  <ul class="clearfix">
+    <li class="ind_share_btn">
+    	  <div class="footer_img_n">
+    	  	  <img src="images/news_pl1.png">大家在评论<span>(1)</span>
+    	  </div>
+    </li>
+    <li class="ind_share_btn1">
+    	  <div class="footer_img_n">
+      		  <img src="images/news_pl2.png">评论
+          </div>
+    </li>
+  </ul>
+</div> --> 
+<div class="pinglun-show">
+    <input type="text" placeholder="请输入要评论内容...(限80字)">
+    <a href="##">发表</a>
+</div>
+<div class="pinglun1_show">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>请输入评论内容</h5>
+        <div class="pinglun1_show_con_f1">
+            <a href="##">好的，知道了</a>
+        </div>
+    </div>
+</div>
+<!--  / footer -->
+
+</body>
+<script>
+$(window).ready(function(){
+
+$('.banner').height($(window).width()*400/750);
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.longevity1 li').click(function(){
+    window.location.href = "InformationDetails.html";
+});
+$('.ind_share_btn').click(function(){
+    window.location.href = "Pinglun.html";
+});
+// $('.ind_share_btn1').click(function(){
+//     $('.pinglun_show').css('display','block');
+// });
+$('.pinglun1_show_con_f1 a').click(function(){
+    $('.pinglun1_show').css('display','none');
+})
+$('.pinglun-show a').click(function(){
+    $('.pinglun-show').css('display','none');
+    $('.pinglun1_show').css('display','block');
+});
+$('.header_shop_longevity').click(function(){
+    $('.pinglun-show').css('display','block');
+})
+$('.InformationDetails7_f2').click(function(){
+    window.location.href = "pinLun_detail.html";
+})
+
+  
+})  
+</script>
+</html>

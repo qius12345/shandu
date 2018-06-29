@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+</head>
+
+<body class="body_bg">
+<div id="app" v-cloak>
+<div class="stroy_nav">
+  <div class="stroy_banr">
+    <div class="swiper-container swiper-stroy_banr">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/stroy_ban1.jpg" width="100%"></div>
+          <div class="swiper-slide"><img src="images/stroy_ban2.jpg" width="100%"></div>
+      </div>
+    </div>
+  </div>
+  <div class="stroy_head clearfix">
+    <div class="stroy_head_l">
+      <a href="search2.html">搜索</a>
+      <a href="stroy_join.html">我要参加</a>
+    </div>
+    <div class="stroy_head_r">
+      <a href="stroy1_ranking.html">活动排行</a>
+      <a href="stroy1_rules.html">活动规则</a>
+    </div> 
+  </div>
+</div>
+
+
+<!--  / warpper  -->
+<div class="warpper warpper_str">
+  <div class="stroy1_class">
+    <div class="swiper-container swiper-stroy1_class">
+      <div class="swiper-wrapper">
+      	
+          <div class="swiper-slide" v-for="(item,index) in story_cate">
+          	<a href="##" v-if="index ===0" class="stroy1_class_bt on" @click="setCateList(item.cate_id)">{{item.classname}}</a>
+          	<a href="##" v-else class="stroy1_class_bt" @click="setCateList(item.cate_id,index)">{{item.classname}}</a>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="stroy-item1">
+  
+  <div class="stroy1_popularity mar_b">
+    <a href="stroy1_inner.html">
+      <h5 class="popular_tit">最佳人气</h5>
+      
+      <div class="popular_img mar_b">
+        <img src="images/stroy_pu1.jpg" width="100%">
+      </div>
+      
+      <div class="popular_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          自己家自己在家先看看开心就行继续继续快开学可惜可惜可大可大可大看就到家小姐姐科学家下课没开心开心
+          开心开心苦咖啡快发快发快发卡卡
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+    </a>
+  </div>
+  
+  <div class="wapSpace"></div>
+  
+  <div class="stroy1_hot mar_b">
+  	
+  	<h5 class="popular_tit pad">热门故事 <a href="##" class="more">更多</a></h5>
+  	
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_hot1.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_hot2.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_hot3.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+  </div>
+  
+  <div class="wapSpace"></div>
+  
+  <div class="stroy1_hot mar_b">
+    <h5 class="popular_tit pad">全部故事 <a href="##" class="more">更多</a></h5>
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_all1.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_all2.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img src="images/stroy_all3.jpg" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>子不语怪力乱神</h5>
+        <p class="text">
+          的；客官说的那个；上课的功能；适当的
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：3</span>
+          <span class="right">编号：00035</span>
+        </div>
+      </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="wapSpace"></div>
+  
+  
+  </div>
+  
+
+</div>
+<!--  / warpper  -->
+
+
+
+<!--  / footer  -->
+<div class="footer">
+  <ul class="clearfix">
+    <a href="index.html">
+    <li>
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_home_gray.png">
+      		  <img src="images/ic_home_home_yellow.png">
+        </div>
+        <span>主页</span>
+    </li>
+    </a>
+    <a href="stroy1.html">
+    <li class="on">
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_yishu_gray.png">
+      		  <img src="images/ic_home_yishu_yellow.png">
+        </div>
+        <span>老故事</span>
+    </li>
+    </a>
+    <a href="bigStage.html">
+    <li class="ind_share_btn">
+    	  <div class="footer_img footer_img2">
+    	  	  <img src="images/ic_dibutiao_shandu_gray.png">
+    	  	  <img src="images/ic_dibutiao_shandu_yellow.png">
+    	  </div>
+    </li>
+    </a>
+    <a href="orderList.html">
+    <li id="goOrder">
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_dingdan_gray.png">
+      		  <img src="images/ic_home_dingdan_yellow.png">
+        </div>
+        <span>订单</span>
+    </li>
+    </a>
+    <a href="user.html">
+    <li>
+    	  <div class="footer_img footer_img1">
+    	      <img src="images/ic_home_geren_gray.png">	
+    	      <img src="images/ic_home_geren_yellow.png">	
+    	  </div>	
+        <span>我的</span>
+    </li>
+    </a>
+  </ul>
+</div>
+<!--  / footer  -->
+</div>
+</body>
+<script>
+$(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data(){
+			return{
+				story_cate:[],
+			}
+		},
+		created:function(){
+			$this = this;
+			$this.getCate()
+			
+						
+					  
+			
+		},
+		mounted:function(){
+			
+		},methods:{
+			//获取分类
+			getCate:function(c){
+				const data = {
+				
+				}
+				Axios.post(window.Url.stroy_cate,data).then((res) => {
+					
+					if(res.result == 1){
+						$this.story_cate = res.info.cate;
+						var mySwiper_strclass = new Swiper ('.swiper-stroy1_class', {
+					     slidesPerView: 4
+						})
+						
+					  
+					}else
+					{
+						console.log("请求错误1")
+					}
+					
+				}).catch((err) => {
+					console.log("请求错误0"+err)
+				})
+			
+			},
+			//设置分类内容
+			setCateList:function(cateId,index){
+				console.log(cateId)
+			}
+			
+			
+		}
+	})
+	
+	
+  $('.popular_img img').height($(window).width()*610/1008);
+  var mySwiper_banner = new Swiper ('.swiper-stroy_banr', {
+    loop: true,
+  	autoplay : 5000,
+  	autoplayDisableOnInteraction : false,
+  })
+  
+ 
+
+  $(window).load(function(){
+    $(".stroy1_hot_text").height($(".stroy1_hot_img").width()*268/359);
+  })
+  $(window).resize(function(){
+    $(".stroy1_hot_text").height($(".stroy1_hot_img").width()*268/359);
+  })
+  $('.ind_share_btn').click(function(){
+	  window.location.href = "bigStage.html";
+  });
+  $('#goOrder').click(function(){
+	  window.location.href = "orderList.html";
+  });
+})  
+</script>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+<!--  / header  -->
+<div class="header_longevity">
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">资讯详情</div>
+    <div class="header_shop_longevity">
+        <img src="images/sc.png" alt="" class="InformationDetails7_f3_f2_img1">
+        <img src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2 img-hidden">
+        <span>收藏</span>
+    </div>   
+</div>
+<!--  / header  -->
+
+
+<div class="InformationDetails">
+    <div class="InformationDetails1">福建考生登录福建省打开肌肤</div>
+    <div class="InformationDetails2">2018-01-11 &nbsp; 16:12</div>
+    <div class="InformationDetails3">
+        <p>城市交通问题是世界各国普遍性问题，它直接影响经济的发展和人们的生活。无线车辆检测器就是针对解决上述问题而建立的。无线车辆磁敏传感器研究项目是将传感器技术和无线网络技术有效地融于一体，通过使用磁敏传感器检测车辆对地磁的影响来获得道路上的重要车流信息，系统同时还集成了温度传感器和化学传感器，可以实时地测量路面的温度和结冰情况。作为交通数据采集设备中最重要的车辆检测传感器，可以收集详细、充分的交通数据将为各种决策提供科学的依据和数据基础。</p>
+        <p>无线车辆磁敏传感器改变了传统的道路环境状况获取技术大多是分立的单一参数的实时信息获取的特点，降低了道路信息系统的建设维护成本。本系统具有改变目前道路信息采集手段分散，提高道路信息采集系统的集成度等特点，更好地适应道路交通信息采集的应用需求。</p>
+    </div>
+    <div class="InformationDetails4">
+        <img src="images/detail-1.jpg" alt="">
+    </div>
+
+</div>
+
+
+<!--  / footer  -->
+<div class="footer1 footer1_news">
+  <ul class="clearfix">
+    <li class="ind_share_btn">
+    	  <div class="footer_img_n">
+    	  	  <img src="images/news_pl1.png">大家在评论<span>(1)</span>
+    	  </div>
+    </li>
+    <li class="ind_share_btn1">
+    	  <div class="footer_img_n">
+      		  <img src="images/news_pl2.png">评论
+          </div>
+    </li>
+  </ul>
+</div> 
+<div class="pinglun-show">
+    <input type="text" placeholder="请输入要评论内容...(限80字)">
+    <a href="##">发表</a>
+</div>
+<div class="pinglun1_show">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>请输入评论内容</h5>
+        <div class="pinglun1_show_con_f1">
+            <a href="##">好的，知道了</a>
+        </div>
+    </div>
+</div>
+<!--  / footer -->
+
+</body>
+<script>
+$(window).ready(function(){
+ var flag=true;
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.longevity1 li').click(function(){
+    window.location.href = "InformationDetails.html";
+});
+$('.ind_share_btn').click(function(){
+    window.location.href = "pinLun.html";
+});
+$('.ind_share_btn1').click(function(){
+    $('.foot1').css('display','none');
+    $('.pinglun-show').css('display','block');
+});
+$('.pinglun-show a').click(function(){
+    $('.foot1').css('display','block');
+    $('.pinglun-show').css('display','none');
+    $('.pinglun1_show').css('display','block');
+    $('.pinglun1_show h5').html('请输入评论内容');
+});
+$('.header_shop_longevity').click(function(){
+  if(flag){
+    $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
+    $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
+    $(this).find('span').html('已收藏');
+    $('.pinglun1_show').css('display','block');
+    $('.pinglun1_show h5').html('收藏成功');
+    flag=false;
+  }else{
+     $(this).find('.InformationDetails7_f3_f2_img2').addClass('img-hidden');
+     $(this).find('.InformationDetails7_f3_f2_img1').removeClass('img-hidden');
+     $(this).find('span').html('收藏'); 
+     $('.pinglun1_show').css('display','block');
+     $('.pinglun1_show h5').html('取消收藏成功');
+    flag=true;
+  }
+})
+$('.pinglun1_show_con_f1 a').click(function(){
+    $('.pinglun1_show').css('display','none');
+})
+  
+})  
+</script>
+</html>

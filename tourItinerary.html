@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+<div class="lianxi_show">
+    <div class="lianxi_show_bg"></div>
+    <div class="lianxi_show_con">
+        <h5>4008089949</h5>
+        <div class="lianxi_show_con_f1">
+            <a href="##">取消</a>
+            <a href="##" class="active">拨打电话</a>
+        </div>
+    </div>
+</div>
+
+
+<!--  / header  -->
+<div class="header_longevity">
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">行程介绍</div>  
+</div>
+<!--  / header  -->
+
+<div class="banner">
+  <div class="swiper-container swiper-container-banner">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/tour_banner1.png" width="100%"></div>
+        <div class="swiper-slide"><img src="images/tour_banner2.png" width="100%"></div>
+        <div class="swiper-slide"><img src="images/tour_banner3.png" width="100%"></div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination swiper-pagination-banner"></div>
+  </div>
+</div>
+
+<!--  / tourItinerary  -->
+<div class="tourItinerary">
+    <div class="tourItinerary1">
+        <p class="tourItinerary1-content1"><span>【组团游】</span>绍兴出发香港七日游</p>
+        <div class="tourItinerary1-content2 clearfix">
+            <span class="tourItinerary1-content2-text1"><i>￥<em>1.00</em></i>/人</span>
+            <span class="tourItinerary1-content2-text2">已报名 : <i> 21</i>人</span>
+        </div>
+        
+    </div>
+    <div class="tourItinerary2">
+        <p class="tourItinerary2-text1">行程介绍:</p>
+		<div class="track-rcol">
+                <div class="track-list">
+                    <ul>
+                        <li class="first">
+                            
+                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生、意气风发。最后，祝普强装饰团队精进、业绩如虹、百年屹立；并祝全体员工身体健康、合家美满、生活幸福！</span>
+                        </li>
+                        <li>
+                            <span class="txt1">07:20</span>
+                            <i class="node-icon"></i>
+                            <span class="time">平台全程接送 <i>集合</i> </span>
+                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
+                        </li>
+                        <li>
+                            <span class="txt1">09:90</span>
+                            <i class="node-icon"></i>
+                            <span class="time">平台全程接送 <i>集合</i> </span>
+                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
+                        </li>
+                        <li>
+                            <span class="txt1">12:00</span>
+                            <i class="node-icon"></i>
+                            <span class="time">平台全程接送 <i>集合</i> </span>
+                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+	</div>
+</div>
+<!--  / tourItinerary  -->
+
+
+<!--  / footer  -->
+<div class="footer1">
+    <ul class="clearfix">
+      <li class="footer1-left">联系我们</li>
+      <li class="footer1-right"> 预约订购</li>
+    </ul>
+</div> 
+<!--  / footer  -->
+
+</body>
+<script>
+$(window).ready(function(){
+
+$('.banner').height($(window).width()*400/750);
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.footer1-right').click(function(){
+    window.location.href = "reservationPayment.html";
+});
+$('.footer1-left').click(function(){
+    $('.lianxi_show').css('display','block');
+})
+$('.lianxi_show_con_f1 a').click(function(){
+    $('.lianxi_show').css('display','none');
+})
+$('.bg4').click(function(){
+      $('.pinglun1_show').css('display','block');
+})
+
+  
+})  
+</script>
+</html>

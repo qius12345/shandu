@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body class="body_bg2">
+<div class="pinglun1_show">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>是否清除缓存</h5>
+        <div class="pinglun1_show_con_f1">
+            <a href="##">取消</a>
+            <a href="##">确认</a>
+        </div>
+    </div>
+</div>
+<!--  / header  -->
+<div class="header_longevity">
+        <div class="header_map_longevity">   
+            <img src="images/jiantou.png" alt="">
+            <span>返回</span>
+        </div>
+        <div class="logo_longevity">设置</div>   
+</div>
+<!--  / header  -->
+
+
+<div class="mySet">
+    <div class="mySet1 clearfix mySet-address">
+        <span class="fl">收货地址</span>
+        <img src="images/right1.png" alt="" class="fr">
+    </div>
+    <a href="myNewPhone.html">
+    <div class="mySet1 mySet2 clearfix">
+        <span class="fl">绑定新手机号码</span>
+        <img src="images/right1.png" alt="" class="fr">
+    </div>
+    </a>
+    <a href="myChangePhone.html">
+    <div class="mySet1 mySet3 clearfix">
+            <span class="fl">修改密码</span>
+            <img src="images/right1.png" alt="" class="fr">
+    </div>
+    </a>
+    <div class="mySet1 mySet3 mySet4 clearfix">
+            <span class="fl">清理缓存</span>
+            <img src="images/right1.png" alt="" class="fr">
+            <span class="fr">23M</span>
+    </div>
+</div>
+
+
+</body>
+<script>
+$(window).ready(function(){
+
+$('.banner').height($(window).width()*400/750);
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.mySet-address').click(function(){
+    window.location.href = "myAddress.html";
+})
+$('.mySet4').click(function(){
+    $('.pinglun1_show').css("display","block");
+})
+$('.pinglun1_show_con_f1 a').click(function(){
+      $('.pinglun1_show').css('display','none');
+})
+
+
+  
+})  
+</script>
+</html>

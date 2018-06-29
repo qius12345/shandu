@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body class="body_bg2">
+
+<!--  / header  -->
+<div class="header_longevity">
+        <div class="header_map_longevity">   
+            <img src="images/jiantou.png" alt="">
+            <span>返回</span>
+        </div>
+        <div class="logo_longevity">签到</div>   
+</div>
+<!--  / header  -->
+
+
+<div class="mySet">
+    <div class="sign1">
+        <table>
+            <thead>
+                <tr>
+                    <th>日</th>
+                    <th>一</th>
+                    <th>二</th>
+                    <th>三</th>
+                    <th>四</th>
+                    <th>五</th>
+                    <th>六</th>
+                </tr>
+                <tr class="theFirst"></tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td class="on">4</td>
+                    <td>5</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>12</td>
+                        <td>13</td>
+                </tr>
+                <tr>
+                        <td class="on">14</td>
+                        <td class="on">15</td>
+                        <td>16</td>
+                        <td>17</td>
+                        <td>18</td>
+                        <td>19</td>
+                        <td>20</td>
+                </tr>
+                <tr>
+                        <td>21</td>
+                        <td>22</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>25</td>
+                        <td>26</td>
+                        <td>27</td>
+                </tr>
+                <tr class="theLast">
+                        <td>28</td>
+                        <td class="on">29</td>
+                        <td>30</td>
+                        <td>31</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="sign2">
+        <span class="fl">2018年01月28日</span>
+        <button class="fr go_qiandao">签到</button>
+    </div>
+    <div class="sign3">
+        <span>您已连续签到1天</span>
+    </div>
+    <div class="sign4">
+        <p class="sign4-txt1">温馨提示：</p>
+        <p>1.连续签到3天，可获得一张优惠券</p>
+        <p>2.优惠券可在团购商城里使用</p>
+        <p>3.优惠券有效期1个月，过期作废</p>
+    </div>
+</div>
+
+<div class="pinglun1_show">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>签到成功</h5>
+        <div class="pinglun1_show_con_f1">
+            <a href="##">好的，知道了</a>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+$(window).ready(function(){
+var flag=true;
+$('.banner').height($(window).width()*400/750);
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.longevity1 li').click(function(){
+    window.location.href = "InformationDetails.html";
+});
+$(".remain").click(function(){
+    window.location.href = "remain.html";
+})
+$(".coupon").click(function(){
+    window.location.href = "myCoupon.html";
+})
+$('.go_qiandao').click(function(){
+    if(flag){
+        $('.pinglun1_show').css('display','block');
+        $('.pinglun1_show h5').html('签到成功');
+        flag=false;
+        $(this).html('已签到');
+        $(this).css("background",'#e9e9e9');
+        $(this).css("color",'#ffffff');
+    }else{
+        $('.pinglun1_show').css('display','block');
+        $('.pinglun1_show h5').html('今天你签到过了');
+    }
+})
+$('.pinglun1_show_con_f1 a').click(function(){
+    $('.pinglun1_show').css('display','none');
+})
+  
+})  
+</script>
+</html>

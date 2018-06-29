@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/iosSelect.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+</script>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+<!--  / header  -->
+<div class="header_longevity">
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">添加新地址</div>
+    <div class="header_shop_longevity">提交</div>   
+</div>
+<!--  / header  -->
+
+
+<div class="mySet">
+    <div class="mySet1 mySet3 clearfix">
+        <span class="fl">联系人</span>
+        <input type="text" placeholder="请输入" class="fr">
+    </div>
+    <div class="mySet1 mySet3 clearfix">
+        <span class="fl">联系电话</span>
+        <input type="text" placeholder="请输入电话" class="fr">
+    </div>
+    <div class="mySet1 mySet3 clearfix">
+            <span class="fl">联系地址</span>
+            <div class="add_address">
+                <div class="form-item item-line service_inner1_area" id="select_contact">               
+                    <div class="pc-box">                     
+                        <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">                     
+                        <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">请选择地址</span> 
+                    </div>             
+                </div>
+                <!-- <img src="images/service_map.png" width="20"> -->
+            </div>
+            <img src="images/right-1.png" alt="" class="fr">
+    </div>
+    <div class="mySet1 mySet3 mySet4 clearfix">
+        <span class="fl">详细地址信息</span>
+        <br>
+        <input type="text" placeholder="请输入详细地址(20字以内)">
+    </div>
+    <!-- <div class="mySet1 mySet5 clearfix">
+            <span class="fl">设为默认</span>
+            <img src="images/hukuai.png" alt="" class="fr">
+    </div> -->
+    <div class="service_inner1_list service_inner1_list-1">
+            <h4>设为默认</h4>
+            <div class="yes_btn">
+                <span></span>
+            </div>
+    </div>
+</div>
+
+
+</body>
+<script src="js/zepto.js"></script>
+<script src="js/iosSelect.js"></script>
+<script src="js/areaData_v2.js"></script>
+<script type="text/javascript">
+    var selectContactDom = $('#select_contact');
+    var showContactDom = $('#show_contact');
+    var contactProvinceCodeDom = $('#contact_province_code');
+    var contactCityCodeDom = $('#contact_city_code');
+    selectContactDom.bind('click', function () {
+        var sccode = showContactDom.attr('data-city-code');
+        var scname = showContactDom.attr('data-city-name');
+
+        var oneLevelId = showContactDom.attr('data-province-code');
+        var twoLevelId = showContactDom.attr('data-city-code');
+        var threeLevelId = showContactDom.attr('data-district-code');
+        var iosSelect = new IosSelect(3, 
+            [iosProvinces, iosCitys, iosCountys],
+            {
+                title: '',
+                itemHeight: 35,
+                relation: [1, 1],
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    contactProvinceCodeDom.val(selectOneObj.id); 
+                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
+                    contactCityCodeDom.val(selectTwoObj.id);
+                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
+
+                    showContactDom.attr('data-province-code', selectOneObj.id);
+                    showContactDom.attr('data-city-code', selectTwoObj.id);
+                    showContactDom.attr('data-district-code', selectThreeObj.id);
+                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                }
+        });
+    });
+</script>
+<script>
+$(window).ready(function(){
+
+$('.banner').height($(window).width()*400/750);
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.mySet-address').click(function(){
+    window.location.href = "myAddress.html";
+})
+$('.yes_btn').click(function(){
+    if($(this).hasClass('on')){
+        $('.yes_btn').removeClass('on');
+    }else{
+        $('.yes_btn').addClass('on');
+    }
+})
+
+
+  
+})  
+</script>
+
+</html>

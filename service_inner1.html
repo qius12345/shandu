@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/iosSelect.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+</script>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body style="background:#f3f5f9;">
+<div class="chakan_show">
+    <div class="chakan_show_bg"></div>
+    <div class="chakan_show_con">
+        <h5>用户下单后可查看联系电话</h5>
+    </div>
+</div>
+<!--  / header  -->
+<div class="header_longevity">
+     <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+     </div>
+     <div class="logo_longevity">服务需求</div> 
+</div>
+<!--  / header  -->
+
+
+<div class="service">
+	
+	
+	<div class="service_inner1">
+		<a href="myAddress.html">
+           <div class="service_inner1_list">
+            <h5>服务地址 :</h5>
+            <p class="service_inner1_dizhi">请选择服务地址 <i class="fa fa-angle-right"></i></p>            
+        </div> 
+        </a>
+		<div class="service_inner1_list no_border service_inner1_list3">
+			<h5>服务内容 :</h5>
+		</div>
+		<div class="service_inner1_list_txt no_border">
+			<textarea placeholder="如:洗衣,扫地,带小孩(限60字)"></textarea>
+		</div>
+		<div class="service_sp1"></div>
+		<div class="service_inner1_list">
+			<h5>是否找别人替代 :</h5>
+			<div class="yes_btn">
+				<span></span>
+			</div>
+		</div>
+		
+		<div class="service_inner1_list no_border service_inner1_list3">
+			<h5>其他说明 :</h5>
+		</div>
+		<div class="service_inner1_list_txt no_border">
+			<textarea placeholder="对服务人员的要求,无要求可不填(限120字)"></textarea>
+		</div>
+		
+		<!-- <div class="service_inner1_list">
+			<h5>服务日期:</h5>
+		</div> -->
+		<div class="service_sp1"></div>
+		<div class="service_inner1_list service_inner1_list_center">
+            <div class="service_inner1_list_bg">服务日期 :</div>
+			<span class="service_inner1_span">
+			  <div class="form-item item-line service_inner1_list1" id="selectDate">                    
+			    <div class="pc-box">                     
+			        <span data-year="" data-month="" data-date="" id="showDate">请选择</span>  
+			    </div>             
+              </div>
+			<i class="fa fa-caret-down"></i>
+			</span>
+			至
+			<span class="service_inner1_span">
+			  <div class="form-item item-line service_inner1_list1" id="selectDate1">                    
+			    <div class="pc-box">                     
+			        <span data-year="" data-month="" data-date="" id="showDate1">请选择</span>  
+			    </div>             
+              </div>
+			  <i class="fa fa-caret-down"></i>
+			</span>
+		</div>
+		
+		
+		<div class="service_inner1_list service_inner1_list_time">
+			<h5>预约时间 :</h5>
+			<p>只需选择开始和结束时间 <i class="fa fa-angle-right"></i></p>
+		</div>
+		<div class="service_inner1_time_show">
+			<p>点击以下方格选择时间24小时制，若要取消选择请您再次点击该方格</p>
+			<div class="row">
+				<div class="col-xs-2 col-time1">1:00</div>
+				<div class="col-xs-2 col-time1">2:00</div>
+				<div class="col-xs-2 col-time1">3:00</div>
+				<div class="col-xs-2 col-time1">4:00</div>
+				<div class="col-xs-2 col-time1">5:00</div>
+				<div class="col-xs-2 col-time1">6:00</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-time1">7:00</div>
+				<div class="col-xs-2 col-time1">8:00</div>
+				<div class="col-xs-2 col-time1">9:00</div>
+				<div class="col-xs-2 col-time1">10:00</div>
+				<div class="col-xs-2 col-time1">11:00</div>
+				<div class="col-xs-2 col-time1">12:00</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-time1">13:00</div>
+				<div class="col-xs-2 col-time1">14:00</div>
+			</div>
+		</div>
+		
+		<div class="service_inner1_list no_border">
+			<h5>预约时长 :</h5>
+			<input type="text" placeholder="">
+		</div>
+		
+		
+		<!-- <div class="service_inner1_list_txt">
+			<textarea placeholder="详细地址"></textarea>
+		</div> -->
+		
+		
+		<div class="service_inner_zf">
+			预约服务费 <span> ￥00.00</span>
+			<a href="##">支付</a>
+		</div>
+		
+	</div>
+	
+	
+		
+</div>
+
+
+
+
+</body>
+
+
+<!-- <script src="js/pccs.js"></script> -->
+<script src="js/zepto.js"></script>
+<script src="js/iosSelect.js"></script>
+<script src="js/areaData_v2.js"></script>
+<script type="text/javascript">
+    var selectDateDom = $('#selectDate');
+    var showDateDom = $('#showDate');
+    var selectDate1Dom = $('#selectDate1');
+    var showDate1Dom = $('#showDate1');
+    // 初始化时间
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth() + 1;
+    var nowDate = now.getDate();
+    showDateDom.attr('data-year', nowYear);
+    showDateDom.attr('data-month', nowMonth);
+    showDateDom.attr('data-date', nowDate);
+    showDate1Dom.attr('data-year', nowYear);
+    showDate1Dom.attr('data-month', nowMonth);
+    showDate1Dom.attr('data-date', nowDate);
+    // 数据初始化
+    function formatYear (nowYear) {
+        var arr = [];
+        for (var i = nowYear - 5; i <= nowYear + 5; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '年'
+            });
+        }
+        return arr;
+    }
+    function formatMonth () {
+        var arr = [];
+        for (var i = 1; i <= 12; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '月'
+            });
+        }
+        return arr;
+    }
+    function formatDate (count) {
+        var arr = [];
+        for (var i = 1; i <= count; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '日'
+            });
+        }
+        return arr;
+    }
+    var yearData = function(callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            callback(formatYear(nowYear))
+        // }, 2000)
+    }
+    var monthData = function (year, callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            callback(formatMonth());
+        // }, 2000);
+    };
+    var dateData = function (year, month, callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            if (/^(1|3|5|7|8|10|12)$/.test(month)) {
+                callback(formatDate(31));
+            }
+            else if (/^(4|6|9|11)$/.test(month)) {
+                callback(formatDate(30));
+            }
+            else if (/^2$/.test(month)) {
+                if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
+                    callback(formatDate(29));
+                }
+                else {
+                    callback(formatDate(28));
+                }
+            }
+            else {
+                throw new Error('month is illegal');
+            }
+        // }, 2000);
+        // ajax请求可以这样写
+        /*
+        $.ajax({
+            type: 'get',
+            url: '/example',
+            success: function(data) {
+                callback(data);
+            }
+        });
+        */
+    };
+    selectDateDom.bind('click', function () {
+        var oneLevelId = showDateDom.attr('data-year');
+        var twoLevelId = showDateDom.attr('data-month');
+        var threeLevelId = showDateDom.attr('data-date');
+        var iosSelect = new IosSelect(3, 
+            [yearData, monthData, dateData],
+            {
+                title: '请选择时间',
+                itemHeight: 35,
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                showLoading: true,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    showDateDom.attr('data-year', selectOneObj.id);
+                    showDateDom.attr('data-month', selectTwoObj.id);
+                    showDateDom.attr('data-date', selectThreeObj.id);
+                    showDateDom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                }
+        });
+    });
+
+    selectDate1Dom.bind('click', function () {
+        var oneLevelId1 = showDate1Dom.attr('data-year');
+        var twoLevelId1 = showDate1Dom.attr('data-month');
+        var threeLevelId1 = showDate1Dom.attr('data-date');
+        var iosSelect = new IosSelect(3, 
+            [yearData, monthData, dateData],
+            {
+                title: '请选择时间',
+                itemHeight: 35,
+                oneLevelId: oneLevelId1,
+                twoLevelId: twoLevelId1,
+                threeLevelId: threeLevelId1,
+                showLoading: true,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    showDate1Dom.attr('data-year', selectOneObj.id);
+                    showDate1Dom.attr('data-month', selectTwoObj.id);
+                    showDate1Dom.attr('data-date', selectThreeObj.id);
+                    showDate1Dom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var selectContactDom = $('#select_contact');
+    var showContactDom = $('#show_contact');
+    var contactProvinceCodeDom = $('#contact_province_code');
+    var contactCityCodeDom = $('#contact_city_code');
+    selectContactDom.bind('click', function () {
+        var sccode = showContactDom.attr('data-city-code');
+        var scname = showContactDom.attr('data-city-name');
+
+        var oneLevelId = showContactDom.attr('data-province-code');
+        var twoLevelId = showContactDom.attr('data-city-code');
+        var threeLevelId = showContactDom.attr('data-district-code');
+        var iosSelect = new IosSelect(3, 
+            [iosProvinces, iosCitys, iosCountys],
+            {
+                title: '',
+                itemHeight: 35,
+                relation: [1, 1],
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    contactProvinceCodeDom.val(selectOneObj.id); 
+                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
+                    contactCityCodeDom.val(selectTwoObj.id);
+                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
+
+                    showContactDom.attr('data-province-code', selectOneObj.id);
+                    showContactDom.attr('data-city-code', selectTwoObj.id);
+                    showContactDom.attr('data-district-code', selectThreeObj.id);
+                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                }
+        });
+    });
+</script>
+
+<script>
+$(window).ready(function(){
+	var flag=true;
+
+$('.banner').height($(window).width()*400/750);
+
+
+$('.yes_btn').click(function(){
+	if($(this).hasClass('on')){
+		$('.yes_btn').removeClass('on');
+	}else{
+		$('.yes_btn').addClass('on');
+	}
+})
+
+
+var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+    loop: true,
+    pagination: '.swiper-pagination-banner',
+	autoplay : 5000,
+	autoplayDisableOnInteraction : false,
+})
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.longevity1 li').click(function(){
+    window.location.href = "InformationDetails.html";
+});
+$('.collage1').click(function(){
+    window.location.href = "shopDetail.html";
+});
+$('.ind_share_btn').click(function(){
+	  window.location.href = "bigStage.html";
+});
+$('#goOrder').click(function(){
+	  window.location.href = "orderList.html";
+});
+$('.order1').click(function(){
+	  window.location.href = "payment-orders.html";
+});
+$('.order3').click(function(){
+	  window.location.href = "energetic-orders.html";
+});
+$('.service_inner1_list_time').click(function(){
+	
+	if(flag){
+		$('.service_inner1_time_show').css('display','block');
+		$(this).addClass('service_inner1_list2');
+		flag=false;
+	}else{
+		$('.service_inner1_time_show').css('display','none');
+		$(this).removeClass('service_inner1_list2');
+		flag=true;
+	}	
+});
+$('.go-chakan').click(function(){
+    $('.chakan_show').css('display','block');
+});
+$('.chakan_show_bg').click(function(){
+    $('.chakan_show').css('display','none');
+})
+  
+})  
+</script>
+
+
+</html>

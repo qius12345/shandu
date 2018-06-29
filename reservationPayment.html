@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>中科家政</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/iosSelect.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+</script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+<!--  / header  -->
+<div class="header_longevity">
+        <div class="header_map_longevity">   
+            <img src="images/jiantou.png" alt="">
+            <span>返回</span>
+        </div>
+        <div class="logo_longevity">行程介绍</div>  
+</div>
+<!--  / header  -->
+<div class="energetic">
+        <div class="energetic1">
+                    <ul>
+                        <li class="energetic1-content">
+                            <div>
+                                <div class="energetic1-content-left">
+                                    <img src="images/energetic-1.png" alt="" class="img3">
+                                </div>
+                                <div class="energetic1-content-right">
+                                    <p class="energetic1-content-text1"><span>【组团游】</span>绍兴出发香港七日游</p>
+                                    <p class="energetic1-content-text2">
+                                         一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生、意...
+                                    </p>
+                                </div>
+                                <table style="clear:both;"></table>
+                            </div> 
+                            <div class="energetic1-content-text3"><span>￥<i>1.00</i></span>/人</div>  
+                        </li>                  
+                    </ul>
+                </div>
+        </div>
+        <div class="energetic2"></div>
+        <div class="energetic3">
+            <div class="energetic3-list clearfix">
+                    <span class="energetic3-list-left">参与人数</span>
+                    <div class="energetic3-list-right">
+                        <input type="text" placeholder="请输入人数">
+                    </div>
+            </div>
+            <div class="energetic3-list clearfix">
+                    <span class="energetic3-list-left">参与日期</span>
+                    <div class="energetic3-list-right">
+                        <span>
+                            
+                             <div class="form-item item-line service_inner1_list1" id="selectDate">                    
+                <div class="pc-box">                     
+                    <span data-year="" data-month="" data-date="" id="showDate">请选择</span>  
+                </div>             
+              </div>
+                        </span>
+                        <img src="images/right-1.png" alt="">
+                    </div>
+            </div>
+            <div class="energetic3-list clearfix">
+                    <span class="energetic3-list-left">您的姓名</span>
+                    <div class="energetic3-list-right">
+                        <input type="text" placeholder="请输入姓名">
+                    </div>
+            </div>
+            <div class="energetic3-list clearfix">
+                    <span class="energetic3-list-left">您的电话</span>
+                    <div class="energetic3-list-right">
+                        <input type="text" placeholder="请输入电话">
+                    </div>
+            </div>
+            <div class="energetic4"></div>
+            <div class="energetic3-list clearfix">
+                    <span class="energetic3-list-left">备注说明</span>
+                    <div class="energetic3-list-right">
+                        <span>60个字符以内</span>
+                    </div>
+            </div>
+            <input type="text" placeholder="请输入备注内容(选填)" class="input-text">
+        </div>
+        
+
+</div>
+
+<!--  / footer  -->
+<div class="footer2">
+    <span>合计 <i> ￥0.00</i></span>
+    <button>预约支付</button> 
+</div> 
+<!--  / footer  -->
+
+</body>
+
+<script src="js/zepto.js"></script>
+<script src="js/iosSelect.js"></script>
+<script src="js/areaData_v2.js"></script>
+<script type="text/javascript">
+    var selectDateDom = $('#selectDate');
+    var showDateDom = $('#showDate');
+    var selectDate1Dom = $('#selectDate1');
+    var showDate1Dom = $('#showDate1');
+    // 初始化时间
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth() + 1;
+    var nowDate = now.getDate();
+    showDateDom.attr('data-year', nowYear);
+    showDateDom.attr('data-month', nowMonth);
+    showDateDom.attr('data-date', nowDate);
+    showDate1Dom.attr('data-year', nowYear);
+    showDate1Dom.attr('data-month', nowMonth);
+    showDate1Dom.attr('data-date', nowDate);
+    // 数据初始化
+    function formatYear (nowYear) {
+        var arr = [];
+        for (var i = nowYear - 5; i <= nowYear + 5; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '年'
+            });
+        }
+        return arr;
+    }
+    function formatMonth () {
+        var arr = [];
+        for (var i = 1; i <= 12; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '月'
+            });
+        }
+        return arr;
+    }
+    function formatDate (count) {
+        var arr = [];
+        for (var i = 1; i <= count; i++) {
+            arr.push({
+                id: i + '',
+                value: i + '日'
+            });
+        }
+        return arr;
+    }
+    var yearData = function(callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            callback(formatYear(nowYear))
+        // }, 2000)
+    }
+    var monthData = function (year, callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            callback(formatMonth());
+        // }, 2000);
+    };
+    var dateData = function (year, month, callback) {
+        // settimeout只是模拟异步请求，真实情况可以去掉
+        // setTimeout(function() {
+            if (/^(1|3|5|7|8|10|12)$/.test(month)) {
+                callback(formatDate(31));
+            }
+            else if (/^(4|6|9|11)$/.test(month)) {
+                callback(formatDate(30));
+            }
+            else if (/^2$/.test(month)) {
+                if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
+                    callback(formatDate(29));
+                }
+                else {
+                    callback(formatDate(28));
+                }
+            }
+            else {
+                throw new Error('month is illegal');
+            }
+        // }, 2000);
+        // ajax请求可以这样写
+        /*
+        $.ajax({
+            type: 'get',
+            url: '/example',
+            success: function(data) {
+                callback(data);
+            }
+        });
+        */
+    };
+    selectDateDom.bind('click', function () {
+        var oneLevelId = showDateDom.attr('data-year');
+        var twoLevelId = showDateDom.attr('data-month');
+        var threeLevelId = showDateDom.attr('data-date');
+        var iosSelect = new IosSelect(3, 
+            [yearData, monthData, dateData],
+            {
+                title: '请选择时间',
+                itemHeight: 35,
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                showLoading: true,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    showDateDom.attr('data-year', selectOneObj.id);
+                    showDateDom.attr('data-month', selectTwoObj.id);
+                    showDateDom.attr('data-date', selectThreeObj.id);
+                    showDateDom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                }
+        });
+    });
+
+    selectDate1Dom.bind('click', function () {
+        var oneLevelId1 = showDate1Dom.attr('data-year');
+        var twoLevelId1 = showDate1Dom.attr('data-month');
+        var threeLevelId1 = showDate1Dom.attr('data-date');
+        var iosSelect = new IosSelect(3, 
+            [yearData, monthData, dateData],
+            {
+                title: '请选择时间',
+                itemHeight: 35,
+                oneLevelId: oneLevelId1,
+                twoLevelId: twoLevelId1,
+                threeLevelId: threeLevelId1,
+                showLoading: true,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    showDate1Dom.attr('data-year', selectOneObj.id);
+                    showDate1Dom.attr('data-month', selectTwoObj.id);
+                    showDate1Dom.attr('data-date', selectThreeObj.id);
+                    showDate1Dom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var selectContactDom = $('#select_contact');
+    var showContactDom = $('#show_contact');
+    var contactProvinceCodeDom = $('#contact_province_code');
+    var contactCityCodeDom = $('#contact_city_code');
+    selectContactDom.bind('click', function () {
+        var sccode = showContactDom.attr('data-city-code');
+        var scname = showContactDom.attr('data-city-name');
+
+        var oneLevelId = showContactDom.attr('data-province-code');
+        var twoLevelId = showContactDom.attr('data-city-code');
+        var threeLevelId = showContactDom.attr('data-district-code');
+        var iosSelect = new IosSelect(3, 
+            [iosProvinces, iosCitys, iosCountys],
+            {
+                title: '',
+                itemHeight: 35,
+                relation: [1, 1],
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    contactProvinceCodeDom.val(selectOneObj.id); 
+                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
+                    contactCityCodeDom.val(selectTwoObj.id);
+                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
+
+                    showContactDom.attr('data-province-code', selectOneObj.id);
+                    showContactDom.attr('data-city-code', selectTwoObj.id);
+                    showContactDom.attr('data-district-code', selectThreeObj.id);
+                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                }
+        });
+    });
+</script>
+
+<script>
+$(window).ready(function(){
+
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+
+$('.energetic1 li').click(function(){
+    window.location.href = "tourItinerary.html";
+});
+
+  
+})  
+</script>
+</html>
