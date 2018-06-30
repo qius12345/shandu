@@ -35,7 +35,9 @@
 </head>
 
 <body class="body_bg">
+
 <div id="app" v-cloak>
+
 <div class="stroy_nav">
   <div class="stroy_banr">
     <div class="swiper-container swiper-stroy_banr">
@@ -64,9 +66,8 @@
     <div class="swiper-container swiper-stroy1_class">
       <div class="swiper-wrapper">
       	
-          <div class="swiper-slide" v-for="(item,index) in story_cate">
-          	<a href="##" v-if="index ===0" class="stroy1_class_bt on" @click="setCateList(item.cate_id)">{{item.classname}}</a>
-          	<a href="##" v-else class="stroy1_class_bt" @click="setCateList(item.cate_id,index)">{{item.classname}}</a>
+          <div class="swiper-slide" v-for="(item,index) in story_cate" @click="getCateList(item.cate_id)">
+          	<a href="##" class="stroy1_class_bt" :class="cateId==item.cate_id?'on':''">{{item.classname}}</a>
           </div>
           
       </div>
@@ -77,23 +78,22 @@
   
   <div class="stroy-item1">
   
-  <div class="stroy1_popularity mar_b">
+  <div class="stroy1_popularity mar_b" @click="goInner(stroy_best.oldstory_id)">
     <a href="stroy1_inner.html">
       <h5 class="popular_tit">最佳人气</h5>
       
       <div class="popular_img mar_b">
-        <img src="images/stroy_pu1.jpg" width="100%">
+        <img :src="stroy_best.pic" width="100%">
       </div>
       
       <div class="popular_text">
-        <h5>子不语怪力乱神</h5>
+        <h5>{{stroy_best.title}}</h5>
         <p class="text">
-          自己家自己在家先看看开心就行继续继续快开学可惜可惜可大可大可大看就到家小姐姐科学家下课没开心开心
-          开心开心苦咖啡快发快发快发卡卡
+          {{stroy_best.content}}
         </p>
         <div class="stroy_function clearfix">
-          <span class="left">人气：3</span>
-          <span class="right">编号：00035</span>
+          <span class="left">人气：{{stroy_best.popularity}}</span>
+          <span class="right">编号：{{stroy_best.number}}</span>
         </div>
       </div>
     </a>
@@ -103,23 +103,40 @@
   
   <div class="stroy1_hot mar_b">
   	
-  	<h5 class="popular_tit pad">热门故事 <a href="##" class="more">更多</a></h5>
+  	<h5 class="popular_tit pad">热门故事 <a href="story1_hotList.html" class="more" @click="goList">更多</a></h5>
   	
-    <div class="stroy1_hot_box clearfix">
+    <div class="stroy1_hot_box clearfix" v-for="items2 in stroy_hot" @click="goInner(items2.oldstory_id)">
       <a href="stroy1_inner.html">
-      <div class="stroy1_hot_img">
-        <img src="images/stroy_hot1.jpg" width="100%">
-      </div>
-      <div class="stroy1_hot_text">
-        <h5>子不语怪力乱神</h5>
-        <p class="text">
-          的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
-        </p>
-        <div class="stroy_function clearfix">
-          <span class="left">人气：3</span>
-          <span class="right">编号：00035</span>
+        <div class="stroy1_hot_img">
+          <img :src="items2.pic" width="100%">
         </div>
-      </div>
+        <div class="stroy1_hot_text">
+          <h5>{{items2.title}}</h5>
+          <p class="text">
+            {{items2.content}}
+          </p>
+          <div class="stroy_function clearfix">
+            <span class="left">人气：{{items2.popularity}}</span>
+            <span class="right">编号：{{items2.number}}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- <div class="stroy1_hot_box clearfix">
+      <a href="stroy1_inner.html">
+        <div class="stroy1_hot_img">
+          <img src="images/stroy_hot1.jpg" width="100%">
+        </div>
+        <div class="stroy1_hot_text">
+          <h5>子不语怪力乱神</h5>
+          <p class="text">
+            的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
+          </p>
+          <div class="stroy_function clearfix">
+            <span class="left">人气：3</span>
+            <span class="right">编号：00035</span>
+          </div>
+        </div>
       </a>
     </div>
     <div class="stroy1_hot_box clearfix">
@@ -155,60 +172,26 @@
         </div>
       </div>
       </a>
-    </div>
+    </div> -->
   </div>
   
   <div class="wapSpace"></div>
   
   <div class="stroy1_hot mar_b">
-    <h5 class="popular_tit pad">全部故事 <a href="##" class="more">更多</a></h5>
-    <div class="stroy1_hot_box clearfix">
+    <h5 class="popular_tit pad">全部故事 <a href="story1_allList.html" class="more" @click="goList">更多</a></h5>
+    <div class="stroy1_hot_box clearfix" v-for="items3 in stroy_all" @click="goInner(items3.oldstory_id)">
       <a href="stroy1_inner.html">
       <div class="stroy1_hot_img">
-        <img src="images/stroy_all1.jpg" width="100%">
+        <img :src="items3.pic" width="100%">
       </div>
       <div class="stroy1_hot_text">
-        <h5>子不语怪力乱神</h5>
+        <h5>{{items3.title}}</h5>
         <p class="text">
-          的；客官说的那个；上课的功能；适当的
+          {{items3.content}}
         </p>
         <div class="stroy_function clearfix">
-          <span class="left">人气：3</span>
-          <span class="right">编号：00035</span>
-        </div>
-      </div>
-      </a>
-    </div>
-    <div class="stroy1_hot_box clearfix">
-      <a href="stroy1_inner.html">
-      <div class="stroy1_hot_img">
-        <img src="images/stroy_all2.jpg" width="100%">
-      </div>
-      <div class="stroy1_hot_text">
-        <h5>子不语怪力乱神</h5>
-        <p class="text">
-          的；客官说的那个；上课的功能；适当的
-        </p>
-        <div class="stroy_function clearfix">
-          <span class="left">人气：3</span>
-          <span class="right">编号：00035</span>
-        </div>
-      </div>
-      </a>
-    </div>
-    <div class="stroy1_hot_box clearfix">
-      <a href="stroy1_inner.html">
-      <div class="stroy1_hot_img">
-        <img src="images/stroy_all3.jpg" width="100%">
-      </div>
-      <div class="stroy1_hot_text">
-        <h5>子不语怪力乱神</h5>
-        <p class="text">
-          的；客官说的那个；上课的功能；适当的
-        </p>
-        <div class="stroy_function clearfix">
-          <span class="left">人气：3</span>
-          <span class="right">编号：00035</span>
+          <span class="left">人气：{{items3.popularity}}</span>
+          <span class="right">编号：{{items3.number}}</span>
         </div>
       </div>
       </a>
@@ -286,21 +269,29 @@ $(window).ready(function(){
 		data(){
 			return{
 				story_cate:[],
+        stroy_rules:[],
+        stroy_best:[],
+        stroy_hot:[],
+        stroy_all:[],
+        cateId:'1',
 			}
 		},
 		created:function(){
-			$this = this;
-			$this.getCate()
-			
-						
-					  
-			
+			var $this = this;
+			$this.getCate();
+      $this.getStoryRules();
+      $this.getBest();
+      $this.getHot();
+      $this.getAll();
+																	
 		},
 		mounted:function(){
 			
-		},methods:{
+		},
+    methods:{
 			//获取分类
-			getCate:function(c){
+			getCate:function(){
+        var $this = this;
 				const data = {
 				
 				}
@@ -308,11 +299,12 @@ $(window).ready(function(){
 					
 					if(res.result == 1){
 						$this.story_cate = res.info.cate;
-						var mySwiper_strclass = new Swiper ('.swiper-stroy1_class', {
-					     slidesPerView: 4
-						})
-						
-					  
+            $this.$nextTick(function () {
+              var mySwiper_strclass = new Swiper ('.swiper-stroy1_class', {
+                slidesPerView: 4,
+              }) 
+            })
+           																	  
 					}else
 					{
 						console.log("请求错误1")
@@ -323,13 +315,138 @@ $(window).ready(function(){
 				})
 			
 			},
-			//设置分类内容
-			setCateList:function(cateId,index){
-				console.log(cateId)
-			}
+
+			//获取分类内容
+			getCateList:function(cateId1){
+        var $this = this;
+				$this.cateId=cateId1;
+        $this.getBest();
+        $this.getHot();
+        $this.getAll();
+			},
+
+      //跳转到老故事列表页
+      goList:function(){
+        var $this = this;
+        setCookie("cateId",$this.cateId);
+      },
+
+      //获取老故事规则
+      getStoryRules:function(){
+        var $this = this;
+        const data = {
+        
+        }
+        Axios.post(window.Url.stroy_rules,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_rules = res;
+            // console.log($this.stroy_rules);
+                                    
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+         
+      },
+
+      //获取最佳人气接口
+
+      getBest:function(){
+        var $this = this;
+        
+        const data = {
+              city:'',
+              cate_id:$this.cateId
+        }
+
+        data.city=getCookie("cityLocation");
+
+        Axios.post(window.Url.stroy_best,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_best = res.info.oldstory;                                    
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+
+      //获取热门故事接口
+
+      getHot:function(){
+        var $this = this;
+        
+        const data = {
+              city:'',
+              cate_id:$this.cateId
+        }
+
+        data.city=getCookie("cityLocation");
+
+        Axios.post(window.Url.stroy_hot,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_hot = res.info.oldstory;
+                                    
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+
+      //获取全部故事接口
+
+      getAll:function(){
+        var $this = this;
+        
+        const data = {
+              city:'',
+              cate_id:$this.cateId
+        }
+
+        data.city=getCookie("cityLocation");
+
+        Axios.post(window.Url.stroy_all,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_all = res.info.oldstory;
+                                    
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+
+      //跳转到老故事详情页
+      goInner:function(oldstoryId){
+         setCookie("oldstoryId",oldstoryId);
+      }
+
+
 			
 			
 		}
+
 	})
 	
 	

@@ -26,9 +26,18 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
+
 <!--  / warpper  -->
 <div class="warpper warpper_str">
     <div class="stroy_inn_box1">
@@ -106,9 +115,55 @@
         </div>
     </div>
 </div>
+
+</div>
+
 </body>
 <script>
 $(window).ready(function(){
+
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+        stroy_details:[],
+      }
+    },
+    created:function(){
+      var $this = this;
+      $this.getCate();
+      
+                            
+    },
+    mounted:function(){
+      
+    },
+    methods:{
+      //老故事排名
+      getCate:function(){
+        var $this = this;
+        const data = {
+           oldstory_id:getCookie("oldstoryId"),
+        }
+        Axios.post(window.Url.stroy_details,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_details = res.info;                                  
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+     
+    }
+
+  })
+
   $(window).load(function(){
 
   })

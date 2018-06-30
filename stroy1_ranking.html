@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg">
+
+<div id="app" v-cloak>
 
 <div class="search1_show">
     <div class="search1_show_bg"></div>
@@ -58,7 +66,7 @@
         <img src="images/rank2.png">活动时间：
     </div>
     <div class="rank_time_con">
-      2018-2-27 00:00 <span><img src="images/rank3.png" width="100%"></span> 2018-3-2 00:00
+      {{stroy_ranking3.starttime}} <span><img src="images/rank3.png" width="100%"></span> {{stroy_ranking3.endtime}}
     </div>
   </div>
   
@@ -84,79 +92,12 @@
             排名
           </th>
         </tr>
-        <tr class="bg1">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱神》</td>
-          <td class="num1">1</td>
-          <td class="num2">1</td>
+        <tr v-for="(items1,index) in stroy_ranking1" :class="index % 3==0?'bg1':(index % 3==1?'bg1':'bg3')">
+          <td>{{items1.user_name}}</td>
+          <td>{{items1.title}}</td>
+          <td class="num1">{{items1.popularity}}</td>
+          <td class="num2">{{items1.ranking}}</td>
         </tr>
-        <tr class="bg2">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱大将风度神》</td>
-          <td class="num1">3</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg3">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱》</td>
-          <td class="num1">2</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg1">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱神》</td>
-          <td class="num1">1</td>
-          <td class="num2">1</td>
-        </tr>
-        <tr class="bg2">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱大将风度神》</td>
-          <td class="num1">3</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg3">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱》</td>
-          <td class="num1">2</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg1">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱神》</td>
-          <td class="num1">1</td>
-          <td class="num2">1</td>
-        </tr>
-        <tr class="bg2">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱大将风度神》</td>
-          <td class="num1">3</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg3">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱》</td>
-          <td class="num1">2</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg1">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱神》</td>
-          <td class="num1">1</td>
-          <td class="num2">1</td>
-        </tr>
-        <tr class="bg2">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱大将风度神》</td>
-          <td class="num1">3</td>
-          <td class="num2">2</td>
-        </tr>
-        <tr class="bg3">
-          <td>闪度新人</td>
-          <td>《子不语怪力乱》</td>
-          <td class="num1">2</td>
-          <td class="num2">2</td>
-        </tr>
-
       </table>
     </div>
   </div>
@@ -166,10 +107,58 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+        stroy_ranking1:[],
+        stroy_ranking2:[],
+        stroy_ranking3:[],
+      }
+    },
+    created:function(){
+      var $this = this;
+      $this.getCate();
+      
+                            
+    },
+    mounted:function(){
+      
+    },
+    methods:{
+      //老故事排名
+      getCate:function(){
+        var $this = this;
+        const data = {
+        
+        }
+        Axios.post(window.Url.stroy_ranking,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_ranking1 = res.info;
+            $this.stroy_ranking2 = res.url;
+            $this.stroy_ranking3 = res.time;                                   
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+     
+    }
+
+  })
+
   $(window).load(function(){
     $('.search').click(function(){
       $('.search1_show').css('display','block');

@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="stroy_rhead">
@@ -40,8 +48,8 @@
 
 <!--  / header  -->
 <!--  / warpper  -->
-<div class="warpper warpper_padt">
-  <div class="stroy_rules">
+<div class="warpper warpper_padt stroy_rules1">
+  <!-- <div class="stroy_rules">
     <h4>杭州西湖老年探戈</h4>
     <p class="stroy_rtime">活动时间</p>
     <p class="stroy_rtime">2017-10-18 00:00:00-> 2018-01-18 00:00:00</p>
@@ -53,7 +61,8 @@
       法局ADSL放假爱上了非常是洛凡就撒来东方拉法
       基举案说法了身份了接待来访骄傲了积分了身份
     </p>
-  </div>
+  </div> -->
+  <iframe :src="stroy_rules.url" width="100%" height="" frameborder="0" scrolling="no"></iframe>
 </div>
 <!--  / warpper  -->
   
@@ -61,9 +70,60 @@
 <!--  / footer  -->
 <!--  / footer  -->
 
+</div>
+
 </body>
 <script>
 $(window).ready(function(){
+
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+        stroy_rules:[],
+      }
+    },
+    created:function(){
+      var $this = this;
+      $this.getStoryRules();
+      
+            
+            
+      
+    },
+    mounted:function(){
+      
+    },
+    methods:{
+
+      //获取老故事规则
+      getStoryRules:function(){
+        var $this = this;
+        const data = {
+        
+        }
+        Axios.post(window.Url.stroy_rules,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_rules = res;
+            // console.log($this.stroy_rules);
+                                    
+          }else
+          {
+            console.log("请求错误1")
+          }
+          
+        }).catch((err) => {
+          console.log("请求错误0"+err)
+        })
+      
+      },
+      
+      
+    }
+
+  })
+
   $(window).load(function(){
 
   })
