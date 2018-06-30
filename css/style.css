@@ -433,7 +433,8 @@ body{
 	border-top:1px solid #e8e8e8;
 	position:relative;
 }
-.stroy1_hot_img{
+/*2018-6-30注释*/
+/*.stroy1_hot_img{
 	width:35%;
 }
 .stroy1_hot_text{
@@ -441,7 +442,7 @@ body{
 	position: absolute;
 	top: 0.18rem;
 	right:0.15rem; 
-}
+}*/
 .stroy1_hot_text h5{
 	font-size: 0.18rem;
 	margin-bottom: 0.08rem;
@@ -468,6 +469,20 @@ body{
 	position:absolute;
 	bottom: 0rem;
 }
+/**2018-6-29修改**/
+.stroy1_hot_img{
+	width:35%;
+	height:0.9rem;
+	overflow: hidden;
+}
+.stroy1_hot_text{
+	width: 56%;
+	height:0.9rem;
+	position: absolute;
+	top: 0.18rem;
+	right:0.15rem; 
+}
+/**2018-6-29修改**/
 /***************stroy1****************/
 
 /***************stroy_inner****************/
