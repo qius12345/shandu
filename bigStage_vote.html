@@ -109,8 +109,8 @@
     			<div class="bigStage_vote2_zi_btn">
     				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 : </span>{{video.number}}</p>
     				<p><span>当前排名:</span>{{video.ranking}}</p>
-    				<!--<a href="##">无法继续投票</a>-->
-    				<a href="javascript:;" style="background-color: #ff540a;" @click="Vote">投 - 票</a>
+    				<a v-if="video.statu" href="javascript:;" style="background-color: #ff540a;" @click="Vote(video.stage_id)">投 - 票</a>
+    				<a v-else href="##">无法继续投票</a>
     			</div>
     			
     		</div>
@@ -137,12 +137,13 @@ $(window).ready(function(){
 		data() {
             return {
                 stage_deploy_ids: {
-                	stage_deploy_id : ''
+                	stage_deploy_id : '',
+                	
                 },
                 Videos : [],
                 activityRules:'',
                 Ranking:[],
-                vote:''
+                vote:'',
             }
 		},
     created: function () {
@@ -231,16 +232,19 @@ $(window).ready(function(){
         
     	},
     	//投票
-    	Vote:function(){
+    	Vote:function(stage_id){
     		var $this = this;
+    		const data={
+    			'token' : '9769a2e98ad0a93a9ab6a023b45506ff',
+    			'stage_id' : stage_id
+    		};
     		
-    		
-    		Axios.post(window.Url.activityvote,$this.stage_deploy_ids).then((res) => {
-    			
+    		Axios.post(window.Url.activityvote,data).then((res) => {
     			if(res.result == 1){
-    				console.log(res)
-    			}
-    			else{
+    				alert(res.info);
+    			}else if(res.result == 0){
+    				alert(res.info);
+    			}else{
     				alert(res.info);
     			}
     			
