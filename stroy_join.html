@@ -19,6 +19,10 @@
 <link rel="stylesheet" type="text/css" href="css/iosSelect.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<style tyle="">
+    
+</style>
+
 <script>
         var _hmt = _hmt || [];
         (function() {
@@ -37,9 +41,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="bg-2">
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="stroy_rhead">
@@ -82,6 +94,7 @@
 	  			<br>
 	  			<span>添加图片</span>
 	  			<span>(最多6张)</span>
+          <input name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="update" >
 	  		</div>
 	  	</div>
 	  	<div class="stroy_join_sec5">
@@ -97,9 +110,53 @@
 <!--  / footer  -->
 <!--  / footer  -->
 
+</div>
+
 </body>
 <script>
 $(window).ready(function(){
+
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            stroy_allList:[],
+          }
+        },
+        created:function(){
+          var $this = this;
+                                         
+        },
+        mounted:function(){
+          
+        },
+        methods:{
+          //全部老故事列表
+          update:function(){
+            var $this = this;
+            const data = {
+                cate_id:getCookie("cateId"),
+                city:getCookie("cityLocation"),
+            }
+            Axios.post(window.Url.stroy_allList,data).then((res) => {
+              
+              if(res.result == 1){
+                $this.stroy_allList = res.info.oldstory;                                 
+              }else
+              {
+                console.log("全部老故事列表:"+res.info);
+              }
+              
+            }).catch((err) => {
+              console.log("全部老故事列表:"+err);
+            })
+          
+          },
+         
+        }
+
+    })
+
   $('.stroy_join_list_city').click(function(){
   		window.location.href = "search.html";
   });

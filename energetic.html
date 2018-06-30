@@ -36,9 +36,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -76,21 +84,21 @@
 
                     <div class="part_line"></div>
                 </div> -->
-                    <ul>
-                        <li class="energetic1-content">
+                    <ul v-show="flag1">
+                        <li class="energetic1-content" v-for="items2 in energetic_Tuijian" @click="goEnergeticDetail(items1.tourist_id)">
                             <div>
                                 <div class="energetic1-content-left">
-                                    <img src="images/energetic-1.png" alt="" class="img3">
+                                    <img :src="items2.logo_pic" alt="" class="img3">
                                 </div>
                                 <div class="energetic1-content-right">
-                                    <p class="energetic1-content-text1"><span>【组团游】</span>绍兴出发香港七日游</p>
+                                    <p class="energetic1-content-text1">{{items2.tourist_name}}</p>
                                     <p class="energetic1-content-text2">
-                                         一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生、意...
+                                         {{items2.tourist_details}}
                                     </p>
                                 </div>
                                 <table style="clear:both;"></table>
                             </div> 
-                            <div class="energetic1-content-text3"><span>￥<i>1.00</i></span>/人</div>  
+                            <div class="energetic1-content-text3"><span>￥<i>{{items2.price}}.00</i></span>/人</div>  
                         </li>                  
                     </ul>
                 </div>
@@ -107,22 +115,22 @@
                     </div>
                 </div>
                     <ul>
-                        <li class="energetic1-content">
+                        <li class="energetic1-content" v-for="items1 in energetic_More" @click="goEnergeticDetail(items1.tourist_id)">
                             <div>
                                 <div class="energetic1-content-left">
-                                    <img src="images/energetic-2.png" alt="" class="img3">
+                                    <img :src="items1.logo_pic" alt="" class="img3">
                                 </div>
                                 <div class="energetic1-content-right">
-                                    <p class="energetic1-content-text1"><span>【组团游】</span>绍兴出发--北京10日</p>
+                                    <p class="energetic1-content-text1">{{items1.tourist_name}}</p>
                                     <p class="energetic1-content-text2">
-                                        主要景点：八达岭野生动物园/八达岭长城 故宫、天安门、鸟巢、水立方、天坛、紫禁城
+                                        {{items1.tourist_details}}
                                     </p>
                                 </div>
                                 <table style="clear:both;"></table>
                             </div> 
-                            <div class="energetic1-content-text3"><span>￥<i>600.00</i></span>/人</div>  
+                            <div class="energetic1-content-text3"><span>￥<i>{{items1.price}}.00</i></span>/人</div>  
                         </li>
-                        <li class="energetic1-content">
+                        <!-- <li class="energetic1-content">
                                 <div>
                                     <div class="energetic1-content-left">
                                         <img src="images/energetic-3.png" alt="" class="img3">
@@ -136,34 +144,100 @@
                                     <table style="clear:both;"></table>
                                 </div> 
                                 <div class="energetic1-content-text3"><span>￥<i>400.00</i></span>/人</div>  
-                        </li>                   
+                        </li>  -->                  
                     </ul>
                 </div>
         </div>
 
 </div>
 
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
 
-$('.banner').height($(window).width()*400/750);
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            energetic_Tuijian:[],
+            energetic_More:[],
+            flag1:false,
+          }
+        },
+        created:function(){
+          var $this = this;
+          $this.getTuijian();
+          $this.getMore();
+          console.log(1);
+          
+                                
+        },
+        mounted:function(){
+          
+        },
+        methods:{
+          //活力健身-相关推荐
+            getTuijian:function(){
+                var $this = this;
+                const data = {
+                   type:'1',
+                   city:getCookie("cityLocation"),
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+                }
+                Axios.post(window.Url.energetic_fitness,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_Tuijian = res.info.tourist;  
+                    $this.flag1=true;                                
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("活力健身-相关推荐:"+err)
+                })
+              
+            },
+            getMore:function(){
+                var $this = this;
+                const data = {
+                   type:'2',
+                   city:getCookie("cityLocation"),
+
+                }
+                Axios.post(window.Url.energetic_fitness,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_More = res.info.tourist;                                  
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("活力健身-相关推荐:"+err)
+                })
+              
+            },
+            goEnergeticDetail:function(touristId1){
+                setCookie("touristId",touristId1);
+                window.location.href="tourItinerary.html";
+            }
+         
+        }
+
+    })
+
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
 
-$('.energetic1 li').click(function(){
-    window.location.href = "tourItinerary.html";
-});
+// $('.energetic1 li').click(function(){
+//     window.location.href = "tourItinerary.html";
+// });
 
   
 })  

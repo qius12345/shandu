@@ -62,10 +62,10 @@
 
 <!--  / footer  -->
   <div class="stroy_footer">
-      <div class="stroy_fbox stroy_fbox_zhichi">
-        <img src="images/zc.jpg" class="InformationDetails7_f3_f2_img1">
-        <img src="images/zc-sel.jpg" class="InformationDetails7_f3_f2_img2 img-hidden">
-        <p>我要支持</p>
+      <div class="stroy_fbox stroy_fbox_zhichi" @click="zhichi">
+        <img src="images/zc.jpg" class="InformationDetails7_f3_f2_img1" v-show="flag1">
+        <img src="images/zc-sel.jpg" class="InformationDetails7_f3_f2_img2" v-show="!flag1">
+        <p v-html="stroy_supportStatu">我要支持</p>
       </div>
       <div class="stroy_fbox stroy_fbox_enter">
         <img src="images/stroy_footer2.jpg">
@@ -106,11 +106,11 @@
 		
 	</div>
 </div>
-<div class="pinglun1_show">
+<div class="pinglun1_show" v-show="flag2">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>支持成功</h5>
-        <div class="pinglun1_show_con_f1">
+        <h5 v-html='stroy_popular'>支持成功</h5>
+        <div class="pinglun1_show_con_f1" @click="closeSupport">
             <a href="##">好的，知道了</a>
         </div>
     </div>
@@ -127,6 +127,10 @@ $(window).ready(function(){
     data(){
       return{
         stroy_details:[],
+        stroy_popular:'支持成功',
+        flag1:true,
+        flag2:false,
+        stroy_supportStatu:'我要支持',
       }
     },
     created:function(){
@@ -159,6 +163,34 @@ $(window).ready(function(){
         })
       
       },
+      zhichi:function(){
+        var $this = this;
+        const data = {
+           oldstory_id:getCookie("oldstoryId"),
+           // token:'71213e27892e38b1f7d528d5977f4bd9',
+        }
+        Axios.post(window.Url.stroy_popularity,data).then((res) => {
+          
+          if(res.result == 1){
+            $this.stroy_popular = res.info;
+            $this.flag1  =false; 
+            $this.flag2  =true;   
+            $this.stroy_supportStatu ="已支持";                  
+          }else
+          {
+            console.log("老故事详情:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("老故事详情:"+err);
+        })
+      
+      },
+
+      closeSupport:function(){
+        $this=this;
+        $this.flag2  =false;
+      }
      
     }
 
@@ -186,22 +218,22 @@ $('.share_show_bg').click(function(){
 $('.share_show_con a').click(function(){
 	$('.share_show').stop(true).fadeOut(600);
 })
-$('.stroy_fbox_zhichi').click(function(){
-  if(flag){
-    $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
-    $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
-    $(this).find('p').html('已支持');
-    $('.pinglun1_show').css('display','block');
-    $('.pinglun1_show h5').html('支持成功');
-    flag=false;
-  }else{ 
-     $('.pinglun1_show').css('display','block');
-     $('.pinglun1_show h5').html('你已经支持过了');
-  }
-})
-$('.pinglun1_show_con_f1 a').click(function(){
-    $('.pinglun1_show').css('display','none');
-})
+// $('.stroy_fbox_zhichi').click(function(){
+//   if(flag){
+//     $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
+//     $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
+//     $(this).find('p').html('已支持');
+//     $('.pinglun1_show').css('display','block');
+//     $('.pinglun1_show h5').html('支持成功');
+//     flag=false;
+//   }else{ 
+//      $('.pinglun1_show').css('display','block');
+//      $('.pinglun1_show h5').html('你已经支持过了');
+//   }
+// })
+// $('.pinglun1_show_con_f1 a').click(function(){
+//     $('.pinglun1_show').css('display','none');
+// })
 
 })  
 </script>
