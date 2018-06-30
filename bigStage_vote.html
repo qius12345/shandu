@@ -109,7 +109,7 @@
     			<div class="bigStage_vote2_zi_btn">
     				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 : </span>{{video.number}}</p>
     				<p><span>当前排名:</span>{{video.ranking}}</p>
-    				<a v-if="video.statu" href="javascript:;" style="background-color: #ff540a;" @click="Vote(video.stage_id)">投 - 票</a>
+    				<a v-if="video.statu == 0" href="javascript:;" style="background-color: #ff540a;" @click="Vote(video.stage_id)">投 - 票</a>
     				<a v-else href="##">无法继续投票</a>
     			</div>
     			
@@ -156,6 +156,7 @@ $(window).ready(function(){
     	//设置文字高度
     	$('.bigStage_vote2_zi').height($(window).width()*0.45*250/330*2);
     	$('.pz').height($(window).height());
+    	
     },
     mounted:function(){
     	
@@ -235,15 +236,15 @@ $(window).ready(function(){
     	Vote:function(stage_id){
     		var $this = this;
     		const data={
-    			'token' : '9769a2e98ad0a93a9ab6a023b45506ff',
+//  			'token' : getCookie('token'),
     			'stage_id' : stage_id
     		};
     		
     		Axios.post(window.Url.activityvote,data).then((res) => {
     			if(res.result == 1){
     				alert(res.info);
-    			}else if(res.result == 0){
-    				alert(res.info);
+    				location.reload();
+    				$this.vote = 1;
     			}else{
     				alert(res.info);
     			}

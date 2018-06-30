@@ -27,12 +27,18 @@
 	
 	Axios.interceptors.request.use(
 		function(config) {
+			
+            if (getCookie("token")) {
+            	
+			   config.data.token = getCookie("token");
+			   
+			 }
             
 			config.cancelToken = new CancelToken(function executor(c) {
 				// executor 函数接收一个 cancel 函数作为参数
 				window.cancelApi = c;
 			});
-
+			
 			// 在发送请求之前做某件事
 			if (
 				config.method === 'post' ||
@@ -53,9 +59,7 @@
 				}
 			}
 			// 若是有做鉴权token , 就给头部带上token
-			 if (localStorage.token) {
-			   //config.headers.Authorization = localStorage.token;
-			 }
+			 
 			
 			return config;			
 		},
@@ -78,7 +82,7 @@
 			return res.data;
 		},
 		function(error){
-			console.log(error)
+			
 			if(error.message == CANCEL){
 				return Promise.reject();
 			}
@@ -93,6 +97,18 @@
 	window.Url = {
 		//首页BANNER
 		home_banner:'/Api/Banner/banner',
+		//活力健身 为你推荐、更多
+		//city:当前城市
+		//type：活力健身类型
+		energetic_fitness:'/Api/Vitality/fitness',
+		//咨询分类
+		Cheats_cate:'/Api/Cheats/cate',
+		//咨询分类列表
+		//cate_id （分类ID）
+		Cheats_cate_list:'/Api/Cheats/cheats_list',
+		//咨询分类列表详情
+		//cheats_id （列表每个信息的ID）
+		Cheats_cate_details:'/Api/Cheats/details',
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
 		//老故事类型
@@ -149,8 +165,17 @@
 		//投票
 		//token（登录状态）
 		//stage_id（当前投票的ID）
-		activityvote:'/Api/Stage/vote'
+		activityvote:'/Api/Stage/vote',
+		//登录
+		user_login:'/Api/User/login'
 	}
-	
+	//用户信息
+	window.userInfo = {
+		token:'',
+		mobile:'',
+		audit:'',
+		forbidden:'',
+		type:''
+	}
 })();
 

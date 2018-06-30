@@ -26,10 +26,18 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -42,37 +50,63 @@
 
 
 <div class="InformationClassify">
-    <div class="InformationClassify1">
-        <img src="images/long_6.jpg" alt="">
-        <div class="InformationClassify1-text">政府关怀</div>
-    </div>
-    <div class="InformationClassify1">
-        <img src="images/long_7.jpg" alt="">
-        <div class="InformationClassify1-text">养生报告厅</div>
-    </div>
-    <div class="InformationClassify1">
-        <img src="images/long_5.jpg" alt="">
-        <div class="InformationClassify1-text">祖传保健药典</div>
-    </div>
-    <div class="InformationClassify1">
-        <img src="images/long_9.png" alt="">
-        <div class="InformationClassify1-text">用户献宝</div>
-    </div>
-    <div class="InformationClassify1">
-        <img src="images/long_4.jpg" alt="">
-        <div class="InformationClassify1-text">保健小知识</div>
-    </div>
-    <div class="InformationClassify1">
-        <img src="images/long_8.jpg" alt="">
-        <div class="InformationClassify1-text">平台推荐</div>
+    <div class="InformationClassify1" v-for="Cheats in CheatsCate" @click="jump(Cheats.cate_id)">
+        <img :src="Cheats.pic" alt="">
+        <div class="InformationClassify1-text">{{Cheats.classname}}</div>
     </div>
 
+</div>
 </div>
 
 
 </body>
 <script>
 $(window).ready(function(){
+	
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                CheatsCate: []
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getCheatsCate();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//咨询分类列表
+    	getCheatsCate:function(){
+    		var $this = this;
+    		const data = {
+    			token:getCookie("token")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_cate,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.CheatsCate = res.info.cate;
+    			}
+    			else{
+    				console.log('咨询分类列表:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('咨询分类列表:'+err);
+	        })
+    	},
+    	jump:function(cate_id){
+    		setCookie('Cheats_cate_id',cate_id);
+		    window.location.href = "longevity.html";
+    	}
+    }
+})
+
 
 $('.banner').height($(window).width()*400/750);
 
@@ -88,11 +122,11 @@ $('.header_map_longevity').click(function(){
 $('.longevity1 li').click(function(){
     window.location.href = "InformationDetails.html";
 });
-$('.InformationClassify1').click(function(){
+/*$('.InformationClassify1').click(function(){
     var str1=$(this).find('.InformationClassify1-text').html();
     sessionStorage.setItem('title1',str1);
     window.location.href = "longevity1.html";
-})
+})*/s
 
   
 })  

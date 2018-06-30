@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -47,7 +53,8 @@
 
 
 <div class="InformationDetails">
-    <div class="InformationDetails1">福建考生登录福建省打开肌肤</div>
+	<iframe :src="CheatsCateDetails.url" width="100%" height="1000" frameborder="0" scrolling="no"></iframe>
+   <!-- <div class="InformationDetails1">福建考生登录福建省打开肌肤</div>
     <div class="InformationDetails2">2018-01-11 &nbsp; 16:12</div>
     <div class="InformationDetails3">
         <p>城市交通问题是世界各国普遍性问题，它直接影响经济的发展和人们的生活。无线车辆检测器就是针对解决上述问题而建立的。无线车辆磁敏传感器研究项目是将传感器技术和无线网络技术有效地融于一体，通过使用磁敏传感器检测车辆对地磁的影响来获得道路上的重要车流信息，系统同时还集成了温度传感器和化学传感器，可以实时地测量路面的温度和结冰情况。作为交通数据采集设备中最重要的车辆检测传感器，可以收集详细、充分的交通数据将为各种决策提供科学的依据和数据基础。</p>
@@ -55,7 +62,7 @@
     </div>
     <div class="InformationDetails4">
         <img src="images/detail-1.jpg" alt="">
-    </div>
+    </div>-->
 
 </div>
 
@@ -88,11 +95,59 @@
         </div>
     </div>
 </div>
+</div>
 <!--  / footer -->
 
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                CheatsCateDetails: []
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getCheatsCateDetails();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//咨询详情
+    	getCheatsCateDetails:function(){
+    		var $this = this;
+    		const data = {
+    			cheats_id : getCookie("cheats_details_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_cate_details,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.CheatsCateDetails = res.info.cheats;
+    			}
+    			else{
+    				console.log('咨询列表:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('咨询列表:'+err);
+	        })
+    	},
+    	//跳转详情页
+    	jump:function(cheats_id){
+    		setCookie('cheats_details_id',cheats_id)
+    		window.location.href = "InformationDetails.html";
+    	}
+    }
+})
+	
+	
  var flag=true;
 $('.header_map_longevity').click(function(){
     history.go(-1);

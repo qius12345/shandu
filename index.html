@@ -202,8 +202,8 @@ $(window).ready(function(){
 		},
     created: function () {
 		var $this = this;
-    	$this.getBanner()
-        
+    	$this.getBanner();
+//        $this.userLogin();
         
     },
     mounted:function(){
@@ -243,12 +243,45 @@ $(window).ready(function(){
         })
         
         
+    	},
+    	//login
+    	userLogin:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			mobile:'13672205424',
+    			password:'123456'
+    		}
+    		
+    		Axios.post("window.Url.user_login", data).then((res) => {
+    			console.log(res)
+    			if(res.result == 1){
+    				console.log(res);
+    				window.userInfo.token = res.token;
+    				window.userInfo.mobile = res.mobile;
+    				window.userInfo.forbidden = res.forbidden;
+    				window.userInfo.audit = res.audit;
+    				window.userInfo.type = res.type
+    				
+    				setCookie("token",res.token)  ;
+    				
+    				setCookie("userInfo",window.userInfo)
+    				
+    				
+					
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+    	
+    	
     	}
-    	
-    	
-    }
-		
-	})
+	}
+})
 
 
 //定位

@@ -26,10 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -43,14 +50,14 @@
 
 <!--  / list  -->
 <div class="longevity">
-    <div class="longevity1">
+    <div class="longevity1" v-for="CheatsCate in CheatsCateList">
         <div class="longevity1-title">上传时间 : 2018-01-11 &nbsp;&nbsp;16:12:20</div>
             <ul>
-                <li class="longevity1-content">
+                <li class="longevity1-content"  @click="jump(CheatsCate.cheats_id)">
                     <div class="longevity1-content-left">
-                        <p class="longevity1-content-text2">管清友谈掏空父母积蓄买房: 现在那个人不是这样</p>
+                        <p class="longevity1-content-text2">{{CheatsCate.title}}</p>
                         <p class="longevity1-content-text1">
-                            <img src="images/news_pl1.png" alt="" class="img1">
+                            <img :src="CheatsCate.pic" alt="" class="img1">
                             <span>0</span>
                             <i>未读</i>
                         </p>
@@ -60,64 +67,9 @@
                     </div>
                     <table style="clear:both;"></table>
                 </li>
-                <li class="longevity1-content">
-                        <div class="longevity1-content-left">
-                            <p class="longevity1-content-text2">管清友谈掏空父母积蓄买房: 现在那个人不是这样</p>
-                            <p class="longevity1-content-text1">
-                                <img src="images/news_pl1.png" alt="" class="img1">
-                                <span>0</span>
-                            </p>
-                        </div>
-                        <div class="longevity1-content-right">
-                            <img src="images/long_1.jpg" alt="" class="img2">
-                        </div>
-                        <table style="clear:both;"></table>
-                </li>
-                <li class="longevity1-content">
-                        <div class="longevity1-content-left">
-                            <p class="longevity1-content-text2">福建考生登录福建省打开肌肤</p>
-                            <p class="longevity1-content-text1">
-                                <img src="images/news_pl1.png" alt="" class="img1">
-                                <span>0</span>
-                                <i>未读</i>
-                            </p>
-                        </div>
-                        <div class="longevity1-content-right">
-                            <img src="images/long_2.jpg" alt="" class="img2">
-                        </div>
-                        <table style="clear:both;"></table>
-                </li>
-                <li class="longevity1-content">
-                        <div class="longevity1-content-left">
-                            <p class="longevity1-content-text2">福建考生登录福建省打开肌肤</p>
-                            <p class="longevity1-content-text1">
-                                <img src="images/news_pl1.png" alt="" class="img1">
-                                <span>0</span>
-                                <i>未读</i>
-                            </p>
-                        </div>
-                        <div class="longevity1-content-right">
-                            <img src="images/long_3.jpg" alt="" class="img2">
-                        </div>
-                        <table style="clear:both;"></table>
-                </li>
-                <li class="longevity1-content">
-                        <div class="longevity1-content-left">
-                            <p class="longevity1-content-text2">福建考生登录福建省打开肌肤</p>
-                            <p class="longevity1-content-text1">
-                                <img src="images/news_pl1.png" alt="" class="img1">
-                                <span>0</span>
-                                <i>未读</i>
-                            </p>
-                        </div>
-                        <div class="longevity1-content-right">
-                            <img src="images/long_2.png" alt="" class="img2">
-                        </div>
-                        <table style="clear:both;"></table>
-                </li>
             </ul>
     </div>
-    <div class="longevity1">
+    <!--<div class="longevity1">
             <div class="longevity1-title">上传时间 : 2018-01-11 &nbsp;&nbsp;16 : 12 : 20</div>
                 <ul>
                     <li class="longevity1-content">
@@ -169,7 +121,8 @@
                     </li>                   
                 </ul>
             </div>
-    </div>
+    -->
+</div>
 
 
 <!--  / footer  -->
@@ -218,10 +171,56 @@
   </ul>
 </div> -->
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                CheatsCateList: []
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getCheatsCateList();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//咨询列表
+    	getCheatsCateList:function(){
+    		var $this = this;
+    		const data = {
+    			cate_id : getCookie("Cheats_cate_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_cate_list,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.CheatsCateList = res.info.cheats;
+    			}
+    			else{
+    				console.log('咨询列表:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('咨询列表:'+err);
+	        })
+    	},
+    	//跳转详情页
+    	jump:function(cheats_id){
+    		setCookie('cheats_details_id',cheats_id)
+    		window.location.href = "InformationDetails.html";
+    	}
+    }
+})
+
 
 $('.banner').height($(window).width()*400/750);
 
@@ -233,9 +232,6 @@ var mySwiper_banner = new Swiper ('.swiper-container-banner', {
 })
 $('.header_map_longevity').click(function(){
     history.go(-1);
-});
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
 });
 $('.header_shop_longevity').click(function(){
     window.location.href = "InformationClassify.html";
