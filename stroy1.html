@@ -307,11 +307,11 @@ $(window).ready(function(){
            																	  
 					}else
 					{
-						console.log("请求错误1")
+						console.log("老故事分类:"+res.info);
 					}
 					
 				}).catch((err) => {
-					console.log("请求错误0"+err)
+					console.log("老故事分类:"+err);
 				})
 			
 			},
@@ -345,11 +345,11 @@ $(window).ready(function(){
                                     
           }else
           {
-            console.log("请求错误1")
+            console.log("老故事规则:"+res.info);
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("老故事规则:"+err);
         })
          
       },
@@ -372,11 +372,11 @@ $(window).ready(function(){
             $this.stroy_best = res.info.oldstory;                                    
           }else
           {
-            console.log("请求错误1")
+            console.log("最佳人气:"+res.info);
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("最佳人气:"+err);
         })
       
       },
@@ -400,11 +400,11 @@ $(window).ready(function(){
                                     
           }else
           {
-            console.log("请求错误1")
+            console.log("热门故事:"+res.info)
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("热门故事:"+err)
         })
       
       },
@@ -428,11 +428,11 @@ $(window).ready(function(){
                                     
           }else
           {
-            console.log("请求错误1")
+            console.log("全部故事:"+res.info);
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("全部故事:"+err);
         })
       
       },

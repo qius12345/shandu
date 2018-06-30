@@ -146,11 +146,11 @@ $(window).ready(function(){
             $this.stroy_ranking3 = res.time;                                   
           }else
           {
-            console.log("请求错误1")
+            console.log("老故事排名:"+res.info);
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("老故事排名:"+err);
         })
       
       },

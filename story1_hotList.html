@@ -91,7 +91,7 @@ $(window).ready(function(){
           
         },
         methods:{
-          //老故事排名
+          //热门老故事列表
           getAllList:function(){
             var $this = this;
             const data = {
@@ -104,11 +104,11 @@ $(window).ready(function(){
                 $this.stroy_hotList = res.info.oldstory;                                 
               }else
               {
-                console.log("请求错误1")
+                console.log("热门老故事列表:"+res.info);
               }
               
             }).catch((err) => {
-              console.log("请求错误0"+err)
+              console.log("热门老故事列表:"+err);
             })
           
           },

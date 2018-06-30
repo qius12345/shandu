@@ -139,7 +139,7 @@ $(window).ready(function(){
       
     },
     methods:{
-      //老故事排名
+      //老故事详情
       getCate:function(){
         var $this = this;
         const data = {
@@ -151,11 +151,11 @@ $(window).ready(function(){
             $this.stroy_details = res.info;                                  
           }else
           {
-            console.log("请求错误1")
+            console.log("老故事详情:"+res.info);
           }
           
         }).catch((err) => {
-          console.log("请求错误0"+err)
+          console.log("老故事详情:"+err)
         })
       
       },
