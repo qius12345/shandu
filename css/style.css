@@ -1822,6 +1822,8 @@ i{
 	width:100%;
 	border-radius: 0.05rem;
 }
+
+/*2018-6-29修改*/
 .bigStage_history1-text{
 	position: absolute;
 	width:100%;
@@ -1831,6 +1833,24 @@ i{
 	color:#fff;
 	font-size:0.13rem;
 	padding:0.24rem 0.2rem 0 0.2rem;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+	overflow: hidden;
+}
+.bigStage_history #Stage_video{
+	max-height: 400px;
+	position: absolute;
+	top: 50%;
+	margin-top: -100px;
+	/*object-fit: cover;*/
+    /*object-position: center center;*/
+}
+.video_bofang{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.5);
 }
 /********大舞台历史活动页面**************/
 
@@ -1946,9 +1966,10 @@ i{
 	background-color: #e1c1be;
 }
 .rank_table1 .bg4{
-	    background: rgba(0, 0, 0, 0);
-    border: 1px solid #9c9c9c;
-    color: #9c9c9c;
+	 /*background: rgba(0, 0, 0, 0);*/
+    border: none;
+    /*color: #9c9c9c;*/
+   background-color: #f6fbd1;
 }
 /********大舞台当前排名页面**************/
 
@@ -3475,7 +3496,13 @@ select::-ms-expand { display: none; }
 	float: left;
 	position: relative;
 }
-
+.bigStage_vote2_img .img2_box{
+	width: 100%;
+	height: 128px;
+	overflow: hidden;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
 .bigStage_vote2_img1{
 	width: 100%;
 	height: 100%;
@@ -3610,6 +3637,10 @@ select::-ms-expand { display: none; }
 	color: #444;
 
 	line-height: 0.2rem;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+	overflow: hidden;
 }
 
 
@@ -3641,7 +3672,7 @@ select::-ms-expand { display: none; }
 	margin-top: 0.1rem;
 }
 
-
+.
 
 
 

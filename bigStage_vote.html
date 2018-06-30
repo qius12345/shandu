@@ -26,9 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+<div id="app">
 <div class="search1_show">
     <div class="search1_show_bg"></div>
     <div class="search1_show_con">
@@ -53,27 +60,29 @@
 
 <div class="bigStage_vote">
     <div class="bigStage_vote1">
-        <div class="bigStage_vote1_left"><span>活动视频</span></div>
-        <div class="bigStage_vote1_right"><span class="bigStage_vote1_active">活动规则</span></div>
+        <div class="bigStage_vote1_left"><span :class="vote == 1 ? '' : 'bigStage_vote1_active'">活动视频</span></div>
+        <div class="bigStage_vote1_right"><span :class="vote == 2 ? '' : 'bigStage_vote1_active'">活动规则</span></div>
         <table style="clear:both;"></table>
     </div>
-    <div class="bigStage_vote2">
+    <div :style="vote == 1 ? ('display:none') : ('display:block')" class="bigStage_vote2">
     	
-    	<div class="bigStage_vote2_list clearfix">
+    	<div class="bigStage_vote2_list clearfix" v-for="(video,index) in Videos">
     		<div class="bigStage_vote2_img">
-    			<img src="images/bigStage_video_1.jpg" width="100%">
-    			<img src="images/bigStage_video_2.jpg" width="100%">
+    			<img :src="video.vo_logo" width="100%" height="128px">
+    			<div class="img2_box" :style="{backgroundImage:'url('+video.pic+')'}">
+	    			<!--<img :src="video.pic" width="100%">-->
+    			</div>
     			<div class="bigStage_vote2_img_bg"></div>
     			<div class="bigStage_vote2_img1">
     				<div class="bigStage_vote2_img1_line"></div>
     				<div class="bigStage_vote2_img1_num">
     					<img src="images/bigStage_video_icon.png" width="100%">
-    					<span>No.1</span>
+    					<span>No.{{index+1}}</span>
     				</div>
     			</div>
     			
     			<div class="bigStage_vote2_img2">
-    				<div class="bigStage_vote2_img2_1">
+    				<div class="bigStage_vote2_img2_1" @click="video_bofang(video.video)">
     					<span><i class="fa fa-play"></i></span>
     					点击播放
     				</div>
@@ -91,121 +100,147 @@
     			
     		</div>
     		<div class="bigStage_vote2_zi">
-    			<h5>娱乐无极限房贷首付</h5>
-    			<p>撒的发生的发送的 的说法是发斯蒂芬啊是打发撒的发斯蒂芬是打发撒的发斯蒂芬大撒的发生的是打发斯蒂芬阿道夫阿什顿发的说法</p>
+    			<h5>{{video.title}}</h5>
+    			<p>{{video.rule}}</p>
     			
     			<div class="bigStage_vote2_zi_btn">
-    				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 : </span>000062</p>
-    				<p><span>当前排名:</span>1</p>
-    				<a href="##">无法继续投票</a>
+    				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 : </span>{{video.number}}</p>
+    				<p><span>当前排名:</span>{{video.ranking}}</p>
+    				<!--<a href="##">无法继续投票</a>-->
+    				<a href="##" style="background-color: #ff540a;">投 - 票</a>
     			</div>
     			
     		</div>
     	</div>
-		<div class="bigStage_vote2_list clearfix">
-    		<div class="bigStage_vote2_img">
-    			<img src="images/bigStage_video_1.jpg" width="100%">
-    			<img src="images/bigStage_video_2.jpg" width="100%">
-    			<div class="bigStage_vote2_img_bg"></div>
-    			<div class="bigStage_vote2_img1">
-    				<div class="bigStage_vote2_img1_line"></div>
-    				<div class="bigStage_vote2_img1_num">
-    					<img src="images/bigStage_video_icon.png" width="100%">
-    					<span>No.2</span>
-    				</div>
-    			</div>
-    			
-    			<div class="bigStage_vote2_img2">
-    				<div class="bigStage_vote2_img2_1">
-    					<span><i class="fa fa-play"></i></span>
-    					点击播放
-    				</div>
-    				
-    				<div class="bigStage_vote2_img2_2">
-    					点击放大
-    				</div>
-    				
-    				<div class="bigStage_vote2_img2_3">
-    					功能
-    					<span>年龄:22</span>
-    				</div>
-    				
-    			</div>
-    			
-    		</div>
-    		<div class="bigStage_vote2_zi">
-    			<h5>娱乐无极限房贷首付</h5>
-    			<p>撒的发生的发送的 的说法是发斯蒂芬啊是打发撒的发斯蒂芬是打发撒的发斯蒂芬大撒的发生的是打发斯蒂芬阿道夫阿什顿发的说法</p>
-    			
-    			<div class="bigStage_vote2_zi_btn">
-    				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</span>000062</p>
-    				<p><span>当前排名:</span>1</p>
-    				<a href="##">无法继续投票</a>
-    			</div>
-    			
-    		</div>
-    	</div>
-		<div class="bigStage_vote2_list clearfix">
-    		<div class="bigStage_vote2_img">
-    			<img src="images/bigStage_video_1.jpg" width="100%">
-    			<img src="images/bigStage_video_2.jpg" width="100%">
-    			<div class="bigStage_vote2_img_bg"></div>
-    			<div class="bigStage_vote2_img1">
-    				<div class="bigStage_vote2_img1_line"></div>
-    				<div class="bigStage_vote2_img1_num">
-    					<img src="images/bigStage_video_icon.png" width="100%">
-    					<span>No.3</span>
-    				</div>
-    			</div>
-    			
-    			<div class="bigStage_vote2_img2">
-    				<div class="bigStage_vote2_img2_1">
-    					<span><i class="fa fa-play"></i></span>
-    					点击播放
-    				</div>
-    				
-    				<div class="bigStage_vote2_img2_2">
-    					点击放大
-    				</div>
-    				
-    				<div class="bigStage_vote2_img2_3">
-    					功能
-    					<span>年龄:22</span>
-    				</div>
-    				
-    			</div>
-    			
-    		</div>
-    		<div class="bigStage_vote2_zi">
-    			<h5>娱乐无极限房贷首付</h5>
-    			<p>撒的发生的发送的 的说法是发斯蒂芬啊是打发撒的发斯蒂芬是打发撒的发斯蒂芬大撒的发生的是打发斯蒂芬阿道夫阿什顿发的说法</p>
-    			
-    			<div class="bigStage_vote2_zi_btn">
-    				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</span>000062</p>
-    				<p><span>当前排名:</span>1</p>
-    				<a href="##">无法继续投票</a>
-    			</div>
-    			
-    		</div>
-    	</div>
-
+		
     	
     </div>
-    <div class="bigStage_vote3">
-        <h5>南山南南山南南日放大个电饭锅的山南南山南南山南南山南</h5>
-        <p>撒的发生的发送的 的说法是发斯蒂芬啊是打发撒的发斯蒂芬是打发撒的发斯蒂芬大撒的发生的是打发斯蒂芬阿道夫阿什顿发的说法 </p>
+    
+    <div :style="vote == 2 ? ('display:none') : ('display:block')" class="bigStage_vote3">
+        <!--<h5>南山南南山南南日放大个电饭锅的山南南山南南山南南山南</h5>
+        <p>撒的发生的发送的 的说法是发斯蒂芬啊是打发撒的发斯蒂芬是打发撒的发斯蒂芬大撒的发生的是打发斯蒂芬阿道夫阿什顿发的说法 </p>-->
+        <iframe :src="activityRules" width="100%" height="auto" frameborder="0" scrolling="no"></iframe>
     </div>
 
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                stage_deploy_ids: {
+                	stage_deploy_id : ''
+                },
+                Videos : [],
+                activityRules:'',
+                Ranking:[],
+                vote:''
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getActivityRules();
+    	$this.getActivityVideo();
+    	$this.getRanking();
+    	$this.vote = getCookie('vote');
+    	$this.stage_deploy_ids.stage_deploy_id = getCookie('stage_deploy_id');
+    	//设置文字高度
+    	$('.bigStage_vote2_zi').height($(window).width()*0.45*250/330*2);
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//活动规则
+    	getActivityRules:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.activityRules,$this.stage_deploy_ids).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.activityRules = res.info
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//活动视频
+    	getActivityVideo:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.activityVideo,$this.stage_deploy_ids).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Videos = res.info.stage
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//排名
+    	getRanking:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.ranking,$this.stage_deploy_ids).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Ranking = res.info.stage
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//视频播放
+    	video_bofang:function(url){
+    		setCookie('video_url',url);
+    		window.location.href = 'video_bofang.html';
+    	}
+    	
+    }
+		
+	})
+	
+	
 
 $('.banner').height($(window).width()*400/750);
 
-$('.bigStage_vote2_zi').height($(window).width()*0.45*250/330*2)
+
 
 var mySwiper_banner = new Swiper ('.swiper-container-banner', {
     loop: true,

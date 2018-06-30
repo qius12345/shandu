@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+	<div id="app">
 <div class="share_show">
   <div class="share_show_bg"></div> 
   <div class="share_show_con">
@@ -58,16 +66,19 @@
 </div>
 <div class="stroy_nav">
   <div class="stroy_banr">
-    <img src="images/bigStage_ban.gif" width="100%">  
-    <h5>南山南南山南南日放大个电饭锅的山 南南山南南山南南</h5>
+    <img v-if="activities_banner" :src="activities_banner" width="100%">  
+  	<img v-else src="images/bigStage_ban.gif" width="100%">
+  	<h5 v-if="activities_title">{{activities_title.title}}</h5>
+  	<h5 v-else>南山南南山南南日放大个电饭锅的山 南南山南南山南南</h5>
   </div>
   
   <div class="bigStorage-head">
-    <img src="images/bigStage-2.png" alt="">
+    <img v-if="activities_title" :src="activities_title.logo_pic" alt="">
+    <img v-else src="images/bigStage-2.png" alt="">
     <div class="bigStorage_head clearfix">
       <div class="bigStorage_head_r">
-        <a href="bigStage_vote.html">活动规则</a>
-        <a href="bigStage_vote1.html">投票</a>
+        <a href="bigStage_vote.html"  @click="jump(activities_title.stage_deploy_id,1)">活动规则</a>
+        <a href="bigStage_vote.html" @click="jump(activities_title.stage_deploy_id,2)">投票</a>
         <a href="##" class="btn-share">分享</a>
       </div> 
     </div>
@@ -82,21 +93,11 @@
     <img src="images/bigStage-right.png" alt="">  
   </div>
   <div class="bigStage2">
-     <div class="bigStage2-detail">
-        <img src="images/bigStage-3.png" alt="" class="bigStage2-detail-img">
-        <div class="bigStage2-detail-txt">武汉市洪山区第一届中老年广场舞活动比赛视频</div>
+     <div class="bigStage2-detail"  v-for="activities in activities_lists" @click="video_bofang(activities.video)">
+        <img :src="activities.pic" alt="" class="bigStage2-detail-img">
+        <div class="bigStage2-detail-txt">{{activities.title}}</div>
         <img src="images/zanting.png" alt="" class="bigStage2-detail-img1">
-     </div>  
-     <div class="bigStage2-detail">
-                <img src="images/bigStage-4.png" alt="" class="bigStage2-detail-img">
-                <div class="bigStage2-detail-txt">武汉市洪山区第一届中老年广场舞活动比赛视频</div>
-                <img src="images/zanting.png" alt="" class="bigStage2-detail-img1">
      </div>
-     <div class="bigStage2-detail">
-                <img src="images/bigStage-5.png" alt="" class="bigStage2-detail-img">
-                <div class="bigStage2-detail-txt">武汉市洪山区第一届中老年广场舞活动比赛视频</div>
-                <img src="images/zanting.png" alt="" class="bigStage2-detail-img1">
-     </div>     
   </div>
 </div>
 <!--  / warpper  -->
@@ -152,10 +153,87 @@
   </ul>
 </div>
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(document).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                city_name:{
+                	city:getCookie("cityLocation")
+                },
+                activities_banner:'',
+                activities_title:'',
+                activities_lists:''
+            }
+		},
+    created: function () {
+			var $this = this;
+    	$this.getActivities();
+    	$this.getActivities_list();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//获取数据
+    	getActivities:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		Axios.post(window.Url.three_activities,$this.city_name).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.activities_banner = res.banner;
+    				$this.activities_title = res.deploy;
+    				
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+	        }).catch((err) => {
+	          console.log(err)
+	        })
+    	},
+      	//视频列表
+    	getActivities_list:function(){
+    		var $this = this;
+    		Axios.post(window.Url.three_activities_lists,$this.city_name).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.activities_lists = res.info;
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+	        }).catch((err) => {
+	          console.log(err)
+	        })
+    	},
+    	//跳转至活动详情
+    	jump:function(event,vote){
+    		setCookie('stage_deploy_id',event);
+    		setCookie('vote',vote);
+    	},
+      	//视频播放
+    	video_bofang:function(url){
+    		setCookie('video_url',url);
+    		window.location.href = 'video_bofang.html';
+    	}
+    }
+	})
+
+	
+	
   
   $('.bigStage2-detail').height($('.bigStage2-detail').width()*340/223);
   

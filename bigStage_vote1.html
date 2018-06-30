@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 </head>
 
 <body>
+	<div id="app">
 <div class="search1_show">
     <div class="search1_show_bg"></div>
     <div class="search1_show_con">
@@ -196,10 +204,62 @@
 
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                banner:[]
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.vote()
+        
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//banner
+    	vote:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.vote).then((res) => {
+    			
+    			if(res.result == 1){
+    				console.log(res);
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	}
+    	
+    	
+    }
+		
+	})
+
+
 
 $('.banner').height($(window).width()*400/750);
 

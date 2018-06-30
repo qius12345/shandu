@@ -43,15 +43,18 @@
         <img src="images/jiantou.png" alt="">
         <span>返回</span>
     </div>
-    <div class="logo_longevity">历史活动</div>  
+    <div class="logo_longevity">视频播放</div>  
 </div>
 <!--  / header  -->
 
 
-<div class="bigStage_history" >
-    <div class="bigStage_history1" v-for="(list,index) in history_list" @click="jump(list.stage_deploy_id)">
-        <img :src="list.pic" alt="">
-        <div class="bigStage_history1-text">{{list.title}}</div>
+<div class="bigStage_history">
+	<div class="video_bofang">
+    <!--<video :src="video_url" autoplay="autoplay" loop="loop" width="100%" height="200px"></video>-->
+	     <video id="Stage_video" width="100%"  controls="controls" height="200" autoplay='autoplay' loop='loop'>
+	        <source style="width: 100%;" :src="video_url" type="video/mp4" />
+	        你的浏览器不支持H5播放器
+	    </video>
     </div>
 </div>
 
@@ -61,51 +64,31 @@
 $(window).ready(function(){
 
 var vm = new Vue({
-		el:"#app",
-		data() {
-            return {
-                city_name:{
-                	city:getCookie("cityLocation")
-                },
-                history_list:''
-            }
-		},
+	el:"#app",
+	data() {
+        return {
+            video_url:getCookie('video_url')
+        }
+	},
     created: function () {
-    	
-		var $this = this;
-    	$this.getHistory_list();
+    	this.FullScreen();
+    	$('.video_bofang').height($(window).height())
     },
     mounted:function(){
     	
     },
     methods:{
-    	
-    	//获取历史活动
-    	getHistory_list:function(){
-    		var $this = this;
-    		
-    		const data = {
-    			type:1
-    		}
-    		Axios.post(window.Url.activities_history_list,$this.city_name).then((res) => {
-    			
-    			if(res.result == 1){
-    				$this.history_list = res.info.stage;
-    			}
-    			else{
-    				alert(res.info)
-    			}
-    			
-	        }).catch((err) => {
-	          console.log(err)
-	        })
-    	},
-    	//跳转至活动详情
-    	jump:function(id){
-    		setCookie('stage_deploy_id',id);
-    		setCookie('vote',2);
-    		window.location.href = "bigStage_vote.html";
-    	}
+    	//进入全屏
+		FullScreen : function() {
+		    var ele = document.documentElement;
+		    if (ele .requestFullscreen) {
+		        ele .requestFullscreen();
+		    } else if (ele .mozRequestFullScreen) {
+		        ele .mozRequestFullScreen();
+		    } else if (ele .webkitRequestFullScreen) {
+		        ele .webkitRequestFullScreen();
+		    }
+		}
     }
 })
 	

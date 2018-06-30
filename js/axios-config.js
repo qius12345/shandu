@@ -10,7 +10,7 @@
 	var Axios = window.axios.create({
 		
 		//baseURL: 'http://shandu.unohacha.com', // 反向代理
-		baseURL: 'http://127.0.0.1:3001', // 反向代理
+		baseURL: 'http://127.0.0.1:3000', // 反向代理
 		timeout: 20000,
 		responseType: 'json',
 		withCredentials: true, // 是否允许带cookie这些
@@ -96,7 +96,21 @@
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
 		//老故事类型
-		stroy_cate:'/Api/Oldstory/cate'
+		stroy_cate:'/Api/Oldstory/cate',
+		//大舞台 的标题
+		three_activities:'/Api/Stage/reveal',
+		//大舞台 下的三个活动
+		three_activities_lists:'/Api/Oldstory/video',
+		//活动历史
+		activities_history_list:'/Api/Stage/history_list',
+		//活动规则
+		activityRules:'/Api/Stage/rule',
+		//活动视频
+		activityVideo:'/Api/Stage/month',
+		//排名
+		activityRanking:'/Api/Stage/ranking',
+		//投票
+		activityvote:'/Api/Stage/vote',
 	}
 	
 })();
