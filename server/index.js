@@ -13,6 +13,6 @@ app.use('/', function(req, res) {
 	req.pipe(request(url)).pipe(res);
 });
 
-app.listen(3000, '127.0.0.1', function() { //前端ajax地址写 http://127.0.0.1:3000/
-	console.log('server is running at port 3000');
+app.listen(3001, '127.0.0.1', function() { //前端ajax地址写 http://127.0.0.1:3000/
+	console.log('server is running at port 3001');
 });
