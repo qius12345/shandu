@@ -1838,11 +1838,12 @@ i{
     -webkit-line-clamp: 1;
 	overflow: hidden;
 }
+/*视频播放页面2018-6-30*/
 .bigStage_history #Stage_video{
 	max-height: 400px;
 	position: absolute;
 	top: 50%;
-	margin-top: -100px;
+	margin-top: -138px;
 	/*object-fit: cover;*/
     /*object-position: center center;*/
 }

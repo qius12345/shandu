@@ -97,6 +97,22 @@
 		hot_city:'/Api/HotCity/hotcityIndex',
 		//老故事类型
 		stroy_cate:'/Api/Oldstory/cate',
+		//老故事规则
+		stroy_rules:'/Api/Oldstory/activity_url',
+		//老故事排名
+		stroy_ranking:'/Api/Oldstory/activity',
+		//获取最佳人气接口
+		stroy_best:'/Api/Oldstory/best',
+		//获取热门故事接口
+		stroy_hot:'/Api/Oldstory/hot',
+		//获取全部故事接口
+		stroy_all:'/Api/Oldstory/all',
+		//获取热门故事列表接口
+		stroy_hotList:'/Api/Oldstory/hot_list',
+		//获取全部故事列表接口
+		stroy_allList:'/Api/Oldstory/all_list',
+		//获取老故事详情接口
+		stroy_details:'/Api/Oldstory/details',
 		//大舞台 的标题
 		three_activities:'/Api/Stage/reveal',
 		//大舞台 下的三个活动
