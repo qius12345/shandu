@@ -224,13 +224,15 @@ $(window).ready(function(){
     			if(res.result == 1){
     				$this.banner = res.info.banner;
     				$('.banner').height($(window).width()*380/750);
-
-						var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-						    loop: true,
-						    pagination: '.swiper-pagination-banner',
-							autoplay : 5000,
-							autoplayDisableOnInteraction : false
-						})
+						$this.$nextTick(function(){
+							mySwiper_banner = new Swiper ('.swiper-container-banner', {
+							    loop: true,
+							    pagination: '.swiper-pagination-banner',
+								autoplay : 5000,
+								autoplayDisableOnInteraction : false
+							})
+						}
+					)
     			}
     			else{
     				alert(res.info)

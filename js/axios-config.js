@@ -102,28 +102,45 @@
 		//老故事排名
 		stroy_ranking:'/Api/Oldstory/activity',
 		//获取最佳人气接口
+		//city : 当前选中城市名
+        //cate_id: 老故事分类id
 		stroy_best:'/Api/Oldstory/best',
 		//获取热门故事接口
+		//city : 当前选中城市名
+        //cate_id: 老故事分类id
 		stroy_hot:'/Api/Oldstory/hot',
 		//获取全部故事接口
+		//city : 当前选中城市名
+        //cate_id: 老故事分类id
 		stroy_all:'/Api/Oldstory/all',
 		//获取热门故事列表接口
+		//city : 当前选中城市名
+        //cate_id: 老故事分类id
 		stroy_hotList:'/Api/Oldstory/hot_list',
 		//获取全部故事列表接口
+		//city : 当前选中城市名
+        //cate_id: 老故事分类id
 		stroy_allList:'/Api/Oldstory/all_list',
 		//获取老故事详情接口
+        //oldstory_id: 老故事详情id
 		stroy_details:'/Api/Oldstory/details',
 		//大舞台 的标题
+		//city : 城市 （发送首页选择的城市）
 		three_activities:'/Api/Stage/reveal',
 		//大舞台 下的三个活动
+		//city : 城市 （发送首页选择的城市）
 		three_activities_lists:'/Api/Oldstory/video',
 		//活动历史
+		//city : 城市 （发送首页选择的城市）
 		activities_history_list:'/Api/Stage/history_list',
 		//活动规则
+		//stage_deploy_id ：id (当前活动ID)
 		activityRules:'/Api/Stage/rule',
 		//活动视频
+		//stage_deploy_id ：id (当前活动ID)
 		activityVideo:'/Api/Stage/month',
 		//排名
+		//stage_deploy_id ：id (当前活动ID)
 		activityRanking:'/Api/Stage/ranking',
 		//投票
 		activityvote:'/Api/Stage/vote',

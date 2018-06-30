@@ -93,11 +93,11 @@ var vm = new Vue({
     				$this.history_list = res.info.stage;
     			}
     			else{
-    				alert(res.info)
+    				console.log('历史活动：'+res.info)
     			}
     			
 	        }).catch((err) => {
-	          console.log(err)
+	          console.log('历史活动：'+err)
 	        })
     	},
     	//跳转至活动详情

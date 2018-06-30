@@ -36,6 +36,9 @@
 
 <body>
 <div id="app">
+<div class="pz" @click="clone_pz">
+	<img src="" width="100%" />
+</div>
 <div class="search1_show">
     <div class="search1_show_bg"></div>
     <div class="search1_show_con">
@@ -87,7 +90,7 @@
     					点击播放
     				</div>
     				
-    				<div class="bigStage_vote2_img2_2">
+    				<div class="bigStage_vote2_img2_2" @click="big_imgs(video.pic)">
     					点击放大
     				</div>
     				
@@ -107,7 +110,7 @@
     				<p><span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 : </span>{{video.number}}</p>
     				<p><span>当前排名:</span>{{video.ranking}}</p>
     				<!--<a href="##">无法继续投票</a>-->
-    				<a href="##" style="background-color: #ff540a;">投 - 票</a>
+    				<a href="javascript:;" style="background-color: #ff540a;" @click="Vote">投 - 票</a>
     			</div>
     			
     		</div>
@@ -151,6 +154,7 @@ $(window).ready(function(){
     	$this.stage_deploy_ids.stage_deploy_id = getCookie('stage_deploy_id');
     	//设置文字高度
     	$('.bigStage_vote2_zi').height($(window).width()*0.45*250/330*2);
+    	$('.pz').height($(window).height());
     },
     mounted:function(){
     	
@@ -171,11 +175,11 @@ $(window).ready(function(){
     				$this.activityRules = res.info
     			}
     			else{
-    				alert(res.info)
+    				console.log('活动规则:'+res.info);
     			}
     			
         }).catch((err) => {
-          console.log(err)
+          console.log('活动规则:'+err)
         })
         
         
@@ -194,11 +198,11 @@ $(window).ready(function(){
     				$this.Videos = res.info.stage
     			}
     			else{
-    				alert(res.info)
+    				console.log('活动视频:'+res.info);
     			}
     			
         }).catch((err) => {
-          console.log(err)
+          console.log('活动视频:'+err);
         })
         
         
@@ -217,11 +221,31 @@ $(window).ready(function(){
     				$this.Ranking = res.info.stage
     			}
     			else{
-    				alert(res.info)
+    				console.log('排名:'+res.info);
     			}
     			
         }).catch((err) => {
-          console.log(err)
+          console.log('排名:'+err);
+        })
+        
+        
+    	},
+    	//投票
+    	Vote:function(){
+    		var $this = this;
+    		
+    		
+    		Axios.post(window.Url.activityvote,$this.stage_deploy_ids).then((res) => {
+    			
+    			if(res.result == 1){
+    				console.log(res)
+    			}
+    			else{
+    				alert(res.info);
+    			}
+    			
+        }).catch((err) => {
+          console.log('投票:'+err);
         })
         
         
@@ -230,8 +254,16 @@ $(window).ready(function(){
     	video_bofang:function(url){
     		setCookie('video_url',url);
     		window.location.href = 'video_bofang.html';
+    	},
+    	//图片放大
+    	big_imgs:function(img){
+    		$('.pz').show();
+    		$('.pz img').attr('src',img);
+    	},
+    	//关闭屏障
+    	clone_pz:function(){
+    		$('.pz').hide();
     	}
-    	
     }
 		
 	})

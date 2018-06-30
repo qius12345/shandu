@@ -43,17 +43,21 @@
     <h5>选择要分享到的平台</h5>
     <ul class="clearfix">
       <li>
+      	
         <span><img src="images/share_icon1.png"></span>
-        微信
+       	 微信
+       
       </li>
       <li>
         <span><img src="images/share_icon2.png"></span>
         微信朋友圈
       </li>
-      <li>
-        <span><img src="images/share_icon3.png"></span>
-        QQ
-      </li>
+      <a href="http://connect.qq.com/widget/shareqq/index.html">
+	      <li>
+	        <span><img src="images/share_icon3.png"></span>
+	        QQ
+	      </li>
+       </a>
       <li>
         <span><img src="images/share_icon4.png"></span>
         QQ空间
@@ -181,7 +185,7 @@ $(document).ready(function(){
     },
     methods:{
     	
-    	//获取数据
+    	//活动标题
     	getActivities:function(){
     		var $this = this;
     		
@@ -196,14 +200,14 @@ $(document).ready(function(){
     				
     			}
     			else{
-    				alert(res.info)
+    				console.log('活动标题:'+res.info);
     			}
     			
 	        }).catch((err) => {
-	          console.log(err)
+	          console.log('活动标题:'+err);
 	        })
     	},
-      	//视频列表
+      	//大舞台 下的三个活动
     	getActivities_list:function(){
     		var $this = this;
     		Axios.post(window.Url.three_activities_lists,$this.city_name).then((res) => {
@@ -212,11 +216,11 @@ $(document).ready(function(){
     				$this.activities_lists = res.info;
     			}
     			else{
-    				alert(res.info)
+    				alert('大舞台 下的三个活动:'+res.info);
     			}
     			
 	        }).catch((err) => {
-	          console.log(err)
+	          console.log('大舞台 下的三个活动:'+err);
 	        })
     	},
     	//跳转至活动详情
