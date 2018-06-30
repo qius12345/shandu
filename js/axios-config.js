@@ -10,7 +10,7 @@
 	var Axios = window.axios.create({
 		
 		//baseURL: 'http://shandu.unohacha.com', // 反向代理
-		baseURL: 'http://127.0.0.1:3000', // 反向代理
+		baseURL: 'http://127.0.0.1:3001', // 反向代理
 		timeout: 20000,
 		responseType: 'json',
 		withCredentials: true, // 是否允许带cookie这些
@@ -53,8 +53,10 @@
 				}
 			}
 			// 若是有做鉴权token , 就给头部带上token
-			 if (localStorage.token) {
-			   //config.headers.Authorization = localStorage.token;
+			
+			 if (getCookie("token")) {
+			   config.headers.Authorization = getCookie("token");
+			   
 			 }
 			
 			return config;			
@@ -144,6 +146,21 @@
 		activityRanking:'/Api/Stage/ranking',
 		//投票
 		activityvote:'/Api/Stage/vote',
+		//登录
+		/**
+     	* mobile 电话号码
+     	* password 密码
+     	*/
+		user_login:'/Api/User/login'
+	}
+	
+	//用户信息
+	window.userInfo = {
+		token:'',
+		mobile:'',
+		audit:'',
+		forbidden:'',
+		type:''
 	}
 	
 })();

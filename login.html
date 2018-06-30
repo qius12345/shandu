@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>E闪度</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="css/mui.min.css">
+
+<link rel="stylesheet" type="text/css" href="login/css/style.css">
+
+
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.link-area {
+				display: block;
+				margin-top: 25px;
+				text-align: center;
+			}
+			
+			.spliter {
+				color: #bbb;
+				padding: 0px 8px;
+			}
+			
+			.oauth-area {
+				position: absolute;
+				bottom: 20px;
+				left: 0px;
+				text-align: center;
+				width: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.oauth-area .oauth-btn {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background-size: 30px 30px;
+				background-position: center center;
+				background-repeat: no-repeat;
+				margin: 0px 20px;
+				/*-webkit-filter: grayscale(100%); */
+				border: solid 1px #ddd;
+				border-radius: 25px;
+			}
+			
+			.oauth-area .oauth-btn:active {
+				border: solid 1px #aaa;
+			}
+			
+			.oauth-area .oauth-btn.disabled {
+				background-color: #ddd;
+			}
+		</style>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/axios-config.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/utils.js"></script>
+
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<button type="button" class="mui-left mui-action-back mui-btn mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav" style=""></span>
+				</button>
+			<h1 class="mui-title">登录</h1>
+		</header>
+		
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="font-size: 0.2rem;">账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+				<div class="mui-input-row">
+					<label style="font-size: 0.2rem;">密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell" style="font-size: 0.2rem;">
+						自动登录
+						<div id="autoLogin" class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<form class="mui-input-group" style="font-size: 0.2rem;">
+				<div class="mui-input-row mui-checkbox mui-left">
+						<label style="width: 100%; font-size: 14px;padding-top: 14px;">阅读并同意<用户协议></label>
+						<input name="checkbox" value="Item 1" type="checkbox">
+					</div>
+			</form>
+			<div class="mui-content-padded" style="font-size: 0.2rem;">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				</div>
+			</div>
+			<div class="mui-content-padded oauth-area">
+				
+			</div>
+		</div>
+		</div>
+	</body>
+
+<script>
+$(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                userInfo:[]
+            }
+		},
+    created: function () {
+		var $this = this;
+    	//$this.userLogin();
+        $this.getTemp()
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//login
+    	userLogin:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			mobile:'13342937385',
+    			password:'123456'
+    		}
+    		
+    		Axios.post(window.Url.user_login, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				
+    				window.userInfo.token = res.token;
+    				window.userInfo.mobile = res.mobile;
+    				window.userInfo.forbidden = res.forbidden;
+    				window.userInfo.audit = res.audit;
+    				window.userInfo.type = res.type
+    				
+    				setCookie("token",res.token)  ;
+    				
+    				setCookie("userInfo",window.userInfo)
+    				
+    				
+					
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//测试获取
+    	getTemp:function(){
+    		console.log(getCookie("token"))
+    		const data = {
+    			token:getCookie("token")
+    		}
+    		Axios.post('/Api/Ucenter/collect',data).then((res) =>{
+    			console.log(res)
+    		}).catch((err) =>{
+    			
+    		})
+    		
+    	}
+    	
+    	
+    }
+		
+	})
+
+  
+})  
+</script>
+</html>
