@@ -127,7 +127,7 @@
 		//老故事支持
 		//oldstory_id （老故事详情ID）
 		//token（登录状态）
-		stroy_popularity:'/Api/Oldstory/popularity'
+		stroy_popularity:'/Api/Oldstory/popularity',
 		//大舞台 的标题
 		//city : 城市 （发送首页选择的城市）
 		three_activities:'/Api/Stage/reveal',
@@ -149,7 +149,7 @@
 		//投票
 		//token（登录状态）
 		//stage_id（当前投票的ID）
-		activityvote:'/Api/Stage/vote',
+		activityvote:'/Api/Stage/vote'
 	}
 	
 })();
