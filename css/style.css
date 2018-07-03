@@ -12,6 +12,9 @@ body{
 	color: #333;
 	background:#fff;
 }	
+[v-cloak]{
+	display: none;
+}
 
 
 /*****header*******/
@@ -4116,6 +4119,15 @@ select::-ms-expand { display: none; }
 	border-bottom:1px solid #e9e9e9;
 	padding-bottom: 0.1rem;
 }
+/*回复评论2018-7-3(DF修改)*/
+.InformationDetails7_sub{
+	border-bottom:2px solid #e9e9e9;
+}
+.InformationDetails7_sub .InformationDetails7_f1_left1 span{
+	color: #CCCCCC;
+}
+
+
 .InformationDetails7_f3 .InformationDetails7-col{
 	text-align: center;
 }

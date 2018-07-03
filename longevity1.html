@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -44,21 +50,22 @@
 <div class="longevity">
     <div class="longevity1">
             <ul>
-                <li class="longevity1-content">
+                <li class="longevity1-content" v-for="CheatsCate in CheatsCateList" @click="jump(CheatsCate.cheats_id)">
                     <div class="longevity1-content-left">
-                        <p class="longevity1-content-text2">福建考生登录福建省打开肌肤打开肌肤</p>
+                        <p class="longevity1-content-text2">{{CheatsCate.title}}</p>
                         <p class="longevity1-content-text1">
                             <img src="images/news_pl1.png" alt="" class="img1">
-                            <span>0</span>
-                            <i>未读</i>
+                            <span>{{CheatsCate.evaluate}}</span>
+                            <i v-if="CheatsCate.is_read">已读</i>
+                            <i v-else>未读</i>
                         </p>
                     </div>
                     <div class="longevity1-content-right">
-                        <img src="images/long_2.png" alt="" class="img2">
+                        <img :src="CheatsCate.pic" alt="" class="img2">
                     </div>
                     <table style="clear:both;"></table>
                 </li>
-                <li class="longevity1-content">
+              <!--  <li class="longevity1-content">
                         <div class="longevity1-content-left">
                             <p class="longevity1-content-text2">方式都发生的父母</p>
                             <p class="longevity1-content-text1">
@@ -85,9 +92,10 @@
                             <img src="images/long_2.jpg" alt="" class="img2">
                         </div>
                         <table style="clear:both;"></table>
-                </li>
+                </li>-->
             </ul>
     </div>
+</div>
 </div>
 
 
@@ -141,6 +149,51 @@
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                CheatsCateList: []
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getCheatsCateList();
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//咨询列表
+    	getCheatsCateList:function(){
+    		var $this = this;
+    		const data = {
+    			cate_id : getCookie("Cheats_cate_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_cate_list,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.CheatsCateList = res.info.cheats;
+    			}
+    			else{
+    				console.log('咨询列表:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('咨询列表:'+err);
+	        })
+    	},
+    	//跳转详情页
+    	jump:function(cheats_id){
+    		setCookie('cheats_details_id',cheats_id)
+    		window.location.href = "InformationDetails.html";
+    	}
+    }
+})
+	
     var str2=sessionStorage.getItem('title1',str2);
     $('.logo_longevity').html(str2);
 

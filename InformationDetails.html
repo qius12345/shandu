@@ -35,7 +35,7 @@
 </head>
 
 <body>
-<div id="app">
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -43,17 +43,21 @@
         <span>返回</span>
     </div>
     <div class="logo_longevity">资讯详情</div>
-    <div class="header_shop_longevity">
-        <img v-if="CheatsCateDetails.is_collect" src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2 img-hidden">
-        <img v-else src="images/sc.png" alt="" class="InformationDetails7_f3_f2_img1">
-        <span>收藏</span>
+    <div class="header_shop_longevity" @click="collect">
+        <!--<img v-if="CheatsCateDetails.is_collect" src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2 img-hidden">
+        <img v-else src="images/sc.png" alt="" class="InformationDetails7_f3_f2_img1">-->
+        <img v-if="CheatsCateDetails.is_collect" src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2">
+        <img v-else src="images/sc.png"  alt="" class="InformationDetails7_f3_f2_img1">
+        <!--<span>{{collect_state}}</span>-->
+        <span v-if="CheatsCateDetails.is_collect">已收藏</span>
+        <span v-else>收藏</span>
     </div>   
 </div>
 <!--  / header  -->
 
 
 <div class="InformationDetails">
-	<iframe :src="CheatsCateDetails.url" width="100%" height="500" frameborder="0" scrolling="no"></iframe>
+	<iframe :src="CheatsCateDetails.url" width="100%" height="4000" frameborder="0" scrolling="no"></iframe>
    <!-- <div class="InformationDetails1">福建考生登录福建省打开肌肤</div>
     <div class="InformationDetails2">2018-01-11 &nbsp; 16:12</div>
     <div class="InformationDetails3">
@@ -83,15 +87,15 @@
   </ul>
 </div> 
 <div class="pinglun-show">
-    <input type="text" placeholder="请输入要评论内容...(限80字)">
-    <a href="##">发表</a>
+    <input type="text" v-model="comment" placeholder="请输入要评论内容...(限80字)">
+    <a href="##" @click="publish">发表</a>
 </div>
 <div class="pinglun1_show">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>请输入评论内容</h5>
+        <h5>{{remind}}</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##">好的，知道了</a>
+            <a href="##" @click="yes">好的，知道了</a>
         </div>
     </div>
 </div>
@@ -106,7 +110,10 @@ $(window).ready(function(){
 		el:"#app",
 		data() {
             return {
-                CheatsCateDetails: []
+                CheatsCateDetails: [],
+                comment:'',
+                remind : '',
+                collect_state: ''
             }
 		},
     created: function () {
@@ -128,6 +135,7 @@ $(window).ready(function(){
     		
     		Axios.post(window.Url.Cheats_cate_details,data).then((res) => {
     			
+    			
     			if(res.result == 1){
     				$this.CheatsCateDetails = res.info.cheats;
     			}
@@ -140,16 +148,20 @@ $(window).ready(function(){
 	        })
     	},
     	//发布评论
-    	getCheatsCateDetails:function(){
+    	publish:function(){
     		var $this = this;
     		const data = {
-    			cheats_id : getCookie("cheats_details_id")
+    			cheats_id : getCookie("cheats_details_id"),
+    			comment: $this.comment
     		}
     		
-    		Axios.post(window.Url.Cheats_cate_details,data).then((res) => {
+    		Axios.post(window.Url.Cheats_evaluate_publish,data).then((res) => {
     			
+    			$this.remind = res.info
+    			console.log($this.remind);
     			if(res.result == 1){
-    				$this.CheatsCateDetails = res.info.cheats;
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
     			}
     			else{
     				console.log('发布评论:'+res.info);
@@ -159,10 +171,37 @@ $(window).ready(function(){
 	          console.log('发布评论:'+err);
 	        })
     	},
+    	//点击确认之后刷新页面
+    	yes:function(){
+    		location.reload();
+    	},
     	//跳转详情页
     	jump:function(cheats_id){
     		setCookie('cheats_details_id',cheats_id)
     		window.location.href = "InformationDetails.html";
+    	},
+    	//收藏
+    	collect:function(){
+    		var $this = this;
+    		const data = {
+    			cheats_id : getCookie("cheats_details_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_evaluate_collect,data).then((res) => {
+    			
+    			$this.remind = res.info
+    			console.log($this.remind);
+    			if(res.result == 1){
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
+    			}
+    			else{
+    				console.log('收藏:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('收藏:'+err);
+	        })
     	}
     }
 })
@@ -186,15 +225,15 @@ $('.pinglun-show a').click(function(){
     $('.foot1').css('display','block');
     $('.pinglun-show').css('display','none');
     $('.pinglun1_show').css('display','block');
-    $('.pinglun1_show h5').html('请输入评论内容');
+//  $('.pinglun1_show h5').html('请输入评论内容');
 });
 $('.header_shop_longevity').click(function(){
   if(flag){
     $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
     $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
-    $(this).find('span').html('已收藏');
+//  $(this).find('span').html('已收藏');
     $('.pinglun1_show').css('display','block');
-    $('.pinglun1_show h5').html('收藏成功');
+//  $('.pinglun1_show h5').html('收藏成功');
     flag=false;
   }else{
      $(this).find('.InformationDetails7_f3_f2_img2').addClass('img-hidden');

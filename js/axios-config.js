@@ -104,6 +104,9 @@
 		//行程介绍 为你推荐、更多
 		//tourist_id:活力健身详情id
 		energetic_fitnessDetail:'/Api/Vitality/fitness_details',
+		//今日数据
+		//token（登录状态）
+		Cheats_today:'/Api/Cheats/today',
 		//咨询分类
 		Cheats_cate:'/Api/Cheats/cate',
 		//咨询分类列表
@@ -118,12 +121,30 @@
 		Cheats_evaluate_list:'/Api/Cheats/evaluate_list',
 		//发布评论
 		//token（登录状态）
-		//cheats_id （秘籍id）
-		Cheats_evaluate_list:'/Api/Cheats/evaluate_list',
+		//cheats_id （当前评论id）
+		//comment （评论内容）
+		Cheats_evaluate_publish:'/Api/Cheats/evaluate',
 		//评论详情
 		//token（登录状态）
-		//evaluate_id （秘籍id）
+		//evaluate_id （咨询分类id）
 		Cheats_evaluate_details:'/Api/Cheats/evaluate_details',
+		//回复评论详情
+		//token（登录状态）
+		//evaluate_id （评论id（后台传过来））
+		//comment （回复内容）
+		Cheats_evaluate_reply:'/Api/Cheats/evaluate_reply',
+		//评论收藏/取消收藏
+		//token（登录状态）
+		//cheats_id （当前评论id）
+		Cheats_evaluate_collect:'/Api/Cheats/collect',
+		//点赞
+		//token（登录状态）
+		//evaluate_id（当前评论的id，后台传过来）
+		Cheats_evaluate_zan:'/Api/Cheats/evaluate_zan',
+		//阅读人数
+		//token（登录状态）
+		//evaluate_id（当前评论的id，后台传过来）
+		Cheats_evaluate_pageview:'/Api/Cheats/evaluate_pageview',
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
 		//老故事类型

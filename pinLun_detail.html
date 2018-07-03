@@ -35,7 +35,7 @@
 </head>
 
 <body>
-<div id="app">
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -64,6 +64,8 @@
       <div class="InformationDetails7_f2">
           {{evaluate_details.comment}}
       </div>
+      
+      
       <!-- <div class="InformationDetails7_f3">
           <div class="row">
               <div class="col-xs-4 InformationDetails7-col">
@@ -84,8 +86,23 @@
           </div>
       </div>  -->      
     </div>
-
+   <div class="InformationDetails6">以下是评论回复区</div>
+	<ul>
+  	<li v-for="sib_details in evaluate_sib_details" class="InformationDetails7_sub">
+  		<div class="InformationDetails7_f1  clearfix">
+	        <div class="InformationDetails7_f1_left InformationDetails7_f1_left1">
+	            <a href="##"><img :src="sib_details.person_img" alt="" width="100%"></a>
+	            <span>{{sib_details.person_name}}</span>
+	        </div>
+	        <div class="InformationDetails7_f1_right InformationDetails7_f1_right1">{{sib_details.add_time}}</div> 
+	      </div>
+	      <div class="InformationDetails7_f2">
+	          {{sib_details.comment}}
+	      </div>
+  	</li>
+</ul>
 </div>
+
 
 
 <!--  / footer  -->
@@ -104,15 +121,15 @@
   </ul>
 </div> --> 
 <div class="pinglun-show">
-    <input type="text" placeholder="请输入要评论内容...(限80字)">
-    <a href="##">发表</a>
+    <input type="text" v-model="comment" placeholder="请输入要评论内容...(限80字)">
+    <a href="##" @click="reply">发表</a>
 </div>
 <div class="pinglun1_show">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>请输入评论内容</h5>
+        <h5>{{remind}}</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##">好的，知道了</a>
+            <a href="##" @click="yes">好的，知道了</a>
         </div>
     </div>
 </div>
@@ -128,6 +145,9 @@ var vm = new Vue({
 		data() {
             return {
                 evaluate_details: [],
+                comment:'',
+                remind:'',
+                evaluate_sib_details:''
             }
 		},
     created: function () {
@@ -151,6 +171,7 @@ var vm = new Vue({
     			
     			if(res.result == 1){
     				$this.evaluate_details = res.info.evaluate_details;
+    				$this.evaluate_sib_details = res.info.evaluate_details.details;
     			}
     			else{
     				console.log('评论详情:'+res.info);
@@ -159,7 +180,35 @@ var vm = new Vue({
 	        }).catch((err) => {
 	          console.log('评论详情:'+err);
 	        })
-    	}
+    	},
+    	//回复评论
+    	reply:function(){
+    		var $this = this;
+    		const data = {
+    			evaluate_id : $this.evaluate_details.evaluate_id,
+    			comment: $this.comment
+    		}
+    		
+    		Axios.post(window.Url.Cheats_evaluate_reply,data).then((res) => {
+    			
+    			$this.remind = res.info
+    			console.log($this.remind);
+    			if(res.result == 1){
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
+    			}
+    			else{
+    				console.log('发布评论:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('发布评论:'+err);
+	        })
+    	},
+    	//点击确认之后刷新页面
+    	yes:function(){
+    		location.reload();
+    	},
     }
 })
 

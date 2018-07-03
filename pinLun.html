@@ -36,7 +36,7 @@
 </head>
 
 <body>
-<div id="app">
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -69,16 +69,16 @@
       <div class="InformationDetails7_f3">
           <div class="row">
               <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f1">阅<span>{{evaluate.pageview}}</span></a>
+                  <a href="##" class="InformationDetails7_f3_f1" @click="pageview(evaluate.evaluate_id)">阅<span>{{evaluate.pageview}}</span></a>
               </div>
               <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f2">
-                      <img src="images/pinglun-zan.png" alt="" width="20" class="InformationDetails7_f3_f2_img1">
-                      <img src="images/pinglun-zan1.png" alt="" width="20" class="InformationDetails7_f3_f2_img2 img-hidden">
+                  <a href="##" class="InformationDetails7_f3_f2" @click="zan(evaluate.evaluate_id)">
+                      <img v-if="evaluate.is_zan" src="images/pinglun-zan1.png" alt="" width="20" class="InformationDetails7_f3_f2_img2">
+                      <img v-else src="images/pinglun-zan.png" alt="" width="20" class="InformationDetails7_f3_f2_img1">
                       <span>{{evaluate.zan}}</span>
                   </a>
               </div>
-              <div class="col-xs-4 InformationDetails7-col">
+              <div class="col-xs-4 InformationDetails7-col" @click="jump(evaluate.evaluate_id)">
                   <a href="pinLun_detail.html" class="InformationDetails7_f3_f3">
                       <img src="images/pinglun-pl.png" alt="" width="16">
                       <span>{{evaluate.reply}}</span>
@@ -171,15 +171,15 @@
   </ul>
 </div> --> 
 <div class="pinglun-show">
-    <input type="text" placeholder="请输入要评论内容...(限80字)">
-    <a href="##">发表</a>
+    <input type="text" v-model="comment" placeholder="请输入要评论内容...(限80字)">
+    <a href="##" @click="publish">发表</a>
 </div>
 <div class="pinglun1_show">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>请输入评论内容</h5>
+        <h5>{{remind}}</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##">好的，知道了</a>
+            <a href="##" @click="yes">好的，知道了</a>
         </div>
     </div>
 </div>
@@ -194,7 +194,9 @@ $(window).ready(function(){
 		data() {
             return {
                 evaluate_list: [],
-                evaluate_title: ''
+                evaluate_title: '',
+                comment:'',
+                remind:''
             }
 		},
     created: function () {
@@ -228,11 +230,84 @@ $(window).ready(function(){
 	          console.log('评论列表:'+err);
 	        })
     	},
+    	//发布评论
+    	publish:function(){
+    		var $this = this;
+    		const data = {
+    			cheats_id : getCookie("cheats_details_id"),
+    			comment: $this.comment
+    		}
+    		
+    		Axios.post(window.Url.Cheats_evaluate_publish,data).then((res) => {
+    			
+    			$this.remind = res.info
+    			console.log($this.remind);
+    			if(res.result == 1){
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
+    			}
+    			else{
+    				console.log('发布评论:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('发布评论:'+err);
+	        })
+    	},
+    	//点击确认之后刷新页面
+    	yes:function(){
+    		location.reload();
+    	},
     	//评论详情页
     	jump:function(cheats_id){
     		setCookie('evaluate_id',cheats_id)
     		window.location.href = "pinLun_detail.html";
-    	}
+    	},
+    	//赞
+    	zan:function(evaluate_id){
+    		var $this = this;
+    		const data = {
+    			evaluate_id : evaluate_id,
+    		}
+    		$('.pinglun1_show').show();
+    		
+    		Axios.post(window.Url.Cheats_evaluate_zan,data).then((res) => {
+    			$this.remind = res.info
+    			if(res.result == 1){
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
+    			}
+    			else{
+    				console.log('点赞:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('点赞:'+err);
+	        })
+    	},
+    	//阅读标记
+    	pageview:function(evaluate_id){
+    		var $this = this;
+    		const data = {
+    			evaluate_id : evaluate_id,
+    		}
+    		$('.pinglun1_show').show();
+    		
+    		Axios.post(window.Url.Cheats_evaluate_pageview,data).then((res) => {
+    			$this.remind = res.info
+    			if(res.result == 1){
+//  				$this.CheatsCateDetails = res.info.cheats;
+					
+    			}
+    			else{
+    				console.log('阅读:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('阅读:'+err);
+	        })
+    	},
+    	
     }
 })
 	
@@ -253,28 +328,11 @@ $('.pinglun1_show_con_f1 a').click(function(){
     $('.pinglun1_show').css('display','none');
 })
 $('.pinglun-show a').click(function(){
-    $('.pinglun-show').css('display','none');
+//  $('.pinglun-show').css('display','none');
     $('.pinglun1_show').css('display','block');
 });
 $('.header_shop_longevity').click(function(){
     $('.pinglun-show').css('display','block');
-})
-$('.InformationDetails7_f3_f2').click(function(){
-  if(flag){
-    $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
-    $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
-    // var num1=Number($(this).find('span').html());
-    // num1+=1;
-    $(this).find('span').html(Number($(this).find('span').html())+1);
-    flag=false;
-  }else{
-     $(this).find('.InformationDetails7_f3_f2_img2').addClass('img-hidden');
-     $(this).find('.InformationDetails7_f3_f2_img1').removeClass('img-hidden');
-     if(Number($(this).find('span').html())>0){
-       $(this).find('span').html(Number($(this).find('span').html())-1);
-     }     
-    flag=true;
-  }
 })
 
 
