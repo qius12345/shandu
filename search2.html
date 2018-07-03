@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity header_longevity1">
@@ -37,58 +45,96 @@
             <span>返回</span>
         </div>
         <div class="logo_longevity1">
-            <input type="text" placeholder="故事名、编号、发布人">            
+            <input placeholder="故事名、编号、发布人" v-model="search1" type="search" id="searchOldstory" @keydown="searchWord">            
         </div> 
         <img src="images/search.png" alt="" class="search-btn" width="18"> 
 </div>
+
 <!--  / header  -->
 
-
-<!-- <div class="aboutUrs">
-    <div class="aboutUrs3">
-       <div class="aboutUrs1-txt1">可用余额(元):</div>
-       <div class="aboutUrs1-txt2">
-           <span class="fl">￥</span>49999.00
-       </div>
+<div class="search2_main" style="margin-top:0.5rem;">
+    <div class="stroy1_hot_box clearfix" v-for="items3 in stroy_searchList" @click="goInner(items3.oldstory_id)">
+      <a href="stroy1_inner.html">
+      <div class="stroy1_hot_img">
+        <img :src="items3.pic" width="100%">
+      </div>
+      <div class="stroy1_hot_text">
+        <h5>{{items3.title}}</h5>
+        <p class="text">
+          {{items3.content}}
+        </p>
+        <div class="stroy_function clearfix">
+          <span class="left">人气：{{items3.popularity}}</span>
+          <span class="right">编号：{{items3.number}}</span>
+        </div>
+      </div>
+      </a>
     </div>
-    <div class="user2-list1 date11 date12">
-            <img src="images/user_icon_13.png" alt="">
-            <span class="user2-list1-txt1">余额提现</span>
-            <img src="images/right.png" alt="" class="fr">
-    </div>
-    <div class="user2-list1 no_border date11 date13">
-            <img src="images/user_icon_14.png" alt="">
-            <span class="user2-list1-txt1">我的优惠券</span>
-            <img src="images/right.png" alt="" class="fr">
-    </div>
+</div>
 
-</div> -->
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
 
-$('.banner').height($(window).width()*400/750);
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            stroy_searchList:[],
+            search1:'',
+          }
+        },
+        created:function(){
+          var $this = this;
+          // $this.getAllList();
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+                                         
+        },
+        mounted:function(){
+          
+        },
+        methods:{
+          //全部老故事列表
+          getAllList:function(){
+            var $this = this;
+            const data = {
+                search:$this.search1,
+            }
+            Axios.post(window.Url.stroy_searchList,data).then((res) => {
+              
+              if(res.result == 1){
+                $this.stroy_searchList = res.info.oldstory;                                 
+              }else
+              {
+                console.log("全部老故事列表:"+res.info);
+                $this.stroy_searchList=[];
+              }
+              
+            }).catch((err) => {
+              console.log("全部老故事列表:"+err);
+            })
+          
+          },
+          searchWord:function(e){
+            var $this = this;            
+            var keycode = e.keyCode;              
+            var searchName = $this.search1;
+            if(keycode=='13'){
+               $this.getAllList();
+            }
+          }
+         
+        }
+
+    })
+
+
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
-$('.date12').click(function(){
-    window.location.href = "remain.html";
-})
-$('.date13').click(function(){
-    window.location.href = "myCoupon.html";
-})
+
 
   
 })  

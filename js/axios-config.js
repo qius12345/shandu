@@ -97,13 +97,24 @@
 	window.Url = {
 		//首页BANNER
 		home_banner:'/Api/Banner/banner',
+
 		//活力健身 为你推荐、更多
-		//city:当前城市
-		//type：活力健身类型
+		//city:（当前城市）
+		//type：（活力健身类型）
 		energetic_fitness:'/Api/Vitality/fitness',
 		//行程介绍 为你推荐、更多
-		//tourist_id:活力健身详情id
+		//tourist_id:（活力健身详情id）
 		energetic_fitnessDetail:'/Api/Vitality/fitness_details',
+		//预约服务
+	    //token （登录状态）
+	    //tourist_id（活力健身详情id）
+	    //num （参与人数）
+	    //name（姓名）
+	    //handler（开始日期）
+	    //telephone（电话）
+	    //remark（备注）
+	    vitality_order:'/Api/Order/Vitality_order',
+
 		//今日数据
 		//token（登录状态）
 		Cheats_today:'/Api/Cheats/today',
@@ -147,6 +158,7 @@
 		Cheats_evaluate_pageview:'/Api/Cheats/evaluate_pageview',
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
+
 		//老故事类型
 		stroy_cate:'/Api/Oldstory/cate',
 		//老故事规则
@@ -154,32 +166,36 @@
 		//老故事排名
 		stroy_ranking:'/Api/Oldstory/activity',
 		//获取最佳人气接口
-		//city : 当前选中城市名
-        //cate_id: 老故事分类id
+		//city : （当前选中城市名）
+        //cate_id: （老故事分类id）
 		stroy_best:'/Api/Oldstory/best',
 		//获取热门故事接口
-		//city : 当前选中城市名
-        //cate_id: 老故事分类id
+		//city : （当前选中城市名）
+        //cate_id: （老故事分类id）
 		stroy_hot:'/Api/Oldstory/hot',
 		//获取全部故事接口
-		//city : 当前选中城市名
-        //cate_id: 老故事分类id
+		//city : （当前选中城市名）
+        //cate_id: （老故事分类id）
 		stroy_all:'/Api/Oldstory/all',
 		//获取热门故事列表接口
-		//city : 当前选中城市名
-        //cate_id: 老故事分类id
+		//city : （当前选中城市名）
+        //cate_id: （老故事分类id）
 		stroy_hotList:'/Api/Oldstory/hot_list',
 		//获取全部故事列表接口
-		//city : 当前选中城市名
-        //cate_id: 老故事分类id
+		//city : （当前选中城市名）
+        //cate_id: （老故事分类id）
 		stroy_allList:'/Api/Oldstory/all_list',
 		//获取老故事详情接口
-        //oldstory_id: 老故事详情id
+        //oldstory_id: （老故事详情id）
 		stroy_details:'/Api/Oldstory/details',
 		//老故事支持
 		//oldstory_id （老故事详情ID）
 		//token（登录状态）
 		stroy_popularity:'/Api/Oldstory/popularity',
+		//老故事搜索
+		//search （搜索的关键字）
+		stroy_searchList:'/Api/Oldstory/search',
+		
 		//大舞台 的标题
 		//city : 城市 （发送首页选择的城市）
 		three_activities:'/Api/Stage/reveal',

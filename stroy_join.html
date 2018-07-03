@@ -128,7 +128,7 @@ $(window).ready(function(){
                                          
         },
         mounted:function(){
-          
+          getData();
         },
         methods:{
           //全部老故事列表
@@ -157,6 +157,36 @@ $(window).ready(function(){
 
     })
 
+    function getData(){
+      var showBankDom = document.querySelector('#showBank');
+      var bankIdDom = document.querySelector('#bankId');
+      showBankDom.addEventListener('click', function () {
+          var bankId = showBankDom.dataset['id'];
+          var bankName = showBankDom.dataset['value'];
+          var bankSelect = new IosSelect(1, 
+              [data],
+              {
+                  container: '.container',
+                  title: '',
+                  itemHeight: 50,
+                  itemShowCount: 3,
+                  oneLevelId: bankId,
+                  callback: function (selectOneObj) {
+                      bankIdDom.value = selectOneObj.id;
+                      showBankDom.innerHTML = selectOneObj.value;
+                      showBankDom.dataset['id'] = selectOneObj.id;
+                      showBankDom.dataset['value'] = selectOneObj.value;
+                  },
+                  fallback: function () {
+                      console.log(1);
+                  },
+                  maskCallback: function () {
+                      console.log(2);
+                  }
+          });
+      });
+    }
+
   $('.stroy_join_list_city').click(function(){
   		window.location.href = "search.html";
   });
@@ -165,33 +195,5 @@ $(window).ready(function(){
 
 <script src="js/bank.js"></script>
 <script src="js/iosSelect.js"></script>
-<script type="text/javascript">
-    var showBankDom = document.querySelector('#showBank');
-    var bankIdDom = document.querySelector('#bankId');
-    showBankDom.addEventListener('click', function () {
-        var bankId = showBankDom.dataset['id'];
-        var bankName = showBankDom.dataset['value'];
-        var bankSelect = new IosSelect(1, 
-            [data],
-            {
-                container: '.container',
-                title: '',
-                itemHeight: 50,
-                itemShowCount: 3,
-                oneLevelId: bankId,
-                callback: function (selectOneObj) {
-                    bankIdDom.value = selectOneObj.id;
-                    showBankDom.innerHTML = selectOneObj.value;
-                    showBankDom.dataset['id'] = selectOneObj.id;
-                    showBankDom.dataset['value'] = selectOneObj.value;
-                },
-                fallback: function () {
-                    console.log(1);
-                },
-                maskCallback: function () {
-                    console.log(2);
-                }
-        });
-    });
-</script>
+
 </html>

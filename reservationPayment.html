@@ -77,26 +77,24 @@
                             <div class="energetic1-content-text3"><span>￥<i>{{energetic_fitnessDetail.price}}.00</i></span>/人</div>  
                         </li>                  
                     </ul>
-                </div>
         </div>
         <div class="energetic2"></div>
         <div class="energetic3">
             <div class="energetic3-list clearfix">
                     <span class="energetic3-list-left">参与人数</span>
                     <div class="energetic3-list-right">
-                        <input type="text" placeholder="请输入人数">
+                        <input type="text" placeholder="请输入人数" v-model="num1">
                     </div>
             </div>
             <div class="energetic3-list clearfix">
                     <span class="energetic3-list-left">参与日期</span>
                     <div class="energetic3-list-right">
-                        <span>
-                            
+                        <span>                            
                              <div class="form-item item-line service_inner1_list1" id="selectDate">                    
-                <div class="pc-box">                     
-                    <span data-year="" data-month="" data-date="" id="showDate">请选择</span>  
-                </div>             
-              </div>
+                                <div class="pc-box">                     
+                                    <span data-year="" data-month="" data-date="" id="showDate">请选择</span>  
+                                </div>             
+                            </div>
                         </span>
                         <img src="images/right-1.png" alt="">
                     </div>
@@ -104,13 +102,13 @@
             <div class="energetic3-list clearfix">
                     <span class="energetic3-list-left">您的姓名</span>
                     <div class="energetic3-list-right">
-                        <input type="text" placeholder="请输入姓名">
+                        <input type="text" placeholder="请输入姓名" v-model="name1">
                     </div>
             </div>
             <div class="energetic3-list clearfix">
                     <span class="energetic3-list-left">您的电话</span>
                     <div class="energetic3-list-right">
-                        <input type="text" placeholder="请输入电话">
+                        <input type="text" placeholder="请输入电话" v-model="telephone1">
                     </div>
             </div>
             <div class="energetic4"></div>
@@ -120,11 +118,9 @@
                         <span>60个字符以内</span>
                     </div>
             </div>
-            <input type="text" placeholder="请输入备注内容(选填)" class="input-text">
-        </div>
-        
+            <input type="text" placeholder="请输入备注内容(选填)" class="input-text" v-model="remark1">
+        </div>        
 </div>
-
 <!--  / footer  -->
 <div class="footer2">
     <span>合计 <i> ￥0.00</i></span>
@@ -132,7 +128,7 @@
 </div> 
 <!--  / footer  -->
 
-</div> 
+</div>
 
 </body>
 
@@ -140,10 +136,89 @@
 <script src="js/iosSelect.js"></script>
 <script src="js/areaData_v2.js"></script>
 <script type="text/javascript">
+    
+</script>
+
+<script>
+$(window).ready(function(){
+
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            energetic_fitnessDetail:[],
+            num1:'',
+            name1:'',
+            handler1:'',
+            telephone1:'',
+            remark1:'',
+          }
+        },
+        created:function(){
+          var $this = this;
+          $this.getTourItinerary();                                          
+         },
+        mounted:function(){
+          timeSelect();
+        },
+        methods:{
+          //预约服务
+            getTourItinerary:function(){
+                var $this = this;
+                const data = {
+                   tourist_id:getCookie("touristId"),
+                }
+                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_fitnessDetail = res.info.tourist;   
+                               
+                  }else
+                  {
+                    console.log("行程详情介绍:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("行程详情介绍:"+err);
+                })
+              
+            },
+            goZhifu:function(){
+                var $this = this;
+                console.log($this.handler1);
+                const data = {
+                   tourist_id:getCookie("touristId"),
+                   num:$this.num1,
+                   name:$this.name1,
+                   handler:$this.handler1,
+                   telephone:$this.telephone1,
+                   remark:$this.remark1,
+                }
+                Axios.post(window.Url.vitality_order,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    console.log("chenggong");  
+                    // alert("chenggong");
+                    
+                               
+                  }else
+                  {
+                    console.log("预约服务:"+res.info);
+                    alert("预约服务:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("预约服务:"+err);
+                })
+            },
+         
+        }
+
+    })
+function timeSelect(){
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
-    var selectDate1Dom = $('#selectDate1');
-    var showDate1Dom = $('#showDate1');
+
     // 初始化时间
     var now = new Date();
     var nowYear = now.getFullYear();
@@ -152,9 +227,7 @@
     showDateDom.attr('data-year', nowYear);
     showDateDom.attr('data-month', nowMonth);
     showDateDom.attr('data-date', nowDate);
-    showDate1Dom.attr('data-year', nowYear);
-    showDate1Dom.attr('data-month', nowMonth);
-    showDate1Dom.attr('data-date', nowDate);
+
     // 数据初始化
     function formatYear (nowYear) {
         var arr = [];
@@ -247,132 +320,14 @@
                     showDateDom.attr('data-year', selectOneObj.id);
                     showDateDom.attr('data-month', selectTwoObj.id);
                     showDateDom.attr('data-date', selectThreeObj.id);
-                    showDateDom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                    showDateDom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value)
+                    );
+                     vm.handler1 = showDateDom.text();
+
                 }
         });
     });
-
-    selectDate1Dom.bind('click', function () {
-        var oneLevelId1 = showDate1Dom.attr('data-year');
-        var twoLevelId1 = showDate1Dom.attr('data-month');
-        var threeLevelId1 = showDate1Dom.attr('data-date');
-        var iosSelect = new IosSelect(3, 
-            [yearData, monthData, dateData],
-            {
-                title: '请选择时间',
-                itemHeight: 35,
-                oneLevelId: oneLevelId1,
-                twoLevelId: twoLevelId1,
-                threeLevelId: threeLevelId1,
-                showLoading: true,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    showDate1Dom.attr('data-year', selectOneObj.id);
-                    showDate1Dom.attr('data-month', selectTwoObj.id);
-                    showDate1Dom.attr('data-date', selectThreeObj.id);
-                    showDate1Dom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
-                }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    var selectContactDom = $('#select_contact');
-    var showContactDom = $('#show_contact');
-    var contactProvinceCodeDom = $('#contact_province_code');
-    var contactCityCodeDom = $('#contact_city_code');
-    selectContactDom.bind('click', function () {
-        var sccode = showContactDom.attr('data-city-code');
-        var scname = showContactDom.attr('data-city-name');
-
-        var oneLevelId = showContactDom.attr('data-province-code');
-        var twoLevelId = showContactDom.attr('data-city-code');
-        var threeLevelId = showContactDom.attr('data-district-code');
-        var iosSelect = new IosSelect(3, 
-            [iosProvinces, iosCitys, iosCountys],
-            {
-                title: '',
-                itemHeight: 35,
-                relation: [1, 1],
-                oneLevelId: oneLevelId,
-                twoLevelId: twoLevelId,
-                threeLevelId: threeLevelId,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    contactProvinceCodeDom.val(selectOneObj.id); 
-                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
-                    contactCityCodeDom.val(selectTwoObj.id);
-                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
-
-                    showContactDom.attr('data-province-code', selectOneObj.id);
-                    showContactDom.attr('data-city-code', selectTwoObj.id);
-                    showContactDom.attr('data-district-code', selectThreeObj.id);
-                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
-                }
-        });
-    });
-</script>
-
-<script>
-$(window).ready(function(){
-
-    var vm = new Vue({
-        el:"#app",
-        data(){
-          return{
-            energetic_fitnessDetail:[],
-          }
-        },
-        created:function(){
-          var $this = this;
-          $this.getTourItinerary();                                          
-         },
-        mounted:function(){
-          
-        },
-        methods:{
-          //行程详情介绍
-            getTourItinerary:function(){
-                var $this = this;
-                const data = {
-                   tourist_id:getCookie("touristId"),
-                }
-                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
-                  
-                  if(res.result == 1){
-                    $this.energetic_fitnessDetail = res.info.tourist;   
-                               
-                  }else
-                  {
-                    console.log("行程详情介绍:"+res.info);
-                  }
-                  
-                }).catch((err) => {
-                  console.log("行程详情介绍:"+err);
-                })
-              
-            },
-            goZhifu:function(){
-                var $this = this;
-                const data = {
-                   tourist_id:getCookie("touristId"),
-                }
-                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
-                  
-                  if(res.result == 1){
-                    $this.energetic_fitnessDetail = res.info.tourist;   
-                               
-                  }else
-                  {
-                    console.log("行程详情介绍:"+res.info);
-                  }
-                  
-                }).catch((err) => {
-                  console.log("行程详情介绍:"+err);
-                })
-            }
-         
-        }
-
-    })
+}
 
 $('.header_map_longevity').click(function(){
     history.go(-1);
