@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <div class="lianxi_show">
     <div class="lianxi_show_bg"></div>
@@ -55,9 +63,7 @@
 <div class="banner">
   <div class="swiper-container swiper-container-banner">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="images/tour_banner1.png" width="100%"></div>
-        <div class="swiper-slide"><img src="images/tour_banner2.png" width="100%"></div>
-        <div class="swiper-slide"><img src="images/tour_banner3.png" width="100%"></div>
+        <div class="swiper-slide" v-for="items1 in energetic_fitnessDetail.pic_list"><img :src="items1" width="100%"></div>
     </div>
     <!-- 如果需要分页器 -->
     <div class="swiper-pagination swiper-pagination-banner"></div>
@@ -67,10 +73,10 @@
 <!--  / tourItinerary  -->
 <div class="tourItinerary">
     <div class="tourItinerary1">
-        <p class="tourItinerary1-content1"><span>【组团游】</span>绍兴出发香港七日游</p>
+        <p class="tourItinerary1-content1">{{energetic_fitnessDetail.tourist_name}}</p>
         <div class="tourItinerary1-content2 clearfix">
-            <span class="tourItinerary1-content2-text1"><i>￥<em>1.00</em></i>/人</span>
-            <span class="tourItinerary1-content2-text2">已报名 : <i> 21</i>人</span>
+            <span class="tourItinerary1-content2-text1"><i>￥<em>{{energetic_fitnessDetail.price}}.00</em></i>/人</span>
+            <span class="tourItinerary1-content2-text2">已报名 : <i> {{energetic_fitnessDetail.reg_number}}</i>人</span>
         </div>
         
     </div>
@@ -79,27 +85,14 @@
 		<div class="track-rcol">
                 <div class="track-list">
                     <ul>
-                        <li class="first">
-                            
-                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生、意气风发。最后，祝普强装饰团队精进、业绩如虹、百年屹立；并祝全体员工身体健康、合家美满、生活幸福！</span>
+                        <li class="first">                            
+                            <span class="txt">{{energetic_fitnessDetail.tourist_details}}</span>
                         </li>
-                        <li>
-                            <span class="txt1">07:20</span>
+                        <li v-for="items2 in energetic_fitnessDetail.trip">
+                            <span class="txt1">{{items2.show_time}}</span>
                             <i class="node-icon"></i>
-                            <span class="time">平台全程接送 <i>集合</i> </span>
-                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
-                        </li>
-                        <li>
-                            <span class="txt1">09:90</span>
-                            <i class="node-icon"></i>
-                            <span class="time">平台全程接送 <i>集合</i> </span>
-                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
-                        </li>
-                        <li>
-                            <span class="txt1">12:00</span>
-                            <i class="node-icon"></i>
-                            <span class="time">平台全程接送 <i>集合</i> </span>
-                            <span class="txt">一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生</span>
+                            <span class="time">{{items2.trip_name}} <i>{{items2.trip_title}}</i> </span>
+                            <span class="txt">{{items2.trip_detail}}</span>
                         </li>
                     </ul>
                 </div>
@@ -118,18 +111,64 @@
 </div> 
 <!--  / footer  -->
 
+</div> 
+
 </body>
 <script>
 $(window).ready(function(){
 
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            energetic_fitnessDetail:[],
+          }
+        },
+        created:function(){
+          var $this = this;
+          $this.getTourItinerary();                                          
+         },
+        mounted:function(){
+          
+        },
+        methods:{
+          //行程详情介绍
+            getTourItinerary:function(){
+                var $this = this;
+                const data = {
+                   tourist_id:getCookie("touristId"),
+                }
+                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_fitnessDetail = res.info.tourist;   
+
+                    $this.$nextTick(function () {
+                        var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+                            loop: true,
+                            pagination: '.swiper-pagination-banner',
+                            autoplay : 5000,
+                            autoplayDisableOnInteraction : false,
+                        }) 
+                    })                               
+                  }else
+                  {
+                    console.log("行程详情介绍:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("行程详情介绍:"+err);
+                })
+              
+            },
+         
+        }
+
+    })
+
 $('.banner').height($(window).width()*400/750);
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });

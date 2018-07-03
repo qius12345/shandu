@@ -37,9 +37,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -56,17 +64,17 @@
                         <li class="energetic1-content">
                             <div>
                                 <div class="energetic1-content-left">
-                                    <img src="images/energetic-1.png" alt="" class="img3">
+                                    <img :src="energetic_fitnessDetail.logo_pic" alt="" class="img3">
                                 </div>
                                 <div class="energetic1-content-right">
-                                    <p class="energetic1-content-text1"><span>【组团游】</span>绍兴出发香港七日游</p>
+                                    <p class="energetic1-content-text1">{{energetic_fitnessDetail.tourist_name}}</p>
                                     <p class="energetic1-content-text2">
-                                         一会儿，车子发动，踏上了回家的归途“累并快乐着”，是大家一致的感受；在紧张工作取得了成绩后，再去放松游玩，那种愉悦与享受更是畅快人生、意...
+                                         {{energetic_fitnessDetail.tourist_details}}
                                     </p>
                                 </div>
                                 <table style="clear:both;"></table>
                             </div> 
-                            <div class="energetic1-content-text3"><span>￥<i>1.00</i></span>/人</div>  
+                            <div class="energetic1-content-text3"><span>￥<i>{{energetic_fitnessDetail.price}}.00</i></span>/人</div>  
                         </li>                  
                     </ul>
                 </div>
@@ -115,15 +123,16 @@
             <input type="text" placeholder="请输入备注内容(选填)" class="input-text">
         </div>
         
-
 </div>
 
 <!--  / footer  -->
 <div class="footer2">
     <span>合计 <i> ￥0.00</i></span>
-    <button>预约支付</button> 
+    <button @click="goZhifu">预约支付</button> 
 </div> 
 <!--  / footer  -->
+
+</div> 
 
 </body>
 
@@ -304,6 +313,66 @@
 
 <script>
 $(window).ready(function(){
+
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            energetic_fitnessDetail:[],
+          }
+        },
+        created:function(){
+          var $this = this;
+          $this.getTourItinerary();                                          
+         },
+        mounted:function(){
+          
+        },
+        methods:{
+          //行程详情介绍
+            getTourItinerary:function(){
+                var $this = this;
+                const data = {
+                   tourist_id:getCookie("touristId"),
+                }
+                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_fitnessDetail = res.info.tourist;   
+                               
+                  }else
+                  {
+                    console.log("行程详情介绍:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("行程详情介绍:"+err);
+                })
+              
+            },
+            goZhifu:function(){
+                var $this = this;
+                const data = {
+                   tourist_id:getCookie("touristId"),
+                }
+                Axios.post(window.Url.energetic_fitnessDetail,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    $this.energetic_fitnessDetail = res.info.tourist;   
+                               
+                  }else
+                  {
+                    console.log("行程详情介绍:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("行程详情介绍:"+err);
+                })
+            }
+         
+        }
+
+    })
 
 $('.header_map_longevity').click(function(){
     history.go(-1);
