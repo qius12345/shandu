@@ -253,7 +253,7 @@ $(window).ready(function(){
     			password:'123456'
     		}
     		
-    		Axios.post("window.Url.user_login", data).then((res) => {
+    		Axios.post(window.Url.user_login, data).then((res) => {
     			console.log(res)
     			if(res.result == 1){
     				console.log(res);

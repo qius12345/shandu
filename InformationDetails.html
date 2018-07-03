@@ -44,8 +44,8 @@
     </div>
     <div class="logo_longevity">资讯详情</div>
     <div class="header_shop_longevity">
-        <img src="images/sc.png" alt="" class="InformationDetails7_f3_f2_img1">
-        <img src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2 img-hidden">
+        <img v-if="CheatsCateDetails.is_collect" src="images/sc-sel.png" alt="" class="InformationDetails7_f3_f2_img2 img-hidden">
+        <img v-else src="images/sc.png" alt="" class="InformationDetails7_f3_f2_img1">
         <span>收藏</span>
     </div>   
 </div>
@@ -53,7 +53,7 @@
 
 
 <div class="InformationDetails">
-	<iframe :src="CheatsCateDetails.url" width="100%" height="1000" frameborder="0" scrolling="no"></iframe>
+	<iframe :src="CheatsCateDetails.url" width="100%" height="500" frameborder="0" scrolling="no"></iframe>
    <!-- <div class="InformationDetails1">福建考生登录福建省打开肌肤</div>
     <div class="InformationDetails2">2018-01-11 &nbsp; 16:12</div>
     <div class="InformationDetails3">
@@ -72,7 +72,7 @@
   <ul class="clearfix">
     <li class="ind_share_btn">
     	  <div class="footer_img_n">
-    	  	  <img src="images/news_pl1.png">大家在评论<span>(1)</span>
+    	  	  <img src="images/news_pl1.png">大家在评论<span>{{CheatsCateDetails.evaluate}}</span>
     	  </div>
     </li>
     <li class="ind_share_btn1">
@@ -137,6 +137,26 @@ $(window).ready(function(){
     			
 	        }).catch((err) => {
 	          console.log('咨询列表:'+err);
+	        })
+    	},
+    	//发布评论
+    	getCheatsCateDetails:function(){
+    		var $this = this;
+    		const data = {
+    			cheats_id : getCookie("cheats_details_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_cate_details,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.CheatsCateDetails = res.info.cheats;
+    			}
+    			else{
+    				console.log('发布评论:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('发布评论:'+err);
 	        })
     	},
     	//跳转详情页

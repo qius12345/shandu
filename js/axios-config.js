@@ -101,6 +101,9 @@
 		//city:当前城市
 		//type：活力健身类型
 		energetic_fitness:'/Api/Vitality/fitness',
+		//行程介绍 为你推荐、更多
+		//tourist_id:活力健身详情id
+		energetic_fitnessDetail:'/Api/Vitality/fitness_details',
 		//咨询分类
 		Cheats_cate:'/Api/Cheats/cate',
 		//咨询分类列表
@@ -109,6 +112,18 @@
 		//咨询分类列表详情
 		//cheats_id （列表每个信息的ID）
 		Cheats_cate_details:'/Api/Cheats/details',
+		//评论列表
+		//token（登录状态）
+		//cheats_id （秘籍id）
+		Cheats_evaluate_list:'/Api/Cheats/evaluate_list',
+		//发布评论
+		//token（登录状态）
+		//cheats_id （秘籍id）
+		Cheats_evaluate_list:'/Api/Cheats/evaluate_list',
+		//评论详情
+		//token（登录状态）
+		//evaluate_id （秘籍id）
+		Cheats_evaluate_details:'/Api/Cheats/evaluate_details',
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
 		//老故事类型

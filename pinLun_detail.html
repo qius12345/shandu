@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -50,13 +56,13 @@
     <div class="InformationDetails7">
       <div class="InformationDetails7_f1 clearfix">
         <div class="InformationDetails7_f1_left InformationDetails7_f1_left1">
-            <a href="##"><img src="images/user-1.jpg" alt="" width="100%"></a>
-            <span>老王</span>
+            <a href="##"><img :src="evaluate_details.person_img" alt="" width="100%"></a>
+            <span>{{evaluate_details.person_name}}</span>
         </div>
-        <div class="InformationDetails7_f1_right InformationDetails7_f1_right1">2018-03-06 11:45:50</div> 
+        <div class="InformationDetails7_f1_right InformationDetails7_f1_right1">{{evaluate_details.add_time}}</div> 
       </div>
       <div class="InformationDetails7_f2">
-          运送丰东股份的是竟然跑上官飞干扰她申达股份四大四方达颠三倒四第三方第四方
+          {{evaluate_details.comment}}
       </div>
       <!-- <div class="InformationDetails7_f3">
           <div class="row">
@@ -111,10 +117,52 @@
     </div>
 </div>
 <!--  / footer -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                evaluate_details: [],
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getEvaluate_details();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//评论详情
+    	getEvaluate_details:function(){
+    		var $this = this;
+    		const data = {
+    			evaluate_id : getCookie("evaluate_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_evaluate_details,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.evaluate_details = res.info.evaluate_details;
+    			}
+    			else{
+    				console.log('评论详情:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('评论详情:'+err);
+	        })
+    	}
+    }
+})
+
 
 $('.banner').height($(window).width()*400/750);
 

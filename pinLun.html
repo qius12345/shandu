@@ -26,10 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app">
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -46,9 +53,41 @@
 
 
 <div class="InformationDetails8">
-    <div class="InformationDetails5">福建考生登录福建省打开肌肤</div>
+    <div class="InformationDetails5">{{evaluate_title}}</div>
     <div class="InformationDetails6">以下是评论区</div>
-    <div class="InformationDetails7">
+    <div class="InformationDetails7" v-for="evaluate in evaluate_list">
+      <div class="InformationDetails7_f1 clearfix">
+        <div class="InformationDetails7_f1_left">
+            <a href="##"><img :src="evaluate.person_img" alt="" width="100%"></a>
+            <span>{{evaluate.person_name}}</span>
+        </div>
+        <div class="InformationDetails7_f1_right">{{evaluate.add_time}}</div> 
+      </div>
+      <div class="InformationDetails7_f2" @click="jump(evaluate.evaluate_id)">
+          {{evaluate.comment}}
+      </div>
+      <div class="InformationDetails7_f3">
+          <div class="row">
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="##" class="InformationDetails7_f3_f1">阅<span>{{evaluate.pageview}}</span></a>
+              </div>
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="##" class="InformationDetails7_f3_f2">
+                      <img src="images/pinglun-zan.png" alt="" width="20" class="InformationDetails7_f3_f2_img1">
+                      <img src="images/pinglun-zan1.png" alt="" width="20" class="InformationDetails7_f3_f2_img2 img-hidden">
+                      <span>{{evaluate.zan}}</span>
+                  </a>
+              </div>
+              <div class="col-xs-4 InformationDetails7-col">
+                  <a href="pinLun_detail.html" class="InformationDetails7_f3_f3">
+                      <img src="images/pinglun-pl.png" alt="" width="16">
+                      <span>{{evaluate.reply}}</span>
+                  </a>
+              </div>
+          </div>
+      </div>       
+    </div>
+<!--    <div class="InformationDetails7">
       <div class="InformationDetails7_f1 clearfix">
         <div class="InformationDetails7_f1_left">
             <a href="##"><img src="images/user-1.jpg" alt="" width="100%"></a>
@@ -112,39 +151,7 @@
           </div>
       </div>       
     </div>
-    <div class="InformationDetails7">
-      <div class="InformationDetails7_f1 clearfix">
-        <div class="InformationDetails7_f1_left">
-            <a href="##"><img src="images/user-1.jpg" alt="" width="100%"></a>
-            <span>老王</span>
-        </div>
-        <div class="InformationDetails7_f1_right">2018-03-06 11:45:50</div> 
-      </div>
-      <div class="InformationDetails7_f2">
-          运送丰东股份的是竟然跑上官飞干扰她申达股份四大四方达颠三倒四第三方第四方
-      </div>
-      <div class="InformationDetails7_f3">
-          <div class="row">
-              <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f1">阅<span>0</span></a>
-              </div>
-              <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f2">
-                      <img src="images/pinglun-zan.png" alt="" width="20" class="InformationDetails7_f3_f2_img1">
-                      <img src="images/pinglun-zan1.png" alt="" width="20" class="InformationDetails7_f3_f2_img2 img-hidden">
-                      <span>0</span>
-                  </a>
-              </div>
-              <div class="col-xs-4 InformationDetails7-col">
-                  <a href="pinLun_detail.html" class="InformationDetails7_f3_f3">
-                      <img src="images/pinglun-pl.png" alt="" width="16">
-                      <span>0</span>
-                  </a>
-              </div>
-          </div>
-      </div>       
-    </div>
-
+-->
 </div>
 
 
@@ -177,10 +184,60 @@
     </div>
 </div>
 <!--  / footer -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                evaluate_list: [],
+                evaluate_title: ''
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getEvaluate_list();
+    	
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//评论列表
+    	getEvaluate_list:function(){
+    		var $this = this;
+    		const data = {
+    			cheats_id : getCookie("cheats_details_id")
+    		}
+    		
+    		Axios.post(window.Url.Cheats_evaluate_list,data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.evaluate_list = res.info.evaluate_list;
+    				$this.evaluate_title = res.title;
+    			}
+    			else{
+    				console.log('评论列表:'+res.info);
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('评论列表:'+err);
+	        })
+    	},
+    	//评论详情页
+    	jump:function(cheats_id){
+    		setCookie('evaluate_id',cheats_id)
+    		window.location.href = "pinLun_detail.html";
+    	}
+    }
+})
+	
+	
+	
   var flag=true;
 
 $('.header_map_longevity').click(function(){
@@ -201,9 +258,6 @@ $('.pinglun-show a').click(function(){
 });
 $('.header_shop_longevity').click(function(){
     $('.pinglun-show').css('display','block');
-})
-$('.InformationDetails7_f2').click(function(){
-    window.location.href = "pinLun_detail.html";
 })
 $('.InformationDetails7_f3_f2').click(function(){
   if(flag){
