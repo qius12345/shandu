@@ -89,7 +89,7 @@
 <div class="index_sec1 clearfix">
 	<div class="index_sec1_list">
 		<img src="images/img_home_bg2.png" width="100%">
-		<a href="service_fwsj.html">
+		<a href="service.html" @click="jump(1)">
 		<h4>服务商家</h4>
 		</a>
 		<div class="index_sec1_list_zi">
@@ -100,7 +100,7 @@
 	</div>
 	<div class="index_sec1_list" id="index_sec1_list1">
 		<img src="images/img_home_bg1.png" width="100%">
-		<a href="service.html">
+		<a href="service.html" @click="jump(2)">
 		<h4>劳务市场</h4>
 		</a>
 		<a href="longevity.html">
@@ -109,7 +109,7 @@
 			<p>养生秘方 让你百岁</p>
 			<img src="images/img_home_logo1.png">
 		</div>
-		<div class="index_sec1_list_tishi"><span>11</span></div>
+		<div class="index_sec1_list_tishi"><span>{{order_num}}</span></div>
 		</a>
 	</div>
 	<div class="index_sec1_list last" id="index_sec1_list2">
@@ -197,13 +197,15 @@ $(window).ready(function(){
                 userId: (() => {
                         
                     })(),
-                banner:[]
+                banner:[],
+                order_num:''
             }
 		},
     created: function () {
 		var $this = this;
+//		$this.userLogin();
     	$this.getBanner();
-//        $this.userLogin();
+    	$this.getOrder_num();
         
     },
     mounted:function(){
@@ -243,6 +245,32 @@ $(window).ready(function(){
         })
         
         
+    	},
+    	//order_num
+    	getOrder_num:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		Axios.post(window.Url.order_num, data).then((res) => {
+    			if(res.result == 1){
+    				$this.order_num = res.info.order_num;
+    				
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_is_company',type_id);
     	},
     	//login
     	userLogin:function(){

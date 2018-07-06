@@ -26,9 +26,18 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -51,20 +60,20 @@
         <div class="nav_class_list_banner">
           <img src="images/nav_class_banner_1.jpg" width="100%">
         </div>
-        <div class="nav_class_list_con">
-          <h5>生活护理类<span></span></h5> 
+        <div class="nav_class_list_con" v-for="type in type_list">
+          <h5>{{type.classname}}<span></span></h5> 
           <div class="nav_class_list_cons"> 
             <ul class="clearfix">
-              <a href="service_list_1.html"><li><img src="images/class_nav1_1.jpg"><span>产后护理</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>皮沙发护理</span></li></a>
+              <a href="service_list_1.html" v-for="tp in type.second" @click="jump(tp.type_id)"><li><img src="images/class_nav1_1.jpg"><span>{{tp.classname}}</span></li></a>
+              <!--<a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>皮沙发护理</span></li></a>
               <a href="service_list_1.html"><li><img src="images/class_nav1_3.jpg"><span>手足护理</span></li></a>
               <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>
               <a href="service_list_1.html"><li><img src="images/class_nav1_5.jpg"><span>医院陪护</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>-->
             </ul>  
           </div>
         </div>
-        <div class="nav_class_list_con">
+        <!--<div class="nav_class_list_con">
           <h5>居家服务类<span></span></h5> 
           <div class="nav_class_list_cons"> 
             <ul class="clearfix">
@@ -102,7 +111,7 @@
               <a href="service_list_1.html"><li><img src="images/class_nav1_10.jpg"><span>跑腿</span></li></a>
             </ul>  
           </div>
-        </div>
+        </div>-->
       </div>          
     </div>  
   </div>
@@ -112,11 +121,62 @@
 </div>
 
 
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                city_name:getCookie("cityLocation"),
+                type_list:[]
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getService_type();
+//        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	//服务类型
+    	getService_type:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+//				city:getCookie("cityLocation"),
+				city:$this.city_name,
+				type:1,
+				is_company:getCookie('service_is_company')
+    		}
+    		
+    		Axios.post(window.Url.service_type, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.type_list = res.info.type;
+    			}
+    			else{
+    				alert('服务类型：'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('服务类型：'+err)
+        })
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_type_id',type_id);
+    	}
+	}
+})
+
 
 $('.header_map_longevity').click(function(){
     history.go(-1);

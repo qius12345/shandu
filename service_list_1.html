@@ -26,9 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+	<div id="app" v-cloak>
 <div class="service_list_bg1"></div>
 <!--  / header  -->
 <div class="header_longevity">
@@ -46,10 +53,11 @@
 	<div class="service_pro">
 		<div class="service_pro_h">
 			<ul class="clearfix">
-				<li class="city">全杭州<i class="fa fa-angle-down"></i><!-- <span></span> -->
+				<li class="city">全{{city_name}}<i class="fa fa-angle-down"></i><!-- <span></span> -->
 				    <ul class="city-show">
-				    	<li>上城区</li>
-				    	<li>下城区</li>
+				    	
+				    	<li v-for="city in Province_list">{{city.name}}</li>
+				    	<!--<li>下城区</li>
 				    	<li>江干区</li>
 				    	<li>拱墅区</li>
 				    	<li>西湖区</li>
@@ -60,7 +68,7 @@
 				    	<li>淳安县</li>
 				    	<li>建德市</li>
 				    	<li>富阳市</li>
-				    	<li>临安市</li>
+				    	<li>临安市</li>-->
 				    </ul>  
 				</li>
 				<li class="haoping">好评率 <i class="fa fa-angle-down"></i><!-- <span></span> -->
@@ -88,13 +96,37 @@
 	<div class="service_sp1"></div>
 	
 	<div class="service_pro_con">
-		<div class="service_pro_list">
+		<div class="service_pro_list" v-for="Service in Service_list">
+			<a href="service_inner_1.html" @click="jump(Service.service_id)">
+				<div class="clearfix service_pro_list_detail">
+					<div class="service_pro_list_left">
+						<div class="service_pro_list_left_img">
+							<img :src="Service.logo_pic">
+							<!-- <span>无保证金</span> -->
+							<i><img src="images/nv.png"></i>
+						</div>
+						<div class="service_pro_list_left_zi">
+							<h5>{{Service.name}} <b v-if="Service.is_assure">已认证</b><b style="color: #999999;border: 1px solid #999999;" v-else>未认证</b><i v-if="!Service.is_bzj">无保证金</i><i style="color: #20b7fe;border: 1px solid #20b7fe;" v-else>有保证金</i></h5>
+							<p><span v-if="Service.service_num">服务员工{{Service.service_num}}人</span><span v-else>{{Service.age}}岁</span><i></i><em>上个月订单数 {{Service.alternative}}个</em></p>
+							<h6>服务时间 {{Service.service_time}}</h6>
+						</div>
+					</div>
+				    <div class="service_pro_list_right">
+				    	<h5>好评率{{Service.favorable_rate}}</h5>
+				    	<span>￥{{Service.price}}/小时</span>
+				    </div>
+			    </div>
+		    </a>
+		    <h4><img src="images/map_2.png" alt="">服务商圈 : {{Service.business_area}}</h4>	
+		</div>
+		<div class="service_sp1"></div>
+		<!--<div class="service_pro_list">
 			<a href="service_inner_1.html">
 				<div class="clearfix service_pro_list_detail">
 					<div class="service_pro_list_left">
 						<div class="service_pro_list_left_img">
 							<img src="images/service_list_1.jpg">
-							<!-- <span>无保证金</span> -->
+							 <span>无保证金</span> 
 							<i><img src="images/nv.png"></i>
 						</div>
 						<div class="service_pro_list_left_zi">
@@ -118,7 +150,7 @@
 					<div class="service_pro_list_left">
 						<div class="service_pro_list_left_img">
 							<img src="images/service_list_1.jpg">
-							<!-- <span>无保证金</span> -->
+							 <span>无保证金</span> 
 							<i><img src="images/nv.png"></i>
 						</div>
 						<div class="service_pro_list_left_zi">
@@ -135,41 +167,91 @@
 		    </a>
 		    <h4><img src="images/map_2.png" alt="">服务商圈 : 大关 德胜 北山 翠苑</h4>	
 		</div>
-		<div class="service_sp1"></div>
-		<div class="service_pro_list">
-			<a href="service_inner_1.html">
-				<div class="clearfix service_pro_list_detail">
-					<div class="service_pro_list_left">
-						<div class="service_pro_list_left_img">
-							<img src="images/service_list_1.jpg">
-							<!-- <span>无保证金</span> -->
-							<i><img src="images/nv.png"></i>
-						</div>
-						<div class="service_pro_list_left_zi">
-							<h5>哥阿姨 <b>已认证</b><i>无保证金</i></h5>
-							<p>21岁 <i></i><em>上个月订单数 3个</em></p>
-							<h6>服务时间 6:00 - 22:00</h6>
-						</div>
-					</div>
-				    <div class="service_pro_list_right">
-				    	<h5>好评率100%</h5>
-				    	<span>￥60.00/小时</span>
-				    </div>
-			    </div>
-		    </a>
-		    <h4><img src="images/map_2.png" alt="">服务商圈 : 大关 德胜 北山 翠苑</h4>	
-		</div>
-		<div class="service_sp1"></div>
+		<div class="service_sp1"></div>-->
 	</div>
 	
 </div>
 
 
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+	el:"#app",
+	data() {
+        return {
+            city_name:getCookie("cityLocation"),
+            Service_list:[],
+            Province_list:''
+        }
+	},
+    created: function () {
+		var $this = this;
+    	$this.getService_list();
+    	$this.getProvince_list();
+//        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	//服务列表
+    	getService_list:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+//				city:getCookie("cityLocation"),
+				city:$this.city_name,
+				type_id:getCookie('service_type_id'),
+				is_company:getCookie('service_is_company')
+    		}
+    		
+    		Axios.post(window.Url.service_list, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Service_list = res.info.service;
+    			}
+    			else{
+    				alert('服务列表：'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('服务列表：'+err)
+        })
+    	},
+    	//获取城市对应区
+    	getProvince_list:function(){
+	    		var $this = this;
+	    		
+	    		const data = {
+					city:$this.city_name,
+	    		}
+	    		
+	    		Axios.post(window.Url.service_province, data).then((res) => {
+	    			
+	    			if(res.result == 1){
+	    				$this.Province_list = res.info;
+	    			}
+	    			else{
+	    				alert('服务列表：'+res.info)
+	    			}
+	    			
+	        }).catch((err) => {
+	          console.log('服务列表：'+err)
+	        })
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_details_id',type_id);
+    	}
+	}
+})
+
 
 $('.header_map_longevity').click(function(){
     history.go(-1);

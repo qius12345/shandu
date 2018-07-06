@@ -26,6 +26,12 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
@@ -43,24 +49,24 @@
 
 
 <div class="aboutUrs">
-    <div class="pingtai_news clearfix">
-            <div class="pingtai_news_left">
-                <span>平台</span>
-                <span>消息</span>
-            </div>
-            <div class="pingtai_news_center">
-              <div class="pingtai_news_center_top clearfix">
-                <span class="pingtai_news_center_txt1">服务人员审核结果</span>
-                <span class="pingtai_news_center_txt2">2018-02-16 15:48:28</span>
-              </div>
-              <div class="pingtai_news_center_bottom">
-                  的服务账户30天冻结期已满，可正常接单了冻结期已满
-              </div>                
-            </div>
-            <span class="pingtai_news_quan"></span>
-            <input type="checkbox">
+    <div class="pingtai_news clearfix" v-for="messaging in messaging_list">
+        <!--<div class="pingtai_news_left">
+            <span>平台</span>
+            <span>消息</span>
+        </div>
+        <div class="pingtai_news_center">
+          <div class="pingtai_news_center_top clearfix">
+            <span class="pingtai_news_center_txt1">服务人员审核结果</span>
+            <span class="pingtai_news_center_txt2">2018-02-16 15:48:28</span>
+          </div>
+          <div class="pingtai_news_center_bottom">
+              	的服务账户30天冻结期已满，可正常接单了冻结期已满
+          </div>                
+        </div>
+        <span class="pingtai_news_quan"></span>
+        <input type="checkbox">-->
     </div>
-    <div class="pingtai_news clearfix">
+    <!--<div class="pingtai_news clearfix">
             <div class="pingtai_news_left">
                 <span>平台</span>
                 <span>消息</span>
@@ -144,7 +150,7 @@
             </div>
             <input type="checkbox">
             
-    </div>
+    </div>-->
 
 </div>
 
@@ -154,6 +160,55 @@
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                messaging_list:''
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getUcenter_messaging();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的平台消息
+    	getUcenter_messaging:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_messaging, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.messaging_list = res.info.messaging;
+    				
+    			}
+    			else{
+    				alert('我的平台消息'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的平台消息'+err)
+        })
+        
+    	}
+	}
+})
+	
+	
+	
 var flag1=true;
 var flag2=true;
 $('.header_map_longevity').click(function(){

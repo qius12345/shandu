@@ -26,6 +26,13 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
@@ -47,7 +54,7 @@
      </div> 
 </div>
 <!--  / header  -->
-
+<div id="app" v-cloak>
 
 <div class="service">
 	
@@ -55,21 +62,28 @@
 	<div class="service_inner_con clearfix">
 		<div class="service_inner_con_left">
 			<div class="service_pro_list_left_img">
-				<img src="images/service_list_1.jpg">
-				<span>无保证金</span>
+				<img :src="service_details.logo_pic">
+				<span v-if='service_details.is_bzj'>有保证金</span>
+				<span v-else style="1px solid #999999;background-color: #999;">无保证金</span>
 			</div>
-			<h5>哥阿姨</h5>
-			<!-- <p>21岁</p> -->
+			<h5>{{service_details.name}}</h5>
+			 <p v-if="service_details.age">{{service_details.age}}岁</p> 
 		</div>	
 		
 		<div class="service_inner_con_right">
 			<ul>
-				<li>服务态度 :<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>90%</b></li>
-				<li>诚实守信 :<i class="fa fa-star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></i><i class="fa fa-star-o"></i><b>90%</b></li>
-				<li>成果验收 :<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>90%</b></li>
+				<li>服务态度 :
+					<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>{{service_details.integrity}}</b>
+				</li>
+				<li>诚实守信 :
+					<i class="fa fa-star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></i><i class="fa fa-star-o"></i><b>{{service_details.integrity}}</b>
+				</li>
+				<li>成果验收 :
+					<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>{{service_details.achievement}}</b>
+				</li>
 			</ul>
-			<p>上月订单数 :<span>0</span>  <i>好评率 :<b>140%</b></i></p>
-			<h5>联系方式 :<span>187****1723</san> <i class="go-chakan">查看</i></h5>
+			<p>上月订单数 :<span>{{service_details.alternative}}</span>  <i>好评率 :<b>{{service_details.favorable_rate}}</b></i></p>
+			<h5>联系方式 :<span>{{service_details.tel}}</san> <i class="go-chakan">查看</i></h5>
 		</div>
 	</div>
 	
@@ -77,53 +91,60 @@
 	
 	<div class="service_inner_list">
 		<span>公司(门市)地址 :</span>
-		浙江省杭州市西湖区
+		{{service_details.province}}
+		{{service_details.ser_city}}
+		{{service_details.district}}
 	</div>
 	
 	<div class="service_inner_list">
 		<span>收费标准 :</span>
-		60.00元/小时
+		{{service_details.price}}元/小时
 	</div>
 	
 	<div class="service_inner_list">
 		<span>服务类型 :</span>
-		产后护理 皮沙发护理 手足护理 育儿师 医院陪护 月嫂 保洁 打扫 足疗 按摩 康复训练 医护上门 体检 就医陪诊 心理健康 小儿推拿 搬家 跑腿
+		{{service_details.classname}}
 	</div>
 	
 	<div class="service_inner_list">
 		<span>服务区域 :</span>
-		拱墅区,西湖区
+		{{service_details.ser_area}}
 	</div>
 	
 	<div class="service_inner_list">
 		<span>服务商圈 :</span>
-		大关 德胜 北山 翠苑
+		{{service_details.business_area}}
 	</div>
 	
 	<div class="service_inner_list service_inner_list1">
 		<span>服务时间 :</span>
-		1:00 - 14:00
+		{{service_details.service_time}}
 	</div>
 	
 	<!-- <div class="service_sp"></div> -->
 	
 	<div class="service_inner_text">
 		<h5>服务内容 :</h5>
-		<p>产后护理 皮沙发护理 手足护理 育儿师 医院陪护 月嫂 保洁 打扫 足疗 按摩 康复训练 医护上门 体检 就医陪诊 心理健康 小儿推拿 搬家 跑腿</p>
+		<p>{{service_details.service_content}}</p>
 	</div>
 	
 	<div class="service_inner_text">
-		<h5>自我介绍 :</h5>
-		<p>飞飞</p>
+		<h5>公司简介 :</h5>
+		<p>{{service_details.des}}</p>
 	</div>
 	
-	<div class="service_inner_text">
+	<div v-if='service_details.special_requirements' class="service_inner_text">
 		<h5>其它说明 :</h5>
-		<p>产后护理 皮沙发护理 手足护理 育儿师</p>
+		<p>{{service_details.special_requirements}}</p>
 	</div>
 	
 	<div class="service_inner_img">
-		<img src="images/service_inner_img.jpg" width="100%">
+		<img v-if="service_details.pic1" :src="service_details.pic1" width="32%" height="110px">
+		<img v-if="service_details.pic2" :src="service_details.pic2" width="32%" height="110px">
+		<img v-if="service_details.pic3" :src="service_details.pic3" width="32%" height="110px">
+		<img v-if="service_details.pic4" :src="service_details.pic4" width="32%" height="110px">
+		<img v-if="service_details.pic5" :src="service_details.pic5" width="32%" height="110px">
+		<img v-if="service_details.pic6" :src="service_details.pic6" width="32%" height="110px">
 	</div>
 	
 </div>	
@@ -145,11 +166,59 @@
 
 
 
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                city_name:getCookie("cityLocation"),
+                service_details:{}
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getService_details();
+//        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	//服务详情
+    	getService_details:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			service_id:getCookie("service_details_id")
+    		}
+    		
+    		Axios.post(window.Url.service_details, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.service_details = res.info.service;
+    			}
+    			else{
+    				alert('服务详情：'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('服务详情：'+err)
+        })
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_details_id',type_id);
+    	}
+	}
+})
+
+
 
 $('.banner').height($(window).width()*400/750);
 

@@ -19,6 +19,13 @@
 <link rel="stylesheet" type="text/css" href="css/iosSelect.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 <script>
         var _hmt = _hmt || [];
         (function() {
@@ -40,7 +47,7 @@
 </head>
 
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
     <div class="header_map_longevity">   
@@ -91,13 +98,63 @@
             </div>
     </div>
 </div>
-
+</div>
 
 </body>
 <script src="js/zepto.js"></script>
 <script src="js/iosSelect.js"></script>
 <script src="js/areaData_v2.js"></script>
 <script type="text/javascript">
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                address_list:''
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getAddress_list();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//添加地址
+    	addandedit:function(addressid){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+				addressid:addressid
+    		}
+    		
+    		Axios.post(window.Url.addandedit, data).then((res) => {
+    			if(res.result == 1){
+    				alert(res.info);
+    			}
+    			else{
+    				alert('添加地址'+res.info)
+    			}
+	        }).catch((err) => {
+	          console.log('添加地址'+err)
+	        })
+        
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('addressid',type_id);
+    	},
+	}
+})
+	
+	
     var selectContactDom = $('#select_contact');
     var showContactDom = $('#show_contact');
     var contactProvinceCodeDom = $('#contact_province_code');

@@ -19,6 +19,13 @@
 <link rel="stylesheet" type="text/css" href="css/iosSelect.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
 <script>
         var _hmt = _hmt || [];
         (function() {
@@ -40,6 +47,8 @@
 </head>
 
 <body style="background:#f3f5f9;">
+	
+<div id="app">
 <div class="chakan_show">
     <div class="chakan_show_bg"></div>
     <div class="chakan_show_con">
@@ -85,7 +94,7 @@
 			<h5>其他说明 :</h5>
 		</div>
 		<div class="service_inner1_list_txt no_border">
-			<textarea placeholder="对服务人员的要求,无要求可不填(限120字)"></textarea>
+			<textarea v-model="explain" placeholder="对服务人员的要求,无要求可不填(限120字)"></textarea>
 		</div>
 		
 		<!-- <div class="service_inner1_list">
@@ -144,7 +153,7 @@
 		
 		<div class="service_inner1_list no_border">
 			<h5>预约时长 :</h5>
-			<input type="text" placeholder="">
+			<input v-model="time_length" type="text" placeholder="">
 		</div>
 		
 		
@@ -155,7 +164,7 @@
 		
 		<div class="service_inner_zf">
 			预约服务费 <span> ￥00.00</span>
-			<a href="##">支付</a>
+			<a href="##" @click="service_is_subscribe">支付</a>
 		</div>
 		
 	</div>
@@ -164,7 +173,7 @@
 		
 </div>
 
-
+</div>
 
 
 </body>
@@ -175,6 +184,85 @@
 <script src="js/iosSelect.js"></script>
 <script src="js/areaData_v2.js"></script>
 <script type="text/javascript">
+	
+	var vm = new Vue({
+	el:"#app",
+	data() {
+        return {
+            city_name:getCookie("cityLocation"),
+            Service_list:[],
+            Province_list:'',
+            time_length:'',
+            explain:'',
+            
+        }
+	},
+    created: function () {
+		var $this = this;
+//  	$this.submit_service_order();
+//        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	//判断是否能提交
+    	service_is_subscribe:function(){
+    		var $this = this;
+    		
+    		const data = {
+				service_id:getCookie('stage_deploy_id')
+    		}
+    		
+    		Axios.post(window.Url.service_is_subscribe, data).then((res) => {
+    			
+    			if(res.result == 1){
+//  				$this.Service_list = res.info.service;
+					$this.submit_service_order();
+    			}
+    			else{
+    				alert('判断是否能提交：'+res.info)
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('判断是否能提交：'+err)
+	        })
+    	},
+    	//提交预约订单
+    	submit_service_order:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+//				city:getCookie("cityLocation"),
+//				city:$this.city_name,
+//				type_id:getCookie('service_type_id'),
+//				is_company:getCookie('service_is_company')
+//				time_length
+//				explain
+    		}
+    		
+    		Axios.post(window.Url.service_order, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Service_list = res.info.service;
+    			}
+    			else{
+    				alert('提交预约订单：'+res.info)
+    			}
+    			
+	        }).catch((err) => {
+	          console.log('提交预约订单：'+err)
+	        })
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_details_id',type_id);
+    	}
+	}
+})
+	
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
     var selectDate1Dom = $('#selectDate1');

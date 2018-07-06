@@ -26,10 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
 
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -38,7 +45,7 @@
         </div>
         <div class="logo_longevity">反馈</div>
         <div class="header_shop_longevity">
-            <span>提交</span>
+            <span @click="submit_feedback">提交</span>
         </div>   
 </div>
 <!--  / header  -->
@@ -46,14 +53,62 @@
 
 <div class="suggestion">
         <!-- <input type="text" placeholder="您的反馈和建议" class="commentArea"> -->
-        <textarea placeholder="您的反馈和建议" class="commentArea"></textarea>
+        <textarea v-model="opinion" placeholder="您的反馈和建议" class="commentArea"></textarea>
         <div class="suggestion1">200字以内</div>
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        opinion:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+//  	$this.getUcenter_wallet();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//提交反馈
+    	submit_feedback:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+				opinion:$this.opinion
+    		}
+    		
+    		Axios.post(window.Url.feedback, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				alert(res.info);
+    				
+    			}
+    			else{
+    				alert('提交反馈'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('提交反馈'+err)
+        })
+        
+    	}
+	}
+})
+	
 
 $('.banner').height($(window).width()*400/750);
 

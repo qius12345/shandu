@@ -26,9 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -107,11 +114,12 @@
         </table>
     </div>
     <div class="sign2">
-        <span class="fl">2018年01月28日</span>
-        <button class="fr go_qiandao">签到</button>
+        <span class="fl">{{newDate.Year}}年{{newDate.Month}}月{{newDate.Date}}日</span>
+        <button v-if="!qiandao.lxqd" class="fr go_qiandao" @click="setAddqiandao">签到</button>
+        <button v-else class="fr go_qiandao" style="background-color: #E9E9E9;color: #FFFFFF;">已签到</button>
     </div>
     <div class="sign3">
-        <span>您已连续签到1天</span>
+        <span>您已连续签到{{qiandao.yiqian}}天</span>
     </div>
     <div class="sign4">
         <p class="sign4-txt1">温馨提示：</p>
@@ -130,9 +138,97 @@
         </div>
     </div>
 </div>
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        qiandao:'',
+	        newDate:{
+	        	Year:'',
+	        	Month:'',
+	        	Date:''
+	        }
+	    }
+		},
+    created: function () {
+		var $this = this;
+        $this.get_qiandao_index();
+        $this.InitTime();
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//设置我的签到
+    	setAddqiandao:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.addqiandao, data).then((res) => {
+    			
+    			if(res.result == 1){
+//  				$this.wallet = res.info.wallet;
+					alert(res.info);
+    				
+    			}
+    			else{
+    				alert('设置我的签到'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('设置我的签到'+err)
+        })
+        
+    	},
+    	//签到列表
+    	get_qiandao_index:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.qiandao_index, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.qiandao = res.info;
+//					alert(res.info);
+    				
+    			}
+    			else{
+    				alert('签到列表'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('签到列表'+err)
+        })
+        
+    	},
+    	InitTime:function(endtime){
+    		var $this = this;
+		   var myDate = new Date();
+		   $this.newDate.Year = myDate.getFullYear(); 
+		   $this.newDate.Month = myDate.getMonth()+1;
+		   $this.newDate.Date = myDate.getDate(); 
+		   
+		  
+		    
+		}
+	}
+})
+
 var flag=true;
 $('.banner').height($(window).width()*400/750);
 

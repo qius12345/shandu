@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="stroy_rhead">
@@ -41,17 +49,17 @@
 <!--  / header  -->
 <!--  / warpper  -->
 <div class="myCollect">
-    <div class="myCollect1 clearfix">
+    <div class="myCollect1 clearfix" v-for="collect in collect_list">
     	  <div class="myCollect_img">
-    	  	<img src="images/collage-list2.jpg" width="100%">
+    	  	<img :src="collect.pic" width="100%">
     	  </div>
     	  <div class="myCollect_zi">
-        	<div class="myCollect1-txt1"> <span>收藏时间 <i>2018-01-27 12:54:56</i></span></div>
-        	<div class="myCollect1-txt2">方式都发生的父母</div>
-        	<div class="myCollect1-txt1"><span>收藏数 <i>1</i></span></div>
+        	<div class="myCollect1-txt1"> <span>收藏时间 <i>{{collect.add_time}}</i></span></div>
+        	<div class="myCollect1-txt2">{{collect.title}}</div>
+        	<div class="myCollect1-txt1"><span>收藏数 <i>{{collect.collect}}</i></span></div>
        </div>
     </div>
-    <div class="myCollect1 clearfix">
+   <!-- <div class="myCollect1 clearfix">
     	<div class="myCollect_img">
     	  	<img src="images/collage-list2.jpg" width="100%">
     	  </div>
@@ -70,7 +78,7 @@
         <div class="myCollect1-txt2">方式都发生的父母</div>
         <div class="myCollect1-txt1"><span>收藏数 <i>2</i></span></div>
        </div>
-    </div>
+    </div>-->
 </div>
 
 <!--  / warpper  -->
@@ -78,10 +86,58 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        collect_list:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getUcenter_collect();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的收藏
+    	getUcenter_collect:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_collect, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.collect_list = res.info.collect;
+    				
+    			}
+    			else{
+    				alert('我的收藏'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的收藏'+err)
+        })
+        
+    	}
+	}
+})
+	
+	
     $('.energetic1 li').click(function(){
       window.location.href = "tourItinerary.html";
     });

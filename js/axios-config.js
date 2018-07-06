@@ -97,6 +97,9 @@
 	window.Url = {
 		//首页BANNER
 		home_banner:'/Api/Banner/banner',
+		//首页长寿秘籍消息下标
+		//token （登录状态）
+		order_num:'/Api/Ucenter/order_num',
 
 		//活力健身 为你推荐、更多
 		//city:（当前城市）
@@ -114,7 +117,7 @@
 	    //telephone（电话）
 	    //remark（备注）
 	    vitality_order:'/Api/Order/Vitality_order',
-
+		
 		//今日数据
 		//token（登录状态）
 		Cheats_today:'/Api/Cheats/today',
@@ -156,9 +159,36 @@
 		//token（登录状态）
 		//evaluate_id（当前评论的id，后台传过来）
 		Cheats_evaluate_pageview:'/Api/Cheats/evaluate_pageview',
+		
+		//服务分类
+		//city（城市）
+		//type_id （二级类型的type_id）
+		//Is_company （1.商家 2个人）
+		service_type:'/Api/Service/type',
+		//服务列表
+		//city（城市）
+		//type_id （二级类型的type_id）
+		//Is_company （1.商家 2个人）
+		service_list:'/Api/Service/service_list',
+		//获取城市对应区
+		//city（城市）
+		service_province:'/Api/Service/province',
+		//服务详情
+		//service_id （当前服务的id）
+		service_details:'/Api/Service/service_details',
+		//判断能否预约
+		//token（登录状态）
+		//service_id （当前服务的id）
+		service_is_subscribe:'/Api/Service/is_subscribe',
+		//提交预约订单
+		//service_id （当前服务的id）
+		service_order:'/Api/Order/service_order',
+		
+		
+		
+		
 		//热门城市
 		hot_city:'/Api/HotCity/hotcityIndex',
-
 		//老故事类型
 		stroy_cate:'/Api/Oldstory/cate',
 		//老故事规则
@@ -196,6 +226,8 @@
 		//search （搜索的关键字）
 		stroy_searchList:'/Api/Oldstory/search',
 		
+		
+		/*大舞台*/
 		//大舞台 的标题
 		//city : 城市 （发送首页选择的城市）
 		three_activities:'/Api/Stage/reveal',
@@ -218,8 +250,52 @@
 		//token（登录状态）
 		//stage_id（当前投票的ID）
 		activityvote:'/Api/Stage/vote',
+		
+		
+		/*我的*/
+		//地址列表
+		//token（登录状态）
+		address_list:'/Api/address/index',
+		//设置默认地址
+		//token（登录状态）
+		//addressid（地址ID）
+		isdefaultset:'/Api/address/isdefaultset',
+		//增加、修改地址
+		//token（登录状态）
+		//addressid（地址ID）
+		addandedit:'/Api/address/addandedit',
+		
+		
+		//个人收藏
+		//token（登录状态）
+		Ucenter_collect:'/Api/Ucenter/collect',
+		
+		
+		//平台消息
+		//token（登录状态）
+		Ucenter_messaging:'/Api/Ucenter/messaging',
+		
+		//意见反馈
+		//token（登录状态）
+		//opinion（输入的值）
+		feedback:'/Api/Ucenter/feedback',
+		
+		
+		//获取钱包余额
+		//token（登录状态）
+		Ucenter_wallet:'/Api/ucenter/wallet',
+		
+		//签到列表
+		//token（登录状态）
+		qiandao_index:'/Api/qiandao/index',
+		//签到
+		//token（登录状态）
+		addqiandao:'/Api/qiandao/addqiandao',
+		
+		
+		
 		//登录
-		user_login:'/Api/User/login'
+		user_login:'/Api/User/login',
 	}
 	//用户信息
 	window.userInfo = {

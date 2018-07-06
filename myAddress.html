@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -43,20 +51,21 @@
 
 
 <div class="mySet">
-    <div class="myAddress1">
+    <div :class="index!=0 ? 'myAddress1 myAddress2' : 'myAddress1'" v-for="(ress,index) in address_list">
         <div class="clearfix myAddress1-text1">
-            <span class="fl">秋日</span>
-            <span class="fr">15852526548</span>
+            <span class="fl">{{ress.consignee}}</span>
+            <span class="fr">{{ress.telephone}}</span>
         </div>
         <div class="myAddress1-text2">
-            <span>浙江省杭州市</span>
+            <span>{{ress.province}}{{ress.city}}{{ress.district}}{{ress.address}}</span>
         </div>
         <div class="clearfix myAddress1-text3">
             <div class="fl">
-                <img src="images/dui1.png" alt="">
-                <span>设为默认</span>
+                <img v-if="ress.isdefault == 0" src="images/dui.png" alt="">
+                <img v-else src="images/dui1.png" alt="">
+                <span @click="setIsdefaultset(ress.addressid)">设为默认</span>
             </div>
-            <a href="addAddress.html">
+            <a href="addAddress.html" @click="jump(ress.addressid)">
             <div class="fr">
                 <img src="images/bianji.png" alt="">
                 <span>编辑</span>
@@ -65,7 +74,7 @@
         </div>
         
     </div>
-    <div class="myAddress1 myAddress2">
+    <!--<div class="myAddress1 myAddress2">
             <div class="clearfix myAddress1-text1">
                 <span class="fl">秋日</span>
                 <span class="fr">15852526548</span>
@@ -108,13 +117,87 @@
                 </a>
             </div>
             
-    </div>
+    </div>-->
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                address_list:''
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getAddress_list();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的收货地址
+    	getAddress_list:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.address_list, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.address_list = res.info.address;
+    				
+    			}
+    			else{
+    				alert('我的收货地址'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的收货地址'+err)
+        })
+        
+    	},
+    	//设置默认地址
+    	setIsdefaultset:function(addressid){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+				addressid:addressid
+    		}
+    		
+    		Axios.post(window.Url.isdefaultset, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				alert(res.info);
+    				location.reload();
+    			}
+    			else{
+    				alert('设置默认地址'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('设置默认地址'+err)
+        })
+        
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('addressid',type_id);
+    	},
+	}
+})
 
 $('.banner').height($(window).width()*400/750);
 
