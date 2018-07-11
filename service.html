@@ -45,7 +45,8 @@
         <img src="images/jiantou.png" alt="">
         <span>返回</span>
      </div>
-     <div class="logo_longevity">个人服务分类</div> 
+     <div v-if="is_company == 2" class="logo_longevity">个人服务分类</div> 
+     <div v-else class="logo_longevity">商家服务分类</div> 
      <!-- <div class="header_shop_longevity">重新提交</div> -->
 </div>
 <!--  / header  -->
@@ -132,7 +133,8 @@ var vm = new Vue({
 		data() {
             return {
                 city_name:getCookie("cityLocation"),
-                type_list:[]
+                type_list:[],
+                is_company:getCookie('service_is_company')
             }
 		},
     created: function () {
@@ -154,7 +156,7 @@ var vm = new Vue({
 //				city:getCookie("cityLocation"),
 				city:$this.city_name,
 				type:1,
-				is_company:getCookie('service_is_company')
+				is_company:$this.is_company
     		}
     		
     		Axios.post(window.Url.service_type, data).then((res) => {

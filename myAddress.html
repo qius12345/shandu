@@ -45,7 +45,7 @@
             <span>返回</span>
         </div>
         <div class="logo_longevity">地址管理</div>
-        <a href="addAddress.html"><div class="header_shop_longevity">新增地址</div></a>   
+        <a href="addAddress.html" @click="clone_addressid"><div class="header_shop_longevity">新增地址</div></a>   
 </div>
 <!--  / header  -->
 
@@ -196,6 +196,9 @@ var vm = new Vue({
     	jump:function(type_id){
     		setCookie('addressid',type_id);
     	},
+    	clone_addressid:function(){
+    		setCookie('addressid','');
+    	}
 	}
 })
 

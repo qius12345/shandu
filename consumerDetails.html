@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -73,10 +79,57 @@
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        collect_list:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getMoney_details();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的收藏
+    	getMoney_details:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Money_details, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.collect_list = res.info.collect;
+    				
+    			}
+    			else{
+    				alert('消费明细'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('消费明细'+err)
+        })
+        
+    	}
+	}
+})
+
 
 $('.banner').height($(window).width()*400/750);
 

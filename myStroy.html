@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
-
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="stroy_rhead">
   <a href="javascript:history.go(-1)" class="back">
@@ -42,24 +48,24 @@
 <!--  / warpper  -->
 <div class="myStroy">
         <div class="stroy1_hot mar_b">
-                <div class="stroy1_hot_box clearfix">
-                  <a href="stroy1_inner.html">
+                <div class="stroy1_hot_box clearfix" v-for="story in my_story">
+                  <a href="stroy1_inner.html" @click="jump(story.oldstory_id)">
                   <div class="stroy1_hot_img">
-                    <img src="images/stroy_hot1.jpg" width="100%">
+                    <img :src="story.pic" width="100%">
                   </div>
                   <div class="stroy1_hot_text">
-                    <h5>子不语怪力乱神</h5>
+                    <h5>{{story.title}}</h5>
                     <p class="text">
-                      的；客官说的那个；上课的功能；适当的；各路大神给多少；感动生命
+                     {{story.content}}
                     </p>
                     <div class="stroy_function stroy_function1 clearfix" style="bottom: 0;">
-                      <span class="left">人气：3</span>
-                      <span class="right">编号：00035</span>
+                      <span class="left">人气：{{story.popularity}}</span>
+                      <span class="right">编号：{{story.number}}</span>
                     </div>
                   </div>
                   </a>
                 </div>
-                <div class="stroy1_hot_box clearfix">
+                <!--<div class="stroy1_hot_box clearfix">
                   <a href="stroy1_inner.html">
                   <div class="stroy1_hot_img">
                     <img src="images/stroy_hot2.jpg" width="100%">
@@ -92,7 +98,7 @@
                     </div>
                   </div>
                   </a>
-                </div>
+                </div>-->
         </div>
 </div>
 
@@ -101,10 +107,59 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        my_story:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getUcenter_my_story();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的老故事
+    	getUcenter_my_story:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_my_story, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.my_story = res.info.oldstory;
+    				
+    			}
+    			else{
+    				alert('我的老故事'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的老故事'+err)
+        })
+        
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('oldstoryId',type_id);
+    	}
+	}
+})
     $('.energetic1 li').click(function(){
       window.location.href = "tourItinerary.html";
     });

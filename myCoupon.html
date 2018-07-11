@@ -26,10 +26,18 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
+
 
 <body class="body_bg2">
 
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -94,11 +102,58 @@
     </div>
 
 </div>
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        coupon_list:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getcoupon();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的优惠券
+    	getcoupon:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.coupon, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.coupon_list = res.info.coupon;
+    				
+    			}
+    			else{
+    				alert('我的优惠券'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的优惠券'+err)
+        })
+        
+    	}
+	}
+})
+
 
 $('.banner').height($(window).width()*400/750);
 

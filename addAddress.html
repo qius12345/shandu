@@ -55,7 +55,7 @@
         <span>返回</span>
     </div>
     <div class="logo_longevity">添加新地址</div>
-    <div class="header_shop_longevity">提交</div>   
+    <div class="header_shop_longevity" @click="addandedit">提交</div>   
 </div>
 <!--  / header  -->
 
@@ -63,11 +63,11 @@
 <div class="mySet">
     <div class="mySet1 mySet3 clearfix">
         <span class="fl">联系人</span>
-        <input type="text" placeholder="请输入" class="fr">
+        <input type="text" v-model="message.consignee" placeholder="请输入" class="fr">
     </div>
     <div class="mySet1 mySet3 clearfix">
         <span class="fl">联系电话</span>
-        <input type="text" placeholder="请输入电话" class="fr">
+        <input type="text" v-model="message.telephone" placeholder="请输入电话" class="fr">
     </div>
     <div class="mySet1 mySet3 clearfix">
             <span class="fl">联系地址</span>
@@ -85,7 +85,7 @@
     <div class="mySet1 mySet3 mySet4 clearfix">
         <span class="fl">详细地址信息</span>
         <br>
-        <input type="text" placeholder="请输入详细地址(20字以内)">
+        <input type="text" v-model="message.address" placeholder="请输入详细地址(20字以内)">
     </div>
     <!-- <div class="mySet1 mySet5 clearfix">
             <span class="fl">设为默认</span>
@@ -93,9 +93,8 @@
     </div> -->
     <div class="service_inner1_list service_inner1_list-1">
             <h4>设为默认</h4>
-            <div class="yes_btn">
-                <span></span>
-            </div>
+            <div v-if="message.isdefault == 0" class="yes_btn"><span></span></div>
+            <div v-else class="yes_btn on"><span></span></div>
     </div>
 </div>
 </div>
@@ -112,14 +111,23 @@
             return {
                 userId: (() => {
                         
-                    })(),
-                address_list:''
+                })(),
+                message:{
+                	consignee:'',
+                	telephone:'',
+                	province:'',
+                	city:'',
+                	district:'',
+                	address:'',
+                	isdefault:0
+                },
+                edit_message:'',
+                addressid:getCookie('addressid')
             }
 		},
     created: function () {
 		var $this = this;
-    	$this.getAddress_list();
-        
+		$this.edit();
     },
     mounted:function(){
     	
@@ -129,12 +137,7 @@
     	//添加地址
     	addandedit:function(addressid){
     		var $this = this;
-    		
-    		const data = {
-//  			type:1
-				addressid:addressid
-    		}
-    		
+    		const data = $this.message;
     		Axios.post(window.Url.addandedit, data).then((res) => {
     			if(res.result == 1){
     				alert(res.info);
@@ -147,9 +150,31 @@
 	        })
         
     	},
-    	//跳转详情页
-    	jump:function(type_id){
-    		setCookie('addressid',type_id);
+    	//编辑地址
+    	edit:function(addressid){
+    		var $this = this;
+    		
+    		const data = {
+    			addressid:getCookie('addressid')
+    		};
+    		Axios.post(window.Url.edit_details, data).then((res) => {
+    			if(res.result == 1){
+    				$this.message.consignee = res.info.address.consignee;
+    				$this.message.telephone = res.info.address.telephone;
+    				$this.message.province = res.info.address.province;
+    				$this.message.city = res.info.address.city;
+    				$this.message.district = res.info.address.district;
+    				$this.message.address = res.info.address.address;
+    				$this.message.isdefault = res.info.address.isdefault;
+    				console.log($this.message);
+    			}
+    			else{
+    				alert('编辑地址'+res.info)
+    			}
+	        }).catch((err) => {
+	          console.log('编辑地址'+err)
+	        })
+        
     	},
 	}
 })
@@ -185,9 +210,22 @@
                     showContactDom.attr('data-city-code', selectTwoObj.id);
                     showContactDom.attr('data-district-code', selectThreeObj.id);
                     showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                    
+                    vm.message.province = selectOneObj.value;
+                    vm.message.city  = selectTwoObj.value;
+                    vm.message.district  = selectThreeObj.value;
                 }
         });
     });
+    $('.yes_btn').click(function(){
+	    if($(this).hasClass('on')){
+	        $('.yes_btn').removeClass('on');
+	        vm.message.isdefault = 0;
+	    }else{
+	        $('.yes_btn').addClass('on');
+	        vm.message.isdefault = 1;
+	    }
+	})
 </script>
 <script>
 $(window).ready(function(){
@@ -206,13 +244,7 @@ $('.header_map_longevity').click(function(){
 $('.mySet-address').click(function(){
     window.location.href = "myAddress.html";
 })
-$('.yes_btn').click(function(){
-    if($(this).hasClass('on')){
-        $('.yes_btn').removeClass('on');
-    }else{
-        $('.yes_btn').addClass('on');
-    }
-})
+
 
 
   

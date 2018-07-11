@@ -26,10 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
 
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -43,19 +50,67 @@
 
 <div class="aboutUrs">
     <div class="aboutUrs1">
-        <img src="images/about_1.png" alt="">
-        <div class="aboutUrs1-text1">1.0.2</div>
+        <img :src="versions.logo_pic" alt="">
+        <div class="aboutUrs1-text1">{{versions.versions}}</div>
     </div>
     <div class="aboutUrs2 clearfix">
         <span class="fl">当前版本</span>
-        <span class="fr">V1.0.0</span>
+        <span class="fr">V{{versions.versions}}</span>
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+	
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        versions:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getVersions();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//关于我们
+    	getVersions:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_versions, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.versions = res.info.versions;
+    				
+    			}
+    			else{
+    				alert('关于我们'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('关于我们'+err)
+        })
+        
+    	}
+	}
+})
+	
 
 $('.banner').height($(window).width()*400/750);
 

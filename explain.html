@@ -26,39 +26,101 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="stroy_rhead">
         <a href="javascript:history.go(-1)" class="back">
           <img src="images/hl.png"> 返回
         </a>
-        <h5>关于服务排行显示说明</h5>
+        <h5>{{help_details.title}}</h5>
 </div>
 <!--  / header  -->
 
 
 <div class="InformationDetails">
-    <div class="InformationDetails1">关于服务排行显示说明</div>
+    <!--<div class="InformationDetails1">{{help_details.title}}</div>
     <div class="InformationDetails5">
         <ul>
-            <li>1、系统默认按上月订单数和好评率由高到低显示排行</li>
-            <li>2、系统默认按上月订单数和好评率由高到低显示排行</li>
+            <li v-html="help_details.content"></li>
         </ul>
-    </div>
-
+    </div>-->
+	<iframe :src="help_details.url" height="1000" frameborder="0" scrolling="no" width="100%"></iframe>
 </div>
 
 
 <!--  / footer  -->
 
 <!--  / footer -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        help_details:'',
+	        help_id:getCookie('help_id')
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.gethelp_details();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//问题解答
+    	gethelp_details:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_help, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.help_list = res.info;
+    				
+    				$($this.help_list).each(function(index,value){
+    					console.log($this.help_id);
+    					if(value.id == $this.help_id){
+    						$this.help_details = value;
+    					}
+    				})
+    				
+    			}
+    			else{
+    				alert('问题解答'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('问题解答'+err)
+        })
+        
+    	}
+	}
+})
+
 
 $('.banner').height($(window).width()*400/750);
 

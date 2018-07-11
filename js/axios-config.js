@@ -264,11 +264,19 @@
 		//token（登录状态）
 		//addressid（地址ID）
 		addandedit:'/Api/address/addandedit',
+		//修改地址（获取详情）
+		//token（登录状态）
+		//addressid（地址ID）
+		edit_details:'Api/Address/info',
 		
 		
 		//个人收藏
 		//token（登录状态）
 		Ucenter_collect:'/Api/Ucenter/collect',
+		
+		//我的故事
+		//token（登录状态）
+		Ucenter_my_story:'/Api/Ucenter/my_story',
 		
 		
 		//平台消息
@@ -284,6 +292,17 @@
 		//获取钱包余额
 		//token（登录状态）
 		Ucenter_wallet:'/Api/ucenter/wallet',
+		//我的优惠券
+		//token（登录状态）
+		//type  1未使用,2过期,3已使用
+		coupon:'/Api/coupon/index',
+		//消费明细
+		//token（登录状态）
+		Money_details:'/Api/Money/index',
+		
+		//获取版本号
+		//token（登录状态）
+		Ucenter_versions:'/Api/Ucenter/versions',
 		
 		//签到列表
 		//token（登录状态）
@@ -291,6 +310,9 @@
 		//签到
 		//token（登录状态）
 		addqiandao:'/Api/qiandao/addqiandao',
+		
+		//帮助中心
+		Ucenter_help:'/Api/Ucenter/help',
 		
 		
 		

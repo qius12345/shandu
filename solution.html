@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="stroy_rhead">
@@ -42,11 +50,11 @@
 <!--  / warpper  -->
 <div class="myPage">
     <div class="myPage2">
-        <div class="myPage2-list1">
-                <span class="myPage2-list1-txt1">关于签到的说明</span>
+        <div class="myPage2-list1" v-for="help in help_list" @click="jump(help.id)">
+                <span class="myPage2-list1-txt1">{{help.title}}</span>
                 <img src="images/right.png" alt="" class="fr">
         </div>
-        <div class="myPage2-list1">
+       <!-- <div class="myPage2-list1">
               <span class="myPage2-list1-txt1">关于优惠券规则的说明</span>
               <img src="images/right.png" alt="" class="fr">
         </div>
@@ -73,7 +81,7 @@
         <div class="myPage2-list1">
             <span class="myPage2-list1-txt1">关于老故事文章修改明</span>
             <img src="images/right.png" alt="" class="fr">
-        </div>  
+        </div> --> 
       </div>
 </div>
 
@@ -82,19 +90,70 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
-    $('.energetic1 li').click(function(){
-      window.location.href = "tourItinerary.html";
-    });
-    $('.myCollect1').click(function(){
-      window.location.href = "InformationDetails.html";
-    });
-    $('.myPage2-list1').click(function(){
-      window.location.href = "explain.html";
-    });
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        help_list:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.gethelp_list();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//问题解答
+    	gethelp_list:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_help, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.help_list = res.info;
+    				
+    			}
+    			else{
+    				alert('问题解答'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('问题解答'+err)
+        })
+        
+    	},
+    	jump:function(help_id){
+    		var $this = this;
+    		setCookie('help_id',help_id);
+    		location.href = 'explain.html';
+    	}
+	}
+})
+//  $('.energetic1 li').click(function(){
+//    window.location.href = "tourItinerary.html";
+//  });
+//  $('.myCollect1').click(function(){
+//    window.location.href = "InformationDetails.html";
+//  });
+//  $('.myPage2-list1').click(function(){
+//    window.location.href = "explain.html";
+//  });
     
     
   $(window).load(function(){
