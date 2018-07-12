@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
+<div id="app" v-cloak>
+	
 <div class="lianxi_show">
     <div class="lianxi_show_bg"></div>
     <div class="lianxi_show_con">
@@ -209,13 +217,60 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
     // $('.energetic1 li').click(function(){
     //   window.location.href = "tourItinerary.html";
     // });
+    var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        wallet:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getUcenter_wallet();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//我的余额
+    	getUcenter_wallet:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Ucenter_wallet, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.wallet = res.info.wallet;
+    				
+    			}
+    			else{
+    				alert('我的余额'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('我的余额'+err)
+        })
+        
+    	}
+	}
+})
+    
+    
     $('.bg5').click(function(){
       $('.lianxi_show').css('display','block');
     })
