@@ -35,7 +35,7 @@
 </head>
 
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -50,21 +50,21 @@
 
 <div class="aboutUrs">
     <div class="pingtai_news clearfix" v-for="messaging in messaging_list">
-        <!--<div class="pingtai_news_left">
+        <div class="pingtai_news_left">
             <span>平台</span>
             <span>消息</span>
         </div>
         <div class="pingtai_news_center">
           <div class="pingtai_news_center_top clearfix">
-            <span class="pingtai_news_center_txt1">服务人员审核结果</span>
-            <span class="pingtai_news_center_txt2">2018-02-16 15:48:28</span>
+            <span class="pingtai_news_center_txt1">{{messaging.title}}</span>
+            <span class="pingtai_news_center_txt2">{{messaging.addtime}}</span>
           </div>
           <div class="pingtai_news_center_bottom">
-              	的服务账户30天冻结期已满，可正常接单了冻结期已满
+              	{{messaging.content}}
           </div>                
         </div>
-        <span class="pingtai_news_quan"></span>
-        <input type="checkbox">-->
+        <span v-show="messaging.isready" class="pingtai_news_quan"></span>
+        <input type="checkbox">
     </div>
     <!--<div class="pingtai_news clearfix">
             <div class="pingtai_news_left">
@@ -157,6 +157,8 @@
 <div class="foot-check">
   全选
 </div>
+
+</div>
 </body>
 <script>
 $(window).ready(function(){
@@ -192,7 +194,7 @@ $(window).ready(function(){
     		Axios.post(window.Url.Ucenter_messaging, data).then((res) => {
     			
     			if(res.result == 1){
-    				$this.messaging_list = res.info.messaging;
+    				$this.messaging_list = res.info;
     				
     			}
     			else{
@@ -214,9 +216,9 @@ var flag2=true;
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.pingtai_news *').not('input').click(function(){
-    window.location.href = "InformationDetails1.html";
-})
+//$('.pingtai_news *').not('input').click(function(){
+//  window.location.href = "InformationDetails1.html";
+//})
 $('.header_shop_longevity').click(function(){
   if(flag1){
     $('.pingtai_news input').show();

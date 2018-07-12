@@ -1563,6 +1563,7 @@ i{
     margin-top: 0.12rem;
     margin-bottom: 0.04rem;
     background:#fff;
+    position: relative;
 }
 .orderList1-detail img{
 	width: 0.4rem;

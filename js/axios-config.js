@@ -252,6 +252,23 @@
 		activityvote:'/Api/Stage/vote',
 		
 		
+		/*活力健身订单*/
+		//token（登录状态）
+		Vitality_order_list:'/Api/Vitality/order_list',
+		/*活力健身订单统计*/
+		//token（登录状态）
+		Vitality_order_num:'/Api/Vitality/index',
+		
+		/*购买商品订单*/
+		//token（登录状态）
+		Service_order_num:'/Api/Service/index',
+		
+		
+		/*预约服务订单*/
+		//token（登录状态）
+		tugou_order_num:'/Api/TuanMyorder/countorder',
+		
+		
 		/*我的*/
 		//地址列表
 		//token（登录状态）

@@ -56,6 +56,7 @@
     </div>
     <div class="logo_longevity">添加新地址</div>
     <div class="header_shop_longevity" @click="addandedit">提交</div>   
+    <!--<div v-else class="header_shop_longevity" @click="edit">提交</div>-->   
 </div>
 <!--  / header  -->
 
@@ -127,7 +128,9 @@
 		},
     created: function () {
 		var $this = this;
-		$this.edit();
+		if(getCookie('addressid') != ''){
+			$this.edit();
+		}
     },
     mounted:function(){
     	
@@ -137,10 +140,14 @@
     	//添加地址
     	addandedit:function(addressid){
     		var $this = this;
+    		if(getCookie('addressid') != ''){
+    			$this.message.addressid = getCookie('addressid');
+    		}
     		const data = $this.message;
     		Axios.post(window.Url.addandedit, data).then((res) => {
     			if(res.result == 1){
     				alert(res.info);
+    				location.href = 'myAddress.html';
     			}
     			else{
     				alert('添加地址'+res.info)

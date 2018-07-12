@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link href="css/mui.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <script src="js/jquery-1.11.1.min.js"></script>
@@ -25,6 +26,9 @@
 <script src="js/swiper-3.4.1.min.js"></script>
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
+<script src="js/mui.min.js"></script> 
+<script src="js/mui.indexedlist.js"></script>
+
 
 <script src="./js/vue.js"></script>
 <script src="./js/axios.min.js"></script>
@@ -51,28 +55,32 @@
 
 
 <div class="mySet">
-    <div :class="index!=0 ? 'myAddress1 myAddress2' : 'myAddress1'" v-for="(ress,index) in address_list">
-        <div class="clearfix myAddress1-text1">
-            <span class="fl">{{ress.consignee}}</span>
-            <span class="fr">{{ress.telephone}}</span>
+    <div :class="index!=0 ? 'myAddress1 myAddress2' : 'myAddress1'" v-for="(ress,index) in address_list" class="mui-table-view-cell mui-transitioning mui-selected">
+    	<div class="mui-slider-right mui-disabled">
+			<a class="mui-btn mui-btn-red">删除</a>
+		</div>
+		<div class="mui-slider-handle">
+	        <div class="clearfix myAddress1-text1">
+	            <span class="fl">{{ress.consignee}}</span>
+	            <span class="fr">{{ress.telephone}}</span>
+	        </div>
+	        <div class="myAddress1-text2">
+	            <span>{{ress.province}}{{ress.city}}{{ress.district}}{{ress.address}}</span>
+	        </div>
+	        <div class="clearfix myAddress1-text3">
+	            <div class="fl">
+	                <img v-if="ress.isdefault == 0" src="images/dui.png" alt="">
+	                <img v-else src="images/dui1.png" alt="">
+	                <span @click="setIsdefaultset(ress.addressid)">设为默认</span>
+	            </div>
+	            <a href="addAddress.html" @click="jump(ress.addressid)">
+	            <div class="fr">
+	                <img src="images/bianji.png" alt="">
+	                <span>编辑</span>
+	            </div>
+	            </a>
+	        </div>
         </div>
-        <div class="myAddress1-text2">
-            <span>{{ress.province}}{{ress.city}}{{ress.district}}{{ress.address}}</span>
-        </div>
-        <div class="clearfix myAddress1-text3">
-            <div class="fl">
-                <img v-if="ress.isdefault == 0" src="images/dui.png" alt="">
-                <img v-else src="images/dui1.png" alt="">
-                <span @click="setIsdefaultset(ress.addressid)">设为默认</span>
-            </div>
-            <a href="addAddress.html" @click="jump(ress.addressid)">
-            <div class="fr">
-                <img src="images/bianji.png" alt="">
-                <span>编辑</span>
-            </div>
-            </a>
-        </div>
-        
     </div>
     <!--<div class="myAddress1 myAddress2">
             <div class="clearfix myAddress1-text1">
@@ -138,7 +146,7 @@ var vm = new Vue({
     created: function () {
 		var $this = this;
     	$this.getAddress_list();
-        
+//      $this.phone_touch();
     },
     mounted:function(){
     	
@@ -191,6 +199,36 @@ var vm = new Vue({
           console.log('设置默认地址'+err)
         })
         
+    	},
+    	phone_touch:function(){
+    		$("body").on("touchstart", function(e) {
+//			    e.preventDefault();
+			    startX = e.originalEvent.changedTouches[0].pageX,
+			    startY = e.originalEvent.changedTouches[0].pageY;
+			});
+			$("body").on("touchmove", function(e) {
+//			    e.preventDefault();
+			    moveEndX = e.originalEvent.changedTouches[0].pageX,
+			    moveEndY = e.originalEvent.changedTouches[0].pageY,
+			    X = moveEndX - startX,
+			    Y = moveEndY - startY;
+			  	console.log(X,Y);
+			    if ( X > 0 ) {
+			        alert("left 2 right");
+			    }
+			    else if ( X < 0 ) {
+			        alert("right 2 left");
+			    }
+			    else if ( Y > 0) {
+			        alert("top 2 bottom");
+			    }
+			    else if ( Y < 0 ) {
+			        alert("bottom 2 top");
+			    }
+			    else{
+			        alert("just touch");
+			    }
+			});
     	},
     	//跳转详情页
     	jump:function(type_id){

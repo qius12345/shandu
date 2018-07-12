@@ -26,10 +26,16 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
      <div class="header_map_longevity">   
@@ -51,6 +57,7 @@
           <div class="orderList1-title-right">
               <span>更多服务订单</span>
               <img src="images/right.png" alt="">
+              
           </div>
         </div>
         <div class="orderList1-content">
@@ -59,6 +66,7 @@
              <img src="images/orderList-1.png" alt="">
              <br>
              <span>待接单</span>
+             <div v-if="Service_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dfk}}</span></div>
           </div>
           </a>
           <a href="payment-orders2.html">
@@ -66,6 +74,7 @@
              <img src="images/orderList-2.png" alt="">
              <br>
              <span>进行中</span>
+             <div v-if="Service_order_num.jxz != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.jxz}}</span></div>
           </div>
           </a>
           <a href="payment-orders3.html">
@@ -73,6 +82,7 @@
              <img src="images/orderList-3.png" alt="">
              <br>
              <span>待评价</span>
+             <div v-if="Service_order_num.dpj != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dpj}}</span></div>
           </div>
           </a>
           <a href="payment-orders4.html">
@@ -80,6 +90,7 @@
              <img src="images/orderList-4.png" alt="">
              <br>
              <span>已完成</span>
+             <div v-if="Service_order_num.ywc != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.ywc}}</span></div>
           </div>
           </a>
           <a href="payment-orders4.html">
@@ -87,6 +98,7 @@
              <img src="images/orderList-5.png" alt="">
              <br>
              <span>退款/售后</span>
+             <div v-if="Service_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.tksh}}</span></div>
           </div>
           </a>
         </div>
@@ -106,6 +118,7 @@
                      <img src="images/orderList-2.png" alt="">
                      <br>
                      <span>待付款</span>
+                     <div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfk}}</span></div>
                   </div>
                   </a>
                   <a href="collage-orders2.html">
@@ -113,6 +126,7 @@
                      <img src="images/orderList-1.png" alt="">
                      <br>
                      <span>待拼团</span>
+                     <div v-if="tugou_order_num.dpt != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dpt}}</span></div>
                   </div>
                   </a>
                   <a href="collage-orders3.html">
@@ -120,6 +134,7 @@
                      <img src="images/orderList-2.png" alt="">
                      <br>
                      <span>待发货</span>
+                     <div v-if="tugou_order_num.dfh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfh}}</span></div>
                   </div>
                   </a>
                   <a href="collage-orders4.html">
@@ -127,6 +142,7 @@
                      <img src="images/orderList-3.png" alt="">
                      <br>
                      <span>待收货</span>
+                     <div v-if="tugou_order_num.dsh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dsh}}</span></div>
                   </div>
                   </a>
                   <a href="collage-orders5.html">
@@ -134,6 +150,7 @@
                      <img src="images/orderList-4.png" alt="">
                      <br>
                      <span>已完成</span>
+                     <!--<div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dfk}}</span></div>-->
                   </div>
                   </a>
                   <a href="collage-orders6.html">
@@ -141,6 +158,7 @@
                      <img src="images/orderList-5.png" alt="">
                      <br>
                      <span>退款/售后</span>
+                     <div v-if="tugou_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.tksh}}</span></div>
                   </div>
                   </a>
                 </div>
@@ -156,10 +174,11 @@
                 </div>
                 <div class="orderList1-content">
                   <a href="energetic-orders.html">	
-                  <div class="orderList1-detail">
+                  <div class="orderList1-detail" style="position: relative;">
                      <img src="images/orderList-1.png" alt="">
                      <br>
                      <span>待付款</span>
+                     <div v-if="Vitality_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dfk}}</span></div>
                   </div>
                   </a>
                   <a href="energetic-orders.html">
@@ -167,6 +186,7 @@
                      <img src="images/orderList-3.png" alt="">
                      <br>
                      <span>已付款</span>
+                     <div v-if="Vitality_order_num.dqr != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dqr}}</span></div>
                   </div>
                   </a>
                   <a href="energetic-orders.html">
@@ -174,6 +194,7 @@
                      <img src="images/orderList-5.png" alt="">
                      <br>
                      <span>退款/售后</span>
+                     <div v-if="Vitality_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.tksh}}</span></div>
                   </div>
                   </a>
                 </div>
@@ -230,11 +251,107 @@
                 </ul>
 </div>
 <!--  / footer  -->
-
+</div>
 
 </body>
 <script>
 $(window).ready(function(){
+	
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+	    return {
+	        userId: (() => {
+	                
+	            })(),
+	        Vitality_order_num:'',
+	        Service_order_num:'',
+	        tugou_order_num:''
+	    }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getVitality_order_num();
+    	$this.getService_order_num();
+    	$this.gettugou_order_num();
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//活力健身订单数量统计
+    	getVitality_order_num:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Vitality_order_num, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Vitality_order_num = res.info;
+    				
+    			}
+    			else{
+    				alert('活力健身订单数量统计'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('活力健身订单数量统计'+err)
+        })
+        
+    	},
+    	//预约订单数量统计
+    	getService_order_num:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.Service_order_num, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.Service_order_num = res.info;
+    				
+    			}
+    			else{
+    				alert('预约订单数量统计'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('预约订单数量统计'+err)
+        })
+        
+    	},
+    	//团购订单数量统计
+    	gettugou_order_num:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+    		}
+    		
+    		Axios.post(window.Url.tugou_order_num, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.tugou_order_num = res.info;
+    				
+    			}
+    			else{
+    				alert('团购订单数量统计'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('团购订单数量统计'+err)
+        })
+        
+    	},
+	}
+})
 
 $('.banner').height($(window).width()*400/750);
 

@@ -115,11 +115,11 @@
     </div>
     <div class="sign2">
         <span class="fl">{{newDate.Year}}年{{newDate.Month}}月{{newDate.Date}}日</span>
-        <button v-if="!qiandao.yiqian" class="fr go_qiandao" @click="setAddqiandao">签到</button>
-        <button v-else class="fr go_qiandao" style="background-color: #E9E9E9;color: #FFFFFF;">已签到</button>
+        <button v-if="qiandao.yiqian" class="fr go_qiandao" style="background-color: #E9E9E9;color: #FFFFFF;">已签到</button>
+        <button v-else class="fr go_qiandao" @click="setAddqiandao">签到</button>
     </div>
     <div class="sign3">
-        <span>您已连续签到{{qiandao.yiqian}}天</span>
+        <span>您已连续签到{{qiandao.lxqd}}天</span>
     </div>
     <div class="sign4">
         <p class="sign4-txt1">温馨提示：</p>
@@ -204,11 +204,18 @@ var vm = new Vue({
     			
     			if(res.result == 1){
     				$this.qiandao = res.info;
-//					alert(res.info);
-					/*var qiandao_arr = $('.sign1 td').text();
-					$(qiandao_arr).each(function(index,value){
-						console.log(value)
-					});*/
+    				
+    				console.log(typeof($('td')));
+    				var td = document.getElementsByTagName('td');
+					var qiandao_day = res.info.qiandao;
+					
+					$(td).each(function(index,value){
+						$(qiandao_day).each(function(idx,val){
+							if($(value).text() == val.day){
+								$(value).addClass('on')
+							}
+						});
+					});
     			}
     			else{
     				alert('签到列表'+res.info)
