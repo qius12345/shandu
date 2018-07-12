@@ -85,7 +85,7 @@
                     <div class="part_line"></div>
                 </div> -->
                     <ul v-show="flag1">
-                        <li class="energetic1-content" v-for="items2 in energetic_Tuijian" @click="goEnergeticDetail(items1.tourist_id)">
+                        <li class="energetic1-content" v-for="items2 in energetic_Tuijian" @click="goEnergeticDetail(items2.tourist_id)">
                             <div>
                                 <div class="energetic1-content-left">
                                     <img :src="items2.logo_pic" alt="" class="img3">
@@ -175,7 +175,7 @@ $(window).ready(function(){
                                 
         },
         mounted:function(){
-          
+          getLocation();
         },
         methods:{
           //活力健身-相关推荐
@@ -225,11 +225,47 @@ $(window).ready(function(){
             goEnergeticDetail:function(touristId1){
                 setCookie("touristId",touristId1);
                 window.location.href="tourItinerary.html";
-            }
+            },
          
         }
 
     })
+ 
+function getLocation(){
+    var selectContactDom = $('#select_contact');
+                var showContactDom = $('#show_contact');
+                var contactProvinceCodeDom = $('#contact_province_code');
+                var contactCityCodeDom = $('#contact_city_code');
+                selectContactDom.bind('click', function () {
+                    var sccode = showContactDom.attr('data-city-code');
+                    var scname = showContactDom.attr('data-city-name');
+
+                    var oneLevelId = showContactDom.attr('data-province-code');
+                    var twoLevelId = showContactDom.attr('data-city-code');
+                    var threeLevelId = showContactDom.attr('data-district-code');
+                    var iosSelect = new IosSelect(2, 
+                        [iosProvinces, iosCitys],
+                        {
+                            title: '',
+                            itemHeight: 35,
+                            relation: [1, 1],
+                            oneLevelId: oneLevelId,
+                            twoLevelId: twoLevelId,
+                            threeLevelId: threeLevelId,
+                            callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                                contactProvinceCodeDom.val(selectOneObj.id); 
+                                contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
+                                contactCityCodeDom.val(selectTwoObj.id);
+                                contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
+
+                                showContactDom.attr('data-province-code', selectOneObj.id);
+                                showContactDom.attr('data-city-code', selectTwoObj.id);
+                                showContactDom.attr('data-district-code', selectThreeObj.id);
+                                showContactDom.html(selectTwoObj.value);
+                            }
+                    });
+                });
+}
 
 $('.header_map_longevity').click(function(){
     history.go(-1);
@@ -245,39 +281,5 @@ $('.header_map_longevity').click(function(){
 <script src="js/zepto.js"></script>
 <script src="js/areaData_v2.js"></script>
 <script src="js/iosSelect.js"></script>
-<script type="text/javascript">
-    var selectContactDom = $('#select_contact');
-    var showContactDom = $('#show_contact');
-    var contactProvinceCodeDom = $('#contact_province_code');
-    var contactCityCodeDom = $('#contact_city_code');
-    selectContactDom.bind('click', function () {
-        var sccode = showContactDom.attr('data-city-code');
-        var scname = showContactDom.attr('data-city-name');
 
-        var oneLevelId = showContactDom.attr('data-province-code');
-        var twoLevelId = showContactDom.attr('data-city-code');
-        var threeLevelId = showContactDom.attr('data-district-code');
-        var iosSelect = new IosSelect(2, 
-            [iosProvinces, iosCitys],
-            {
-                title: '',
-                itemHeight: 35,
-                relation: [1, 1],
-                oneLevelId: oneLevelId,
-                twoLevelId: twoLevelId,
-                threeLevelId: threeLevelId,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    contactProvinceCodeDom.val(selectOneObj.id); 
-                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
-                    contactCityCodeDom.val(selectTwoObj.id);
-                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
-
-                    showContactDom.attr('data-province-code', selectOneObj.id);
-                    showContactDom.attr('data-city-code', selectTwoObj.id);
-                    showContactDom.attr('data-district-code', selectThreeObj.id);
-                    showContactDom.html(selectTwoObj.value);
-                }
-        });
-    });
-</script>
 </html>

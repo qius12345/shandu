@@ -27,16 +27,34 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+<style>
+    .banner_bg2_right2 span b{
+        font-weight:normal;
+    }
+    .shopDetail6_bg1{
+       top: 20%;
+    }
+</style>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
+
 <div class="lianxi_show">
     <div class="lianxi_show_bg"></div>
     <div class="lianxi_show_con">
         <h5>4008089949</h5>
         <div class="lianxi_show_con_f1">
-            <a href="##">取消</a>
-            <a href="##" class="active">拨打电话</a>
+            <a href="##" class="quxiao1">取消</a>
+            <a href="tel:4008089949" class="active">拨打电话</a>
         </div>
     </div>
 </div>
@@ -59,26 +77,27 @@
 </div>
 <!--  / header  -->
 
-<div class="banner" style="padding-top:0.38rem;">
-  <div class="swiper-container swiper-container-banner">
+<div class="banner">
+  <img :src="goods_list.logo_pic" width="100%">
+  <!-- <div class="swiper-container swiper-container-banner">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="images/collage-list1_1.jpg" width="100%"></div>
+        <div class="swiper-slide"><img :src="goods_list.logo_pic" width="100%"></div>
         <div class="swiper-slide"><img src="images/collage-list1_1.jpg" width="100%"></div>
         <div class="swiper-slide"><img src="images/collage-list1_1.jpg" width="100%"></div>
     </div>
-    <!-- 如果需要分页器 -->
-    <!-- <div class="swiper-pagination swiper-pagination-banner"></div> -->
-  </div>
+    如果需要分页器
+    <div class="swiper-pagination swiper-pagination-banner"></div>
+  </div> -->
   <div class="banner_bg1">
   </div>
   <div class="banner_bg2 clearfix">
       <div class="banner_bg2_left">
-          <div class="banner_bg2_left1">拼团价：<span>￥10.00</span></div>
+          <div class="banner_bg2_left1">拼团价：<span>￥{{goods_list.price}}</span></div>
           <div class="banner_bg2_left2">原价：<span>￥100.00</span></div>
       </div>
       <div class="banner_bg2_right">
           <div class="banner_bg2_right1">距结束仅剩</div>
-          <div class="banner_bg2_right2"><span>01</span> : <span>01</span> : <span>01</span> : <span>01</span></div>
+          <div class="banner_bg2_right2"><span><b v-if="list.dd<=9">0</b>{{list.dd}}</span> : <span><b v-if="list.hh<=9">0</b>{{list.hh}}</span> : <span><b v-if="list.mm<=9">0</b>{{list.mm}}</span> : <span><b v-if="list.ss<=9">0</b>{{list.ss}}</span></div>
       </div>
       <!-- <div class="banner_bg2_pintuan">10人团</div> -->
   </div>
@@ -99,8 +118,8 @@
                 <span>分享</span>
             </div>
         </div> -->
-        <div class="shopDetail6">
-            <h3>测试 后台自动补齐测试 后台自动补齐测试 后台自动补齐测试 后台自动补齐</h3>
+        <div class="shopDetail6 clearfix">
+            <h3>{{goods_list.goods_name}}</h3>
             <div class="shopDetail6_bg1">
                 <img src="images/shopDetail-share.png" alt="" width="22">
                 <br>
@@ -240,11 +259,9 @@
         <div class="show_xz_t clearfix">
             <img src="images/collage-list2.jpg" width="100">
             <h3>请选择分类规格</h3>
-            <h4>拼团价: <span>￥<i>10.00</i></span> </h4>
-            <!-- <h6>已拼团人数：<span>7</span> /100</h6> -->
+            <h4>拼团价: <span>￥<i>{{goods_list.price}}</i></span> </h4>
         </div>
         <div class="show_div_cons" style="margin-top:88px; height:258px;">
-
             <!-- <div class="show_xza">
                 <h5>配送区域<span>(配送地可能会影响库存，请正确选择)</span></h5>
                 <a href="user_dizhi3.html"><p><img src="images/map1.png" width="15">
@@ -280,9 +297,100 @@
     </div> -->
 </div>
 
+</div>
+
 </body>
 <script>
 $(window).ready(function(){
+
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            goods_list:[],
+            list:{
+                dd:'',
+                hh:'',
+                mm:'',
+                ss:'',
+            },
+          }
+        },
+        created:function(){
+          var $this = this;
+          $this.getGoodsList();                                        
+        },
+        mounted:function(){
+            var $this = this;
+            setInterval( ()=> {
+                    var aaa = parseInt( $this.goods_list.end_time );
+                    var bbb = new Date().getTime();
+                    var rightTime = aaa - bbb;
+                    // var rightTime = parseInt( $this.list[key]["second"] );
+                    if (rightTime > 0) {
+                        var dd1 = Math.floor(rightTime /1000 / 60 / 60 / 24);
+                        var hh1 = Math.floor((rightTime /1000  / 60 / 60) % 24);
+                        var mm1 = Math.floor((rightTime /1000 / 60) % 60);
+                        var ss1 = Math.floor(rightTime /1000 % 60);
+                        vm.list.dd=dd1;
+                        vm.list.hh=hh1;
+                        vm.list.mm=mm1;
+                        vm.list.ss=ss1;
+                    }                   
+            }, 1000);
+           
+        },
+        methods:{
+          //团购列表-全部商品
+            getGoodsList:function(){
+                var $this = this;
+                const data = {
+                   goodsid:getCookie("goodId"),
+                }
+                Axios.post(window.Url.goods_info,data).then((res) => {
+                  if(res.result == 1){
+                    $this.goods_list = res.info.goods[0];  
+                    console.log($this.goods_list);
+                    $this.$nextTick(function(){
+                        InitTime($this.goods_list.end_time);
+                    })
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("活力健身-相关推荐:"+err)
+                })              
+            },        
+        }
+
+    })
+function InitTime(time1){
+    $this=this;
+    
+    var dd1,hh1,mm1,ss1 = null;
+    var time = parseInt(time1) - new Date().getTime();
+    if(time<=0){
+        // return '拼团已结束'
+    }else{
+        dd1 = Math.floor(time /1000 / 60 / 60 / 24);
+        hh1 = Math.floor((time /1000 / 60 / 60) % 24);
+        mm1 = Math.floor((time /1000 / 60) % 60);
+        ss1 = Math.floor(time /1000 % 60);
+        console.log(dd1);
+        console.log($this.list);
+        // var obj1=new Object();
+        vm.list.dd=dd1;
+        vm.list.hh=hh1;
+        vm.list.mm=mm1;
+        vm.list.ss=ss1;
+        console.log(vm.list);
+        // $this.={dd:dd1,hh:hh1,mm:mm1,ss:ss1};
+        // var str = dd1+"tian";
+        // return obj1;
+    }
+}
 
 // $('.banner').height($(window).width()*400/750);
 
@@ -314,7 +422,7 @@ $('.share_show_con a').click(function(){
 $('.footer3-left').click(function(){
   $('.lianxi_show').css('display','block');
 })
-$('.lianxi_show_con_f1 a').click(function(){
+$('.lianxi_show_con_f1 .quxiao1').click(function(){
     $('.lianxi_show').css('display','none');
 })
 $('.footer3-center').click(function(){

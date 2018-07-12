@@ -250,6 +250,12 @@
 		//token（登录状态）
 		//stage_id（当前投票的ID）
 		activityvote:'/Api/Stage/vote',
+
+		//团购列表-全部商品
+		goods_list:'/Api/Tuan/goodsList',
+		//团购列表-指定商品
+		//goodsid（指定商品的ID）
+		goods_info:'/Api/Tuan/goodsInfo',
 		
 		
 		/*活力健身订单*/
