@@ -353,6 +353,7 @@ $(window).ready(function(){
                     console.log($this.goods_list);
                     $this.$nextTick(function(){
                         InitTime($this.goods_list.end_time);
+                        bgshow();
                     })
                   }else
                   {
@@ -448,12 +449,16 @@ $('.show_xzb p span').click(function () {
         })
   
 }) 
-$('.pro_show_bg').click(function () {
+function bgshow(){
+    $('.pro_show_bg').click(function () {
+
             $('.pro_show_bg').stop(true, true).fadeOut(300);
             $('.pro_share_con').stop(true, true).fadeOut(300);
 
             $('.show_div').stop(true, true).animate({bottom: "-450px"}, 500);
             $('body').removeClass('body_on');
-}) 
+    }) 
+}
+
 </script>
 </html>

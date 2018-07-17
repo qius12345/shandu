@@ -49,7 +49,7 @@
 
 
 <div class="aboutUrs">
-    <div class="pingtai_news clearfix" v-for="messaging in messaging_list" @click="jump(messaging.messageid)">
+    <div class="pingtai_news clearfix" v-for="messaging in messaging_list" @click="jump(messaging.messageid,messaging.url)">
         <div class="pingtai_news_left">
             <span>平台</span>
             <span>消息</span>
@@ -206,8 +206,9 @@ $(window).ready(function(){
         })
         
     	},
-    	jump:function(messageid){
+    	jump:function(messageid,messageidUrl){
     		setCookie('messagesid',messageid);
+        setCookie('pingtaiUrl',messageidUrl);
     		window.location.href = "InformationDetails1.html";
     	}
 	}

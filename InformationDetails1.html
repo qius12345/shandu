@@ -54,11 +54,13 @@
 
 
 <div class="InformationDetails">
-    <div class="InformationDetails1">更符合法规</div>
+    <!-- <div class="InformationDetails1">更符合法规</div>
     <div class="InformationDetails2">2018-01-11 &nbsp;16 : 12 : 20</div>
     <div class="InformationDetails3">
         <p>给对方回复</p>
-    </div>
+    </div> -->
+
+    <iframe :src="messaging_list" width="100%" height="" frameborder="0" scrolling="no"></iframe>
 </div>
 
 
@@ -94,12 +96,11 @@ var vm = new Vue({
                 userId: (() => {
                         
                     })(),
-                messaging_list:''
+                messaging_list:getCookie("pingtaiUrl"),
             }
 		},
     created: function () {
 		var $this = this;
-    	$this.getUcenter_messaging();
         
     },
     mounted:function(){
@@ -107,33 +108,7 @@ var vm = new Vue({
     },
     methods:{
     	
-    	//我的平台消息详情
-    	getUcenter_messaging:function(){
-    		var $this = this;
-    		
-    		const data = {
-//  			type:1
-    		}
-    		
-    		Axios.post(window.Url.Ucenter_messaging, data).then((res) => {
-    			
-    			if(res.result == 1){
-    				$this.messaging_list = res.info;
-    				
-    			}
-    			else{
-    				alert('我的平台消息详情'+res.info)
-    			}
-    			
-        }).catch((err) => {
-          console.log('我的平台消息详情'+err)
-        })
-        
-    	},
-    	jump:function(messageid){
-    		setCookie('messagesid',messageid);
-    		window.location.href = "InformationDetails1.html";
-    	}
+    	
 	}
 })
 
