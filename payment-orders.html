@@ -69,144 +69,50 @@
 <!--  / header  -->
 <!--  / warpper  -->
 <div class="payment-orders">
-  <div class="payment-orders1">
+  <div class="payment-orders1" v-for="ServiceOrder in ServiceOrder_list">
         <div class="energetic1-title3">
-            <span>订单编号：<i>100320180127092728983</i></span>
-            <span>下单时间：<i>2018-01-10 &nbsp;&nbsp;&nbsp;16 : 41 : 30</i></span>
+            <span>订单编号：<i>{{ServiceOrder.orderno}}</i></span>
+            <span>下单时间：<i>{{ServiceOrder.add_time}}</i></span>
         </div>
         <div class="service_pro_list service_pro_list1">
           <a href="service_inner_1.html">
             <div class="clearfix service_pro_list_detail">
               <div class="service_pro_list_left">
                 <div class="service_pro_list_left_img">
-                  <img src="images/service_list_1.jpg">
+                  <img :src="ServiceOrder.logo_pic">
                   <!-- <span>无保证金</span> -->
                   <i><img src="images/nv.png"></i>
                 </div>
                 <div class="service_pro_list_left_zi">
-                  <h5>哥阿姨 <b>已认证</b><i>无保证金</i></h5>
-                  <p>21岁 <i></i><em>上个月订单数 3个</em></p>
+                  <h5>{{ServiceOrder.name}} <b>已认证</b><i>无保证金</i></h5>
+                  <p>21岁 <i></i><em>上个月订单数 {{ServiceOrder.order_num}}个</em></p>
                   <h6>服务时间 6:00 - 22:00</h6>
                 </div>
               </div>
               <div class="service_pro_list_right">
-                <h5>好评率100%</h5>
-                <span>￥60.00/小时</span>
+                <h5>好评率{{ServiceOrder.favorable_rate}}</h5>
+                <span>￥{{ServiceOrder.price}}/小时</span>
               </div>
             </div>
           </a> 
         </div>
-        <div class="yuyue-btn clearfix">
+        <div class="yuyue-btn clearfix" @click="more">
           <a href="##">详情</a>
         </div>
         <div class="energetic1-foot2">
-           <div class="text-right"><span>预约服务类型：</span><i>保洁</i></div>
-           <div class="text-right"><span>预约开始时间：</span><i>17 : 00</i></div>
-           <div class="text-right"><span>每天服务时长：</span><i>1小时</i></div>
-           <div><span>预约时长：</span><i>2018-01-11 至 2018-01-12 &nbsp;共1天</i></div>                               
-           <div><span>预约地址：</span><i>浙江省杭州市西湖区华星时代广场A座</i></div>           
-           <div class="text-right"><span>预约服务费：</span><i>20.00元</i></div>
+           <div class="text-right"><span>预约服务类型：</span><i>{{ServiceOrder.service_type}}</i></div>
+           <div class="text-right"><span>预约开始时间：</span><i>{{ServiceOrder.timing}}</i></div>
+           <div class="text-right"><span>每天服务时长：</span><i>{{ServiceOrder.duration}}小时</i></div>
+           <div><span>预约时长：</span><i>2018-01-11 至 2018-01-12 &nbsp;共{{ServiceOrder.days}}天</i></div>                               
+           <div><span>预约地址：</span><i>{{ServiceOrder.address}}</i></div>           
+           <div class="text-right"><span>预约服务费：</span><i>{{ServiceOrder.total_price}}元</i></div>
            <div class="service_inner_text service_inner_textOrder">
               <h5>服务内容 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师 医院陪护 月嫂 保洁 打扫 足疗 按摩 康复训练 医护上门 体检 就医陪诊 心理健康 小儿推拿 搬家 跑腿</p>
+              <p>{{ServiceOrder.content}}</p>
            </div>
            <div class="service_inner_text service_inner_textOrder">
               <h5>其它说明 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师</p>
-           </div>
-        </div>
-  </div>
-  <div class="payment-orders1">
-        <div class="energetic1-title3">
-            <span>订单编号：<i>100320180127092728983</i></span>
-            <span>下单时间：<i>2018-01-10 &nbsp;&nbsp;&nbsp;16 : 41 : 30</i></span>
-        </div>
-        <div class="service_pro_list service_pro_list1">
-          <a href="service_inner_1.html">
-            <div class="clearfix service_pro_list_detail">
-              <div class="service_pro_list_left">
-                <div class="service_pro_list_left_img">
-                  <img src="images/service_list_1.jpg">
-                  <!-- <span>无保证金</span> -->
-                  <i><img src="images/nv.png"></i>
-                </div>
-                <div class="service_pro_list_left_zi">
-                  <h5>哥阿姨 <b>已认证</b><i>无保证金</i></h5>
-                  <p>21岁 <i></i><em>上个月订单数 3个</em></p>
-                  <h6>服务时间 6:00 - 22:00</h6>
-                </div>
-              </div>
-              <div class="service_pro_list_right">
-                <h5>好评率100%</h5>
-                <span>￥60.00/小时</span>
-              </div>
-            </div>
-          </a> 
-        </div>
-        <div class="yuyue-btn clearfix">
-          <a href="##">详情</a>
-        </div>
-        <div class="energetic1-foot2">
-           <div class="text-right"><span>预约服务类型：</span><i>保洁</i></div>
-           <div class="text-right"><span>预约开始时间：</span><i>17 : 00</i></div>
-           <div class="text-right"><span>每天服务时长：</span><i>1小时</i></div>
-           <div><span>预约时长：</span><i>2018-01-11 至 2018-01-12 &nbsp;共1天</i></div>                               
-           <div><span>预约地址：</span><i>浙江省杭州市西湖区华星时代广场A座</i></div>           
-           <div class="text-right"><span>预约服务费：</span><i>20.00元</i></div>
-           <div class="service_inner_text service_inner_textOrder">
-              <h5>服务内容 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师 医院陪护 月嫂 保洁 打扫 足疗 按摩 康复训练 医护上门 体检 就医陪诊 心理健康 小儿推拿 搬家 跑腿</p>
-           </div>
-           <div class="service_inner_text service_inner_textOrder">
-              <h5>其它说明 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师</p>
-           </div>
-        </div>
-  </div>
-  <div class="payment-orders1">
-        <div class="energetic1-title3">
-            <span>订单编号：<i>100320180127092728983</i></span>
-            <span>下单时间：<i>2018-01-10 &nbsp;&nbsp;&nbsp;16 : 41 : 30</i></span>
-        </div>
-        <div class="service_pro_list service_pro_list1">
-          <a href="service_inner_1.html">
-            <div class="clearfix service_pro_list_detail">
-              <div class="service_pro_list_left">
-                <div class="service_pro_list_left_img">
-                  <img src="images/service_list_1.jpg">
-                  <!-- <span>无保证金</span> -->
-                  <i><img src="images/nv.png"></i>
-                </div>
-                <div class="service_pro_list_left_zi">
-                  <h5>哥阿姨 <b>已认证</b><i>无保证金</i></h5>
-                  <p>21岁 <i></i><em>上个月订单数 3个</em></p>
-                  <h6>服务时间 6:00 - 22:00</h6>
-                </div>
-              </div>
-              <div class="service_pro_list_right">
-                <h5>好评率100%</h5>
-                <span>￥60.00/小时</span>
-              </div>
-            </div>
-          </a> 
-        </div>
-        <div class="yuyue-btn clearfix">
-          <a href="##">详情</a>
-        </div>
-        <div class="energetic1-foot2">
-           <div class="text-right"><span>预约服务类型：</span><i>保洁</i></div>
-           <div class="text-right"><span>预约开始时间：</span><i>17 : 00</i></div>
-           <div class="text-right"><span>每天服务时长：</span><i>1小时</i></div>
-           <div><span>预约时长：</span><i>2018-01-11 至 2018-01-12 &nbsp;共1天</i></div>                               
-           <div><span>预约地址：</span><i>浙江省杭州市西湖区华星时代广场A座</i></div>           
-           <div class="text-right"><span>预约服务费：</span><i>20.00元</i></div>
-           <div class="service_inner_text service_inner_textOrder">
-              <h5>服务内容 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师 医院陪护 月嫂 保洁 打扫 足疗 按摩 康复训练 医护上门 体检 就医陪诊 心理健康 小儿推拿 搬家 跑腿</p>
-           </div>
-           <div class="service_inner_text service_inner_textOrder">
-              <h5>其它说明 :</h5>
-              <p>产后护理 皮沙发护理 手足护理 育儿师</p>
+              <p>{{ServiceOrder.special}}</p>
            </div>
         </div>
   </div>
@@ -231,12 +137,12 @@ $(window).ready(function(){
 	        userId: (() => {
 	                
 	            })(),
-	        wallet:''
+	        ServiceOrder_list:''
 	    }
 		},
     created: function () {
 		var $this = this;
-    	$this.getUcenter_wallet();
+    	$this.getServiceOrder_list();
         
     },
     mounted:function(){
@@ -244,28 +150,40 @@ $(window).ready(function(){
     },
     methods:{
     	
-    	//我的余额
-    	getUcenter_wallet:function(){
+    	//预约订单列表
+    	getServiceOrder_list:function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+    			type:4
     		}
     		
-    		Axios.post(window.Url.Ucenter_wallet, data).then((res) => {
+    		Axios.post(window.Url.ServiceOrder_list, data).then((res) => {
     			
     			if(res.result == 1){
-    				$this.wallet = res.info.wallet;
+    				$this.ServiceOrder_list = res.info;
     				
     			}
     			else{
-    				alert('我的余额'+res.info)
+    				alert('预约订单列表'+res.info)
     			}
     			
         }).catch((err) => {
-          console.log('我的余额'+err)
+          console.log('预约订单列表'+err)
         })
         
+    	},
+    	//查看详情
+    	more:function(){
+    		if($(this).parent().parent().find('.energetic1-foot2').css("display")=="none"){
+		        $(this).parent().parent().find('.energetic1-foot2').css("display","block");
+		        $(this).html("收起");
+		        $(this).parent().css("border-bottom","1px solid #e9e9e9");
+		      }else{
+		        $(this).parent().parent().find('.energetic1-foot2').css("display","none");
+		        $(this).html("详情");
+		        $(this).parent().css("border-bottom","none");
+		      }
     	}
 	}
 })
@@ -283,7 +201,7 @@ $(window).ready(function(){
     $('.pinglun1_show_con_f1 a').click(function(){
       $('.pinglun1_show').css('display','none');
     })
-    $('.yuyue-btn a').click(function(){
+ /*   $('.yuyue-btn a').click(function(){
       if($(this).parent().parent().find('.energetic1-foot2').css("display")=="none"){
         $(this).parent().parent().find('.energetic1-foot2').css("display","block");
         $(this).html("收起");
@@ -293,7 +211,7 @@ $(window).ready(function(){
         $(this).html("详情");
         $(this).parent().css("border-bottom","none");
       }
-    })
+    })*/
 
 })  
 </script>

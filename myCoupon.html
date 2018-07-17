@@ -52,54 +52,22 @@
 
 <div class="myCoupon">
     <div class="myCoupon1">
-        <span class="coupon_active">未使用</span>
-        <span>已过期</span>
-        <span>已使用</span>
+        <span class="coupon_active" @click="getcoupon(1)">未使用</span>
+        <span @click="getcoupon(2)">已过期</span>
+        <span @click="getcoupon(3)">已使用</span>
     </div>
-    <div class="myCoupon3 clearfix">
+    <div class="myCoupon3 clearfix" v-for="coupon in coupon_list">
         <div class="myCoupon3-left">
             <img src="images/myCoupon_1.jpg" alt="" width="100%">
         </div>
         <div class="myCoupon3-right">
-            <div class="myCoupon3-right1">1元优惠券 满0.00元可用</div>
-            <div class="myCoupon3-right2">团购全部商品使用</div>
+            <div class="myCoupon3-right1">{{coupon.name}}</div>
+            <div class="myCoupon3-right2">{{coupon.condition}}</div>
             <div class="myCoupon3-right3">截止时间：</div>
-            <div class="myCoupon3-right4">2018.05.26 17:07</div>
+            <div class="myCoupon3-right4">{{coupon.useendtime}}</div>
         </div>
     </div>
-    <div class="myCoupon3 clearfix">
-        <div class="myCoupon3-left">
-            <img src="images/myCoupon_1.jpg" alt="" width="100%">
-        </div>
-        <div class="myCoupon3-right">
-            <div class="myCoupon3-right1">1元优惠券 满0.00元可用</div>
-            <div class="myCoupon3-right2">团购全部商品使用</div>
-            <div class="myCoupon3-right3">截止时间：</div>
-            <div class="myCoupon3-right4">2018.05.26 17:07</div>
-        </div>
-    </div>
-    <div class="myCoupon3 clearfix">
-        <div class="myCoupon3-left">
-            <img src="images/myCoupon_1.jpg" alt="" width="100%">
-        </div>
-        <div class="myCoupon3-right">
-            <div class="myCoupon3-right1">1元优惠券 满0.00元可用</div>
-            <div class="myCoupon3-right2">团购全部商品使用</div>
-            <div class="myCoupon3-right3">截止时间：</div>
-            <div class="myCoupon3-right4">2018.05.26 17:07</div>
-        </div>
-    </div>
-    <div class="myCoupon3 clearfix">
-        <div class="myCoupon3-left">
-            <img src="images/myCoupon_1.jpg" alt="" width="100%">
-        </div>
-        <div class="myCoupon3-right">
-            <div class="myCoupon3-right1">1元优惠券 满0.00元可用</div>
-            <div class="myCoupon3-right2">团购全部商品使用</div>
-            <div class="myCoupon3-right3">截止时间：</div>
-            <div class="myCoupon3-right4">2018.05.26 17:07</div>
-        </div>
-    </div>
+
 
 </div>
 </div>
@@ -129,13 +97,15 @@ var vm = new Vue({
     methods:{
     	
     	//我的优惠券
-    	getcoupon:function(){
+    	getcoupon:function(type){
     		var $this = this;
     		
     		const data = {
     			type:1
     		}
-    		
+    		if(type != ''){
+    			data.type = type;
+    		}
     		Axios.post(window.Url.coupon, data).then((res) => {
     			
     			if(res.result == 1){
@@ -143,6 +113,7 @@ var vm = new Vue({
     				
     			}
     			else{
+    				$this.coupon_list = ''
     				alert('我的优惠券'+res.info)
     			}
     			

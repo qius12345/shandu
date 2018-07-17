@@ -275,6 +275,19 @@
 		tugou_order_num:'/Api/TuanMyorder/countorder',
 		
 		
+		/*购买商品订单列表*/
+		//token（登录状态）
+		//type  {1全部,2待付款,3代发货,4待收货,5待评价,6已完成,7申请退款中,8退款完成关闭,9退款售后,10待拼团}
+		TuanMyorder_list:'/Api/TuanMyorder/index',
+		
+		/*预约订单列表*/
+		//token（登录状态）
+		//type//1更多全部,2待付款,3待确认,4进行中,5待评价,6已完成,7退款售后
+		ServiceOrder_list:'/Api/ServiceOrder/index',
+		
+		
+		
+		
 		/*我的*/
 		//地址列表
 		//token（登录状态）
@@ -291,6 +304,10 @@
 		//token（登录状态）
 		//addressid（地址ID）
 		edit_details:'Api/Address/info',
+		//删除地址
+		//token（登录状态）
+		//addressid（地址ID）
+		delete_ress:'Api/address/del',
 		
 		
 		//个人收藏

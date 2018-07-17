@@ -55,9 +55,9 @@
 
 
 <div class="mySet">
-    <div :class="index!=0 ? 'myAddress1 myAddress2' : 'myAddress1'" v-for="(ress,index) in address_list" class="mui-table-view-cell mui-transitioning mui-selected">
+    <div :class="index!=0 ? 'myAddress1 myAddress2' : 'myAddress1'" v-for="(ress,index) in address_list" class="mui-table-view-cell mui-transitioning" :key="ress.addressid">
     	<div class="mui-slider-right mui-disabled">
-			<a class="mui-btn mui-btn-red">删除</a>
+			<a class="mui-btn mui-btn-red" @click="delete_ress(ress.addressid)">删除</a>
 		</div>
 		<div class="mui-slider-handle">
 	        <div class="clearfix myAddress1-text1">
@@ -200,35 +200,28 @@ var vm = new Vue({
         })
         
     	},
-    	phone_touch:function(){
-    		$("body").on("touchstart", function(e) {
-//			    e.preventDefault();
-			    startX = e.originalEvent.changedTouches[0].pageX,
-			    startY = e.originalEvent.changedTouches[0].pageY;
-			});
-			$("body").on("touchmove", function(e) {
-//			    e.preventDefault();
-			    moveEndX = e.originalEvent.changedTouches[0].pageX,
-			    moveEndY = e.originalEvent.changedTouches[0].pageY,
-			    X = moveEndX - startX,
-			    Y = moveEndY - startY;
-			  	console.log(X,Y);
-			    if ( X > 0 ) {
-			        alert("left 2 right");
-			    }
-			    else if ( X < 0 ) {
-			        alert("right 2 left");
-			    }
-			    else if ( Y > 0) {
-			        alert("top 2 bottom");
-			    }
-			    else if ( Y < 0 ) {
-			        alert("bottom 2 top");
-			    }
-			    else{
-			        alert("just touch");
-			    }
-			});
+    	//删除地址
+    	delete_ress:function(addressid){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+				addressid:addressid
+    		}
+    		
+    		Axios.post(window.Url.delete_ress, data).then((res) => {
+    			if(res.result == 1){
+    				alert(res.info);
+    				location.reload();
+    			}
+    			else{
+    				alert('删除地址'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('删除地址'+err)
+        })
+        
     	},
     	//跳转详情页
     	jump:function(type_id){
