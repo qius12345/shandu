@@ -256,6 +256,11 @@
 		//团购列表-指定商品
 		//goodsid（指定商品的ID）
 		goods_info:'/Api/Tuan/goodsInfo',
+
+		//团购订单列表
+        //token（登录状态）
+		//type  {1全部,2待付款,3代发货,4待收货,5待评价,6已完成,7申请退款中,8退款完成关闭,9退款售后,10待拼团}
+		TuanOrder_list:'/Api/TuanMyorder/index',
 		
 		
 		/*活力健身订单*/

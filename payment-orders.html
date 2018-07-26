@@ -32,6 +32,7 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+
 </head>
 
 <body>
@@ -96,7 +97,7 @@
             </div>
           </a> 
         </div>
-        <div class="yuyue-btn clearfix" @click="more">
+        <div class="yuyue-btn clearfix" @click="more($event)">
           <a href="##">详情</a>
         </div>
         <div class="energetic1-foot2">
@@ -137,7 +138,8 @@ $(window).ready(function(){
 	        userId: (() => {
 	                
 	            })(),
-	        ServiceOrder_list:''
+	        ServiceOrder_list:'',
+          yuyue_type:getCookie("yuyueType"),  
 	    }
 		},
     created: function () {
@@ -155,7 +157,7 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-    			type:4
+    			type:$this.yuyue_type,
     		}
     		
     		Axios.post(window.Url.ServiceOrder_list, data).then((res) => {
@@ -174,18 +176,28 @@ $(window).ready(function(){
         
     	},
     	//查看详情
-    	more:function(){
-    		if($(this).parent().parent().find('.energetic1-foot2').css("display")=="none"){
-		        $(this).parent().parent().find('.energetic1-foot2').css("display","block");
-		        $(this).html("收起");
-		        $(this).parent().css("border-bottom","1px solid #e9e9e9");
+    	more:function(event){
+          // showMore();
+          var el=event.currentTarget;
+          console.log(el);
+
+          console.log($(el).parent().find('.energetic1-foot2').css("display"));
+        
+    		  if($(el).parent().find('.energetic1-foot2').css("display")=="none"){
+		        $(el).parent().find('.energetic1-foot2').css("display","block");
+		        $(el).children().text("收起");
+		        $(el).css("border-bottom","1px solid #e9e9e9");
 		      }else{
-		        $(this).parent().parent().find('.energetic1-foot2').css("display","none");
-		        $(this).html("详情");
-		        $(this).parent().css("border-bottom","none");
+
+            $(el).parent().find('.energetic1-foot2').css("display","none");
+            $(el).children().text("详情");
+            $(el).css("border-bottom","none");
+		        // $this.parent().parent().find('.energetic1-foot2').css("display","none");
+		        // $this.html("详情");
+		        // $this.parent().css("border-bottom","none");
 		      }
-    	}
-	}
+	    }
+    }
 })
     
     
@@ -201,17 +213,20 @@ $(window).ready(function(){
     $('.pinglun1_show_con_f1 a').click(function(){
       $('.pinglun1_show').css('display','none');
     })
- /*   $('.yuyue-btn a').click(function(){
-      if($(this).parent().parent().find('.energetic1-foot2').css("display")=="none"){
-        $(this).parent().parent().find('.energetic1-foot2').css("display","block");
-        $(this).html("收起");
-        $(this).parent().css("border-bottom","1px solid #e9e9e9");
-      }else{
-        $(this).parent().parent().find('.energetic1-foot2').css("display","none");
-        $(this).html("详情");
-        $(this).parent().css("border-bottom","none");
-      }
-    })*/
+    // function showMore(){
+    //   $('.yuyue-btn a').click(function(){
+    //     if($(this).parent().parent().find('.energetic1-foot2').css("display")=="none"){
+    //       $(this).parent().parent().find('.energetic1-foot2').css("display","block");
+    //       $(this).html("收起");
+    //       $(this).parent().css("border-bottom","1px solid #e9e9e9");
+    //     }else{
+    //       $(this).parent().parent().find('.energetic1-foot2').css("display","none");
+    //       $(this).html("详情");
+    //       $(this).parent().css("border-bottom","none");
+    //     }
+    //   })
+    // }
+    
 
 })  
 </script>

@@ -27,9 +27,29 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+<style>
+  .user_order_list_tx .tx{
+        font-size: 12px;
+       display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      padding-right: 0.2rem;
+  }
+</style>
+
 </head>
 
 <body>
+
+<div id="app" v-cloak>
+
 <div class="pinglun1_show">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
@@ -45,7 +65,7 @@
   <a href="javascript:history.go(-1)" class="back">
     <img src="images/hl.png"> 返回
   </a>
-  <h5>全部订单</h5>
+  <h5 v-html="tuan_type_txt">全部订单</h5>
 </div>
 
 <!--  / header  -->
@@ -54,88 +74,32 @@
   <div class="warpper" style="padding-top: 0;padding-bottom: 0%; background: #f5f5f9;">
     <!--有订单-->
     <div class="user_order_list">
-      <div class="user_order_list_con">
+      <div class="user_order_list_con" v-for="items1 in TuanOrder_list">
         <div class="user_order_list_top clearfix">
-          订单编号: 59987116389745 <span class="tx">待拼团</span>
+          订单编号: {{items1.order_no}} <span class="tx" v-html="items1.order_status==1?'待付款':(items1.order_status==11?'待拼团':(items1.order_status==2?'待发货':(items1.order_status==3?'待收货':(items1.order_status==5?'已完成':'退款/售后'))))">待拼团</span>
         </div>
-        <div class="user_order_list_ct clearfix">
-          <a href="user_din_in.html">
-            <div class="img"><img src="images/simi1.jpg" width="100%"></div>
+        <div class="user_order_list_ct clearfix" v-for="items2 in items1.goods">
+          <a href="javascript:void(0);" @click="goCollageOrderDetail(items1)">
+            <div class="img"><img :src="items2.goods_pic" width="100%"></div>
             <div class="user_order_list_tx">
-              <div class="title">德意(DE&E)M5新品 851T油烟机 欧式大吸力抽油烟机</div>
-              <div class="tx">系列:851T+715B烟灶套装（天然气）</div>
+              <div class="title">{{items2.goods_name}}</div>
+              <div class="tx">{{items2.goods_des}}</div>
               <div class="text">
                 <div class="now">拼团价</div>
-                <div class="bef">￥40.00</div>
+                <div class="bef">￥{{items2.goods_price}}</div>
                 <div class="num">x<span>1</span></div>
-
               </div>
-              <div class="pintuan">拼团人数: <span>10/19</span></div>
+              <div class="pintuan">拼团人数: <span>{{items2.salesnum}}/{{items2.tuan}}</span></div>
             </div>
           </a>
         </div>
         <div class="user_order_list_text">
-          共1件商品 合计:￥<span>3988.00</span>(含运费￥0.00)
+          共1件商品 合计:￥<span>{{items1.total_price}}</span>(含运费￥0.00)
         </div>
         <div class="user_order_list_bot clearfix">          
-          <a href="##" class="on">联系平台</a>
-          <a href="##">查看物流</a>
-        </div>
-      </div>
-      <div class="user_order_list_con">
-        <div class="user_order_list_top clearfix">
-          订单编号: 59987116389745 <span class="tx">待收货</span>
-        </div>
-        <div class="user_order_list_ct clearfix">
-          <a href="user_din_in.html">
-            <div class="img"><img src="images/simi1.jpg" width="100%"></div>
-            <div class="user_order_list_tx">
-              <div class="title">德意(DE&E)M5新品 851T油烟机 欧式大吸力抽油烟机</div>
-              <div class="tx">系列:851T+715B烟灶套装（天然气）</div>
-              <div class="text">
-                <div class="now">拼团价</div>
-                <div class="bef">￥40.00</div>
-                <div class="num">x<span>1</span></div>
-
-              </div>
-              <div class="pintuan">拼团人数: <span>10/19</span></div>
-            </div>
-          </a>
-        </div>
-        <div class="user_order_list_text">
-          共1件商品 合计:￥<span>3988.00</span>(含运费￥0.00)
-        </div>
-        <div class="user_order_list_bot clearfix">
-          <a href="##" class="on">确认收货</a>
-          <a href="##">查看物流</a>
-        </div>
-      </div>
-      <div class="user_order_list_con">
-        <div class="user_order_list_top clearfix">
-          订单编号: 59987116389745 <span class="tx">待付款</span>
-        </div>
-        <div class="user_order_list_ct clearfix">
-          <a href="user_din_in.html">
-            <div class="img"><img src="images/simi1.jpg" width="100%"></div>
-            <div class="user_order_list_tx">
-              <div class="title">德意(DE&E)M5新品 851T油烟机 欧式大吸力抽油烟机</div>
-              <div class="tx">系列:851T+715B烟灶套装（天然气）</div>
-              <div class="text">
-                <div class="now">拼团价</div>
-                <div class="bef">￥40.00</div>
-                <div class="num">x<span>1</span></div>
-
-              </div>
-              <div class="pintuan">拼团人数: <span>10/19</span></div>
-            </div>
-          </a>
-        </div>
-        <div class="user_order_list_text">
-          共1件商品 合计:￥<span>3988.00</span>(含运费￥0.00)
-        </div>
-        <div class="user_order_list_bot clearfix">
-          <a href="##" class="on">付款</a>
-          <a href="##">取消订单</a>
+          <a href="##" class="on" v-if="items1.order_status==2">提醒发货</a>
+          <a href="##" v-if="items1.order_status>2">查看物流</a>
+          <a href="tel:4008001234">联系平台</a>
         </div>
       </div>
     </div>
@@ -150,26 +114,92 @@
 
 <!--  / footer  -->
 <!--  / footer  -->
+</div>
 
 </body>
 <script>
+
 $(window).ready(function(){
-    $('.energetic1 li').click(function(){
-      window.location.href = "tourItinerary.html";
-    });
-    $('.bg4').click(function(){
-      $('.pinglun1_show').css('display','block');
-    })
-    $('.pinglun1_show_con_f1 a').click(function(){
-      $('.pinglun1_show').css('display','none');
-    })
-  $(window).load(function(){
 
-  })
+  var vm = new Vue({
+    el:"#app",
+    data() {
+      return {
 
-  $(window).resize(function(){
+          userId: (() => {
+                  
+          })(),
+          TuanOrder_list:[],
+          tuan_type:getCookie("tuanType"),
+          tuan_type_txt:"全部订单",        
+      }
+    },
+    created: function () {
+      var $this = this;
 
-  })
-})  
+      if($this.tuan_type==1){
+        $this.tuan_type_txt="全部订单";
+      }else if($this.tuan_type==2){
+        $this.tuan_type_txt="待付款";
+      }else if($this.tuan_type==10){
+        $this.tuan_type_txt="待拼团";
+      }else if($this.tuan_type==3){
+        $this.tuan_type_txt="待发货";
+      }else if($this.tuan_type==4){
+        $this.tuan_type_txt="待收货";
+      }else if($this.tuan_type==6){
+        $this.tuan_type_txt="已完成";
+      }else if($this.tuan_type==9){
+        $this.tuan_type_txt="退款/售后";
+      }
+
+      $this.getTuanOrder();
+      
+    },
+    mounted:function(){
+      
+    },
+    methods:{
+      
+      //团购订单列表
+      getTuanOrder:function(){
+        var $this = this;
+        
+        const data = {
+             type:$this.tuan_type,
+        }
+        
+        Axios.post(window.Url.TuanOrder_list, data).then((res) => {
+          
+          if(res.result == 1){
+            $this.TuanOrder_list = res.info.order;
+            
+          }
+          else{
+            alert('团购订单列表'+res.info)
+          }
+          
+        }).catch((err) => {
+          console.log('团购订单列表'+err)
+        })
+        
+      },
+
+      //跳转团购订单详情
+      goCollageOrderDetail:function(obj){
+        sessionStorage.setItem('tuanDetail', JSON.stringify(obj));
+        window.location.href = "user_din_in.html";
+      }
+    }
+
+  })  
+
+  $('.pinglun1_show_con_f1 a').click(function(){
+    $('.pinglun1_show').css('display','none');
+  });
+
+})
+ 
+
 </script>
 </html>

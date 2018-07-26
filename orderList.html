@@ -52,7 +52,7 @@
 
 <div class="orderList">
     <div class="orderList1 clearfix">
-        <div class="orderList1-title order1 clearfix">
+        <div class="orderList1-title order1 clearfix" @click="goPaymentOrder(1)">
           <span class="orderList1-title-left">预约服务订单</span>
           <div class="orderList1-title-right">
               <span>更多服务订单</span>
@@ -61,51 +61,50 @@
           </div>
         </div>
         <div class="orderList1-content">
-          <a href="payment-orders1.html">
-          <div class="orderList1-detail">
+
+          <div class="orderList1-detail" @click="goPaymentOrder(3)">
              <img src="images/orderList-1.png" alt="">
              <br>
              <span>待接单</span>
              <div v-if="Service_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dfk}}</span></div>
           </div>
-          </a>
-          <a href="payment-orders2.html">
-          <div class="orderList1-detail">
+
+          <div class="orderList1-detail" @click="goPaymentOrder(4)">
              <img src="images/orderList-2.png" alt="">
              <br>
              <span>进行中</span>
              <div v-if="Service_order_num.jxz != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.jxz}}</span></div>
           </div>
-          </a>
-          <a href="payment-orders3.html">
-          <div class="orderList1-detail">
+
+
+          <div class="orderList1-detail" @click="goPaymentOrder(5)">
              <img src="images/orderList-3.png" alt="">
              <br>
              <span>待评价</span>
              <div v-if="Service_order_num.dpj != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dpj}}</span></div>
           </div>
-          </a>
-          <a href="payment-orders4.html">
-          <div class="orderList1-detail">
+
+
+          <div class="orderList1-detail" @click="goPaymentOrder(6)">
              <img src="images/orderList-4.png" alt="">
              <br>
              <span>已完成</span>
              <div v-if="Service_order_num.ywc != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.ywc}}</span></div>
           </div>
-          </a>
-          <a href="payment-orders4.html">
-          <div class="orderList1-detail">
+
+
+          <div class="orderList1-detail" @click="goPaymentOrder(7)">
              <img src="images/orderList-5.png" alt="">
              <br>
              <span>退款/售后</span>
              <div v-if="Service_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.tksh}}</span></div>
           </div>
-          </a>
+
         </div>
     </div>
     <div class="orderList2"></div>
     <div class="orderList1 clearfix">
-                <div class="orderList1-title order2 clearfix">
+                <div class="orderList1-title order2 clearfix" @click="goCollageOrder(1)">
                   <span class="orderList1-title-left">购买商品订单</span>
                   <div class="orderList1-title-right">
                       <span>更多团购订单</span>
@@ -113,15 +112,15 @@
                   </div>
                 </div>                
                 <div class="orderList1-content">
-                  <a href="collage-orders1.html">
-                  <div class="orderList1-detail">
-                     <img src="images/orderList-2.png" alt="">
-                     <br>
-                     <span>待付款</span>
-                     <div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfk}}</span></div>
-                  </div>
+                  <a href="javascript:void(0);" @click="goCollageOrder(2)">
+                    <div class="orderList1-detail">
+                       <img src="images/orderList-2.png" alt="">
+                       <br>
+                       <span>待付款</span>
+                       <div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfk}}</span></div>
+                    </div>
                   </a>
-                  <a href="collage-orders2.html">
+                  <a href="javascript:void(0);" @click="goCollageOrder(10)">
                   <div class="orderList1-detail">
                      <img src="images/orderList-1.png" alt="">
                      <br>
@@ -129,7 +128,7 @@
                      <div v-if="tugou_order_num.dpt != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dpt}}</span></div>
                   </div>
                   </a>
-                  <a href="collage-orders3.html">
+                  <a href="javascript:void(0);" @click="goCollageOrder(3)">
                   <div class="orderList1-detail">
                      <img src="images/orderList-2.png" alt="">
                      <br>
@@ -137,7 +136,7 @@
                      <div v-if="tugou_order_num.dfh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfh}}</span></div>
                   </div>
                   </a>
-                  <a href="collage-orders4.html">
+                  <a href="javascript:void(0);" @click="goCollageOrder(4)">
                   <div class="orderList1-detail">
                      <img src="images/orderList-3.png" alt="">
                      <br>
@@ -145,7 +144,7 @@
                      <div v-if="tugou_order_num.dsh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dsh}}</span></div>
                   </div>
                   </a>
-                  <a href="collage-orders5.html">
+                  <a href="javascript:void(0);" @click="goCollageOrder(6)">
                   <div class="orderList1-detail">
                      <img src="images/orderList-4.png" alt="">
                      <br>
@@ -153,7 +152,7 @@
                      <!--<div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dfk}}</span></div>-->
                   </div>
                   </a>
-                  <a href="collage-orders6.html">
+                  <a href="javascript:void(0);" @click="goCollageOrder(9)">
                   <div class="orderList1-detail">
                      <img src="images/orderList-5.png" alt="">
                      <br>
@@ -286,7 +285,7 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.Vitality_order_num, data).then((res) => {
@@ -309,7 +308,7 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.Service_order_num, data).then((res) => {
@@ -332,7 +331,7 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.tugou_order_num, data).then((res) => {
@@ -350,8 +349,22 @@ $(window).ready(function(){
         })
         
     	},
-	}
-})
+
+      //跳转到全部团购订单列表页面
+      goCollageOrder:function(tuan_type){
+        var $this = this;
+        setCookie("tuanType",tuan_type);
+        window.location.href = "collage-orders.html";                
+      },
+
+      //跳转到全部预约订单列表页面
+      goPaymentOrder:function(yuyue_type){
+        var $this = this;
+        setCookie("yuyueType",yuyue_type);
+        window.location.href = "payment-orders.html";                
+      },
+	  }
+  })
 
 $('.banner').height($(window).width()*400/750);
 
@@ -376,12 +389,12 @@ $('.ind_share_btn').click(function(){
 $('#goOrder').click(function(){
 	  window.location.href = "orderList.html";
 });
-$('.order1').click(function(){
-	  window.location.href = "payment-orders.html";
-});
-$('.order2').click(function(){
-    window.location.href = "collage-orders.html";
-});
+// $('.order1').click(function(){
+// 	  window.location.href = "payment-orders.html";
+// });
+// $('.order2').click(function(){
+//     window.location.href = "collage-orders.html";
+// });
 $('.order3').click(function(){
 	  window.location.href = "energetic-orders.html";
 });
