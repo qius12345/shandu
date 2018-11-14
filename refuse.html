@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/iosSelect.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/style1.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/layui/layui.js"></script>
+
+<style>
+  .refuse_list_f1{
+    width: 100%;
+    padding: 0.12rem 0.15rem;
+    border-bottom: 1px solid #f2f2f2;
+    color: #333;
+    font-size: 0.15rem;
+  }
+  .refuse_list_f2{
+    width: 100%;
+    padding: 0.12rem 0.15rem;
+    border-bottom: 1px solid #f2f2f2;
+    color: #333;
+    font-size: 0.15rem;
+  }
+  .refuse_list_f3{
+    width: 100%;
+    padding: 0.12rem 0.15rem;
+    border-bottom: 1px solid #f2f2f2;
+    color: #333;
+    font-size: 0.15rem;
+    position: relative;
+  }
+  .refuse_list_f1 span{
+    margin-left:0.1rem;
+    color:#e97a99;
+  }
+  .refuse_list_f2 input{
+    border: none;
+    margin-left: 0.15rem;
+    height: 100%;
+    font-size:0.14rem;
+  }
+
+  .stroy_join_sec4_list{
+    position: relative;
+    display: inline-block;
+  }
+  .stroy_join_sec4_list input{
+    position: absolute;
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity:0;
+    z-index: 10;
+  }
+  #picUpDemo img{
+      width: 25%;
+  }
+  .layui-upload-list{
+      margin: 10px 0;
+      padding: 0 15px;
+  }
+
+    .pic{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        margin-right:0.05rem;
+        margin-bottom: 0.05rem;
+    }
+    .pic img {
+        width: 100%;
+        height: 100%;
+    }
+    .stroy_join_sec4{
+      position: relative;
+    }
+    .addElement{
+      display: inline-block;
+      vertical-align: top;
+      /*position: absolute;
+      top:0.25rem;
+      left:0.15rem;*/
+    }
+    .refuse_tijiao{
+      position: fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      height:0.4rem;
+      line-height:0.4rem;
+      text-align: center;
+      background:#e55681;
+      color:#fff;
+    }
+</style>
+
+</head>
+
+<body>
+<div id="app" v-cloak>
+
+<!--  / header  -->
+<div class="stroy_rhead">
+  <a href="javascript:history.go(-1)" class="back">
+    <img src="images/hl.png">
+  </a>
+  <h5>申请退货</h5>
+</div>
+
+<!--  / header  -->
+<div class="orders"> 
+  <!--  / warpper  -->
+  <div class="warpper" style="padding-top: 0.15rem;padding-bottom: 0%;">
+ 
+    <!--有订单-->
+    <div class="user_order_list">
+      <div class="user_order_list_con" style="background: #f5f5f9;margin-bottom:0rem;">
+        <!-- <div class="user_order_list_top clearfix">
+          订单编号: 59987116389745 <span class="tx">已完成</span>
+        </div> -->
+        <div class="user_order_list_ct clearfix">
+          <a href="user_din_in.html">
+          <div class="img" :style="{backgroundImage: 'url(' + order1.goods_pic + ')', backgroundSize:'cover'}"></div>
+            <!-- <div class="img"><img :src="order.goods[0].goods_pic" width="100%"></div> -->
+            <div class="user_order_list_tx">
+              <div class="title">{{order1.goods_name}}</div>
+              <div class="tx">{{order1.goods_des}}</div>
+              <div class="text">
+                <div class="now">拼团价</div>
+                <div class="bef">￥{{order1.goods_price}}</div>
+                <div class="num">x<span>1</span></div>
+              </div>
+              <!-- <div class="pintuan">拼团人数: <span>10/19</span></div> -->
+            </div>
+          </a>
+        </div>
+        <!-- <div class="user_order_list_text">
+          共1件商品 合计:￥<span>3988.00</span>(含运费￥0.00)
+        </div> -->
+      </div>
+    </div>
+    <!--有订单-->
+
+    <div class="refuse_list">
+      <div class="stroy_join_list stroy_join_list3" style="border-bottom:1px solid #eee;">
+        退货原因
+        <span>        
+          <div class="form-item item-line stroy_join_list1">                                  
+            <div class="pc-box">                     
+                <input type="hidden" name="bank_id" id="bankId" value="">                     
+                <span id="showBank">请选择</span>  
+            </div>             
+          </div>
+          <i class="fa fa-angle-right"></i>
+        </span>
+      </div>
+      <div class="refuse_list_f1">
+        退款金额 <span>￥{{order.total_fee}}</span>        
+      </div>
+      <div class="refuse_list_f2">
+        退款说明 <input type="text" placeholder="选填" v-model="reasonTxt">        
+      </div>
+      <div class="refuse_list_f3">
+        <div style="margin-bottom: 0.15rem;">上传凭证</div>
+        <div class="addElement" id="addElement"></div>
+        <div class="stroy_join_sec4_list" id="uploadImgBtn">
+          <img src="images/xiangji.png" alt="">
+          <br>
+          <span>添加图片</span>
+          <span>(最多3张)</span>
+          <input name="file1" type="file" multiple="multiple" id="file">
+        </div>
+      </div>
+    </div>
+
+    <div class="refuse_tijiao" @click="goSubmit()">提交</div>
+    
+
+  </div>
+  <!--  / warpper  -->
+</div>
+
+  
+
+<!--  / footer  -->
+<!--  / footer  -->
+
+</div>
+</body>
+
+<script src="js/iosSelect.js"></script>
+<script>
+$(window).ready(function(){
+    
+  var vm = new Vue({
+      el:"#app",
+      data(){
+        return{
+          stroy_allList:[],
+          title1:'',
+          collect1:'',
+          file1:'',
+          order:[],
+          order1:[],
+          reason:[],
+          orderId:'',
+          reasonId:'',
+          reasonTxt:'',
+
+        }
+      },
+      created:function(){
+        var $this = this;
+        $this.orderId=sessionStorage.getItem("orderId");
+        $this.refuseResult();
+      },
+      mounted:function(){          
+          imgUpload();
+          // getResult(this.reason);
+      },
+      methods:{
+
+        goSubmit:function(){
+          var $this = this;
+          console.log($this.file1);
+          var formData = new FormData();
+          formData.append("token", getCookie("token"));
+          formData.append("orderid", $this.orderId);
+          formData.append("reasonid", $this.reasonId);
+          formData.append("img1", $this.file1[0]);
+          formData.append("content", $this.reasonTxt);
+          $.ajax({  
+               url: 'http://shandu.unohacha.com/Api/TuanOrder/tuanOrderApplyRefunds',  
+               type: 'post',  
+               data: formData,  
+               cache: false,
+               processData: false,
+               contentType: false,
+               async: false
+          }).done(function(res) {
+              alert('申请退货成功');
+              window.location.href = "orderList.html";                                               
+          }).fail(function(res) {
+              console.log("全部老故事列表:"+err);
+          });
+        },
+        refuseResult:function(){
+          var $this = this;
+          const data = {
+              orderid:$this.orderId
+          }
+          // console.log(formData);
+          Axios.post(window.Url.orderDetails,data).then((res) => {
+            
+            if(res.result == 1){
+              // alert(res);
+              $this.order = res.info.order; 
+              $this.order1 = res.info.order.goods[0];
+              $this.reason = res.info.reason;
+              $this.$nextTick(function(){
+                getResult(res.info.reason);
+              })                              
+            }else
+            {
+              console.log("全部老故事列表:"+res.info);
+            }
+            
+          }).catch((err) => {
+            console.log("全部老故事列表:"+err);
+          })
+        }
+       
+      }
+
+  })
+
+  function imgUpload(){
+      //为外面的盒子绑定一个点击事件
+      $("#uploadImgBtn").click(function(){
+          /*
+          1、先获取input标签
+          2、给input标签绑定change事件
+          3、把图片回显
+           */
+          // 1、先回去input标签
+          var $input = $("#file");
+          // console.log($input)
+          // 2、给input标签绑定change事件
+          $input.on("change" , function(){
+              // console.log(this)
+              //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
+              //获取选择图片的个数
+              var files = this.files;
+              var length = files.length;
+              // console.log("选择了"+length+"张图片");
+              //3、回显
+              $.each(files,function(key,value){
+                  //每次都只会遍历一个图片数据
+                  var div = document.createElement("div"),
+                      img = document.createElement("img");
+                  div.className = "pic";
+
+                  var fr = new FileReader();
+                  fr.onload = function(){
+                      img.src=this.result;
+                      div.appendChild(img);
+                      var element=document.getElementById("addElement");
+                      element.appendChild(div);
+                  }
+                  fr.readAsDataURL(value);
+              })
+              // console.log(files);
+              vm.file1=files;
+
+          })
+
+          //4、我们把当前input标签的id属性remove
+          $input.removeAttr("id");
+          //我们做个标记，再class中再添加一个类名就叫test
+          var newInput = '<input class="uploadImg test" type="file" name="file" multiple id="file">';
+          $(this).append($(newInput));
+
+      })
+  }
+
+  function doUpload() {  
+    var formData = new FormData();
+    formData.append("token", getCookie("token"));
+    formData.append("title", "fhg");
+    formData.append("city", "杭州");
+    formData.append("file", $('#file')[0].files[0]);
+    formData.append("cate_id", 1);
+    formData.append("collect", "sgkfgfg");
+    console.log(formData.file);
+    $.ajax({  
+         url: 'http://shandu.unohacha.com/Api/Oldstory/issue',  
+         type: 'post',  
+         data: formData,  
+         cache: false,
+         processData: false,
+         contentType: false,
+         async: false
+    }).done(function(res) {
+        
+    }).fail(function(res) {
+        
+    });
+  }
+  
+  function getResult(reason){
+    var data = reason;
+    var showBankDom = document.querySelector('#showBank');
+    var bankIdDom = document.querySelector('#bankId');
+    showBankDom.addEventListener('click', function () {
+        var bankId = showBankDom.dataset['id'];
+        var bankName = showBankDom.dataset['value'];
+        var bankSelect = new IosSelect(1, 
+            [data],
+            {
+                container: '.container',
+                title: '',
+                itemHeight: 50,
+                itemShowCount: 3,
+                oneLevelId: bankId,
+                callback: function (selectOneObj) {
+                    bankIdDom.value = selectOneObj.id;
+                    showBankDom.innerHTML = selectOneObj.value;
+                    showBankDom.dataset['id'] = selectOneObj.id;
+                    showBankDom.dataset['value'] = selectOneObj.value;
+                    vm.reasonId=selectOneObj.id;
+                    // console.log(vm.reasonId);
+                },
+                fallback: function () {
+                    console.log(1);
+                },
+                maskCallback: function () {
+                    console.log(2);
+                }
+        });
+    });
+  }
+   
+})  
+</script>
+</html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
 <link rel="stylesheet" type="text/css" href="css/iosSelect.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css">
 
 <style tyle="">
     
@@ -46,10 +47,12 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<script src="./js/layui/layui.js"></script>
 
 <style>
   .stroy_join_sec4_list{
     position: relative;
+    display: inline-block;
   }
   .stroy_join_sec4_list input{
     position: absolute;
@@ -60,6 +63,35 @@
     filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity:0;
     z-index: 10;
   }
+  #picUpDemo img{
+      width: 25%;
+  }
+  .layui-upload-list{
+      margin: 10px 0;
+      padding: 0 15px;
+  }
+
+    .pic{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        margin-right:0.05rem;
+        margin-bottom: 0.05rem;
+    }
+    .pic img {
+        width: 100%;
+        height: 100%;
+    }
+    .stroy_join_sec4{
+      position: relative;
+    }
+    .addElement{
+      display: inline-block;
+      vertical-align: top;
+      /*position: absolute;
+      top:0.25rem;
+      left:0.15rem;*/
+    }
 </style>
 
 </head>
@@ -67,6 +99,7 @@
 <body class="bg-2">
 
 <div id="app" v-cloak>
+<form id= "uploadForm">
 
 <!--  / header  -->
 <div class="stroy_rhead">
@@ -74,26 +107,30 @@
     <img src="images/hl.png"> 返回
   </a>
   <h5>撰写老故事</h5>
-  <a class="offside" href="##" style="font-size: 0.15rem;">发布</a>
+  <a class="offside" href="javascript:void(0);" style="font-size: 0.15rem;" id="sendTale">
+    <input type="button" value="发布" @click="goSubmit()" style="border:none;background:transparent;" />
+  </a>
+
 </div>
 
 <!--  / header  -->
 <!--  / warpper  -->
 <div class="warpper warpper_padt">
 	
-	<div class="stroy_join">
+	  <div class="stroy_join">
 	  	<div class="stroy_join_list stroy_join_list3">
 	  		发布类型
-	  		<span>
-	  		
-	  		<div class="form-item item-line stroy_join_list1">                                  
-			    <div class="pc-box">                     
-			        <input type="hidden" name="bank_id" id="bankId" value="">                     
-			        <span id="showBank">匠心技艺</span>  
-			    </div>             
-            </div>
-	  		<i class="fa fa-angle-right"></i></span>
+	  		<span>	  		
+  	  		<div class="form-item item-line stroy_join_list1">                                  
+  			    <div class="pc-box">                     
+  			        <input type="hidden" name="bank_id" id="bankId" value="">                     
+  			        <span id="showBank">匠心技艺</span>  
+  			    </div>             
+          </div>
+  	  		<i class="fa fa-angle-right"></i>
+        </span>
 	  	</div>
+
 	  	<div class="stroy_join_list stroy_join_list_city">
 	  		所在城市
 	  		<span>杭州<i class="fa fa-angle-right"></i></span>
@@ -101,33 +138,44 @@
 	  	
 	  	<div class="stroy_join_list">
 	  		故事标题
-	  		<input type="text" placeholder="输入标题最多个12个字">
+	  		<input type="text" placeholder="输入标题最多个12个字" v-model="title1" maxlength="12">
 	  	</div>
+
 	  	<div class="stroy_join_sec4">
-	  		<div class="stroy_join_sec4_list">
+        <div class="addElement" id="addElement"></div>
+	  		<div class="stroy_join_sec4_list" id="uploadImgBtn">
 	  			<img src="images/xiangji.png" alt="">
 	  			<br>
 	  			<span>添加图片</span>
 	  			<span>(最多6张)</span>
-          <input name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="update" >
+          <input name="file1" type="file" multiple="multiple" id="file">
 	  		</div>
-	  	</div>
+        
+      </div>
+          
+      <!-- <div class="layui-upload">
+          <div class="layui-upload-list" id="picUpDemo"></div>
+      </div> -->
+
 	  	<div class="stroy_join_sec5">
-	  		<textarea placeholder="(在此处填写您的故事,限1200字以内)" class="commentArea1"></textarea>
-	  	</div>
-	  	
-	</div>
-	
+	  		<textarea placeholder="(在此处填写您的故事,限1200字以内)" class="commentArea1" v-model="collect1"></textarea>
+	  	</div>	  	
+    </div>
+
 </div>
 <!--  / warpper  -->
   
 
 <!--  / footer  -->
 <!--  / footer  -->
+</form>
 
 </div>
 
+
 </body>
+<script src="js/bank.js"></script>
+<script src="js/iosSelect.js"></script>
 <script>
 $(window).ready(function(){
 
@@ -136,79 +184,186 @@ $(window).ready(function(){
         data(){
           return{
             stroy_allList:[],
+            title1:'',
+            collect1:'',
+            file1:'',
           }
         },
         created:function(){
           var $this = this;
-                                         
         },
         mounted:function(){
-          getData();
+            //   getData();
+            //   imgSend();
+            imgUpload();
         },
         methods:{
-          //全部老故事列表
-          update:function(){
+
+          goSubmit:function(){
             var $this = this;
-            const data = {
-                cate_id:getCookie("cateId"),
-                city:getCookie("cityLocation"),
-            }
-            Axios.post(window.Url.stroy_allList,data).then((res) => {
+            console.log($this.file1);
+            var formData = new FormData();
+            formData.append("token", getCookie("token"));
+            formData.append("title", $this.title1);
+            formData.append("city", sessionStorage.getItem("cityLocation"));
+            formData.append("file", $this.file1[0]);
+            formData.append("cate_id", 1);
+            formData.append("collect", $this.collect1);
+            formData.append("is_weixin", 1);
+            // console.log($('#file')[0].files);
+            $.ajax({  
+                 url: 'http://shandu.unohacha.com/Api/Oldstory/issue',  
+                 type: 'post',  
+                 data: formData,  
+                 cache: false,
+                 processData: false,
+                 contentType: false,
+                 async: false
+            }).done(function(res) {
+                sessionStorage.setItem('tabType',2);
+                alert(res.info);
+                window.location.href = "stroy1.html";
+                                                                
+            }).fail(function(res) {
+                console.log("全部老故事列表:"+err);
+            });
+            // const data = {
+            //     title:$this.title1,
+            //     city:sessionStorage.getItem("cityLocation"),
+            //     file:$this.file1,
+            //     cate_id:'1',
+            //     collect:$this.collect1,
+            // }
+            // console.log(formData);
+            // Axios.post(window.Url.stroy_issue,formData).then((res) => {
               
-              if(res.result == 1){
-                $this.stroy_allList = res.info.oldstory;                                 
-              }else
-              {
-                console.log("全部老故事列表:"+res.info);
-              }
+            //   if(res.result == 1){
+            //     alert(res);                                
+            //   }else
+            //   {
+            //     console.log("全部老故事列表:"+res.info);
+            //   }
               
-            }).catch((err) => {
-              console.log("全部老故事列表:"+err);
-            })
-          
-          },
+            // }).catch((err) => {
+            //   console.log("全部老故事列表:"+err);
+            // })
+
+          }
          
         }
 
     })
 
-    function getData(){
-      var showBankDom = document.querySelector('#showBank');
-      var bankIdDom = document.querySelector('#bankId');
-      showBankDom.addEventListener('click', function () {
-          var bankId = showBankDom.dataset['id'];
-          var bankName = showBankDom.dataset['value'];
-          var bankSelect = new IosSelect(1, 
-              [data],
-              {
-                  container: '.container',
-                  title: '',
-                  itemHeight: 50,
-                  itemShowCount: 3,
-                  oneLevelId: bankId,
-                  callback: function (selectOneObj) {
-                      bankIdDom.value = selectOneObj.id;
-                      showBankDom.innerHTML = selectOneObj.value;
-                      showBankDom.dataset['id'] = selectOneObj.id;
-                      showBankDom.dataset['value'] = selectOneObj.value;
-                  },
-                  fallback: function () {
-                      console.log(1);
-                  },
-                  maskCallback: function () {
-                      console.log(2);
-                  }
-          });
-      });
-    }
+        function imgUpload(){
+            //为外面的盒子绑定一个点击事件
+            $("#uploadImgBtn").click(function(){
+                /*
+                1、先获取input标签
+                2、给input标签绑定change事件
+                3、把图片回显
+                 */
+                // 1、先回去input标签
+                var $input = $("#file");
+                // console.log($input)
+                // 2、给input标签绑定change事件
+                $input.on("change" , function(){
+                    // console.log(this)
+                    //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
+                    //获取选择图片的个数
+                    var files = this.files;
+                    var length = files.length;
+                    // console.log("选择了"+length+"张图片");
+                    //3、回显
+                    $.each(files,function(key,value){
+                        //每次都只会遍历一个图片数据
+                        var div = document.createElement("div"),
+                            img = document.createElement("img");
+                        div.className = "pic";
 
+                        var fr = new FileReader();
+                        fr.onload = function(){
+                            img.src=this.result;
+                            div.appendChild(img);
+                            var element=document.getElementById("addElement");
+                            element.appendChild(div);
+                        }
+                        fr.readAsDataURL(value);
+                    })
+                    // console.log(files);
+                    vm.file1=files;
+
+                })
+
+                //4、我们把当前input标签的id属性remove
+                $input.removeAttr("id");
+                //我们做个标记，再class中再添加一个类名就叫test
+                var newInput = '<input class="uploadImg test" type="file" name="file" multiple id="file">';
+                $(this).append($(newInput));
+
+            })
+        }
+
+
+        // function upload(){
+        //     /**
+        //      * 我们存一下this对象，
+        //      * 我们将在ajax的回调函数中，
+        //      * 将要用这个对象，
+        //      * 用它来改变父盒子的背景图
+        //      *
+        //      */
+        //     var self = this;
+        //     //如果不理解我写的，可以看看我的前几篇文章
+        //     $.ajax({
+        //         url: "/UpImg/upload",
+        //         type: "post",
+        //         dataType: "json",
+        //         cache: false,
+        //         data: new FormData($("#formTag1")[0]),
+        //         processData: false,// 不处理数据
+        //         contentType: false, // 不设置内容类型
+        //         success: function(data){
+        //             /*
+        //                 后端返回的数据格式为
+        //                 {"url": "xxxxxx"}
+        //              */
+        //             $(self).parent().css({
+        //                 "background-image": "url("+data.url+")"
+        //             })
+        //         }
+
+        //     })
+        // }        
+    
   $('.stroy_join_list_city').click(function(){
   		window.location.href = "search.html";
   });
-})  
+}) 
+
+function doUpload() {  
+    var formData = new FormData();
+    formData.append("token", getCookie("token"));
+    formData.append("title", "fhg");
+    formData.append("city", "杭州");
+    formData.append("file", $('#file')[0].files[0]);
+    formData.append("cate_id", 1);
+    formData.append("collect", "sgkfgfg");
+    console.log(formData.file);
+    $.ajax({  
+         url: 'http://shandu.unohacha.com/Api/Oldstory/issue',  
+         type: 'post',  
+         data: formData,  
+         cache: false,
+         processData: false,
+         contentType: false,
+         async: false
+    }).done(function(res) {
+        
+    }).fail(function(res) {
+        
+    });
+} 
 </script>
 
-<script src="js/bank.js"></script>
-<script src="js/iosSelect.js"></script>
 
 </html>

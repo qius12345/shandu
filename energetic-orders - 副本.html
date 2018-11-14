@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+    .energetic1 button{
+        outline:none;
+    }
+
+    .pinglun1_show{
+    display: block;
+  }
+  .lianxi_show{
+    display: block;
+  }
+  .pinglun1_show_con{
+    padding:0;
+  }
+  .pinglun1_show_con h5{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    background: #eeedf3;
+    margin: 0;
+    padding: 0.24rem 0 0.16rem;
+    position: relative;
+    color:#222;
+  }
+  .pinglun1_show_con h4{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.24rem 0.24rem 0.1rem;
+    position: relative;
+    color: #222;
+    text-align: left;
+  }
+  .pinglun1_show_con h5 img{
+    position: absolute;
+    top: 0.08rem;
+    right: 0.08rem;
+  }
+  .pinglun1_show_con_f1 {
+    position: relative;
+    text-align: left;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f4 {
+    position: relative;
+    text-align: right;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f1_left{
+    float:left;
+    width:45%;
+  }
+  .pinglun1_show_con_f1_left img{
+    margin-right:0.12rem;
+    vertical-align: middle;
+  }
+  .pinglun1_show_con_f1_left span{
+    font-size:0.14rem;
+    color:#222;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  .pinglun1_show_con_f1_right span{
+    font-size: 0.14rem;
+    color: #9b9b9b;
+    vertical-align: middle;
+    display: block;
+    height: 0.25rem;
+    line-height: 0.25rem;
+  }
+  .pinglun1_show_con_f2{
+    border-bottom: 0.1rem solid #eeedf3;
+  }
+  .pinglun1_show_con_f3{
+    border-bottom: 1px solid #ebebeb;
+  }
+  .pinglun1_show_con_btn{
+    height:0.56rem;
+    line-height: 0.56rem;
+    width:100%;
+    background:#20b7fe;
+    color:#ff0000;
+    font-size:0.16rem;
+    text-align: center;
+    font-weight: 600;
+  }
+</style>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+</head>
+
+<body>
+<div id="app" v-cloak>
+
+<div class="pinglun1_show" v-show="flag1">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="hideZhifu()"> </h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_yue.jpg" alt="" width="25">
+              <span>余额</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>余额:{{wallet.wallet}}</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_weixin.jpg" alt="" width="25">
+              <span>微信</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
+    </div>
+</div>
+
+<div class="pinglun1_show" v-show="flag3">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h4 v-html="btnTxt">确认取消订单？</h4>
+        <div class="pinglun1_show_con_f1 pinglun1_show_con_f4">
+            <a href="javascript:void(0);" @click="cancleHide()">取消</a>
+            <a href="javascript:void(0);" @click="cancleSureType()">确认</a>
+        </div>
+    </div>
+</div>
+
+<div class="lianxi_show" v-show="flag5">
+    <div class="lianxi_show_bg"></div>
+    <div class="lianxi_show_con">
+        <h5>400-808-9949</h5>
+        <div class="lianxi_show_con_f1">
+            <a href="##" @click="cancleHide()">取消</a>
+            <a href="tel:4008089949" class="active">拨打电话</a>
+        </div>
+    </div>
+</div>
+
+<!--  / header  -->
+<div class="stroy_rhead">
+  <a href="javascript:history.go(-1)" class="back">
+    <img src="images/hl.png"> 返回
+  </a>
+  <h5 v-html="vitality_type_txt">全部订单</h5>
+</div>
+
+<!--  / header  -->
+<!--  / warpper  -->
+<div class="orders">
+  <div class="energetic1" v-for="order in vitality_order_list">
+        <div class="energetic1-title2">
+            <!-- <img src="images/orderList-7.png" alt=""> -->
+            <span>订单编号：<i>{{order.orderno}}</i></span>
+            <!-- <button class="energetic1-title2-btn1" v-html="order.orderstate==1?'待付款':(order.is_refund==0?'已付款':(order.orderstate==1)'退款中')">待付款</button> -->
+            <button class="energetic1-title2-btn1" v-html="order.orderstate==3?'已完成':(order.orderstate==1?'待付款':(order.is_refund==0?'已付款':(order.orderstate==1)'退款中'))">待付款</button>
+        </div>
+        <ul>
+            <li class="energetic1-content" @click="jump(order.tourist_id)">
+                <div>
+                    <div class="energetic1-content-left">
+                        <img src="images/energetic-1.png" alt="" class="img3">
+                    </div>
+                    <div class="energetic1-content-right">
+                        <!--<p class="energetic1-content-text1"><span>【组团游】</span>绍兴出发香港七日游</p>-->
+                        <p class="energetic1-content-text1">{{order.tourist_name}}</p>
+                        <p class="energetic1-content-text2">
+                        	{{order.tourist_details}}
+                        </p>
+                    </div>
+                    <table style="clear:both;"></table>
+                </div> 
+                <div class="energetic1-content-text3"><span>￥<i>{{order.price}}</i></span>/位</div>  
+            </li>                  
+        </ul>
+        <div class="energetic1-foot1">
+            <div class="energetic1-foot1-txt1 clearfix">
+                <div class="clearfix">
+                    <span class="fl">姓名：<i>{{order.contacts}}</i></span>
+                    <span class="fl">预约人数：<i>{{order.num}}人</i></span>
+                    <span class="fl energetic1-foot1-txt1-right">联系电话：<i>{{order.tel}}</i></span>
+                </div>
+                <div class="energetic1-foot1-txt2"><span>订单生成时间：</span><i>{{order.addtime}}</i></div>
+            </div>
+            <!-- <div class="energetic1-foot1-txt1"> <span>电话：</span><i>15858695842</i></div> -->
+            <div class="energetic1-foot1-txt3 clearfix">
+                <!-- <span class="energetic1-foot1-txt3-left fl">订单生成时间：2018-01-27 09:20:20</span> -->
+               <!--  <span class="energetic1-foot1-txt3-left fl">订单生成时间：<i>2018-01-27 &nbsp;09 : 20 : 20</i></span> -->
+                <span class="energetic1-foot1-txt3-right fr">合计：<i>￥<em>{{order.num*order.price}}.00</em></i></span>
+            </div>
+            <div class="energetic1-foot1-txt5 clearfix">
+                <button class="energetic1-foot1-btn2 bg5" v-if="order.orderstate==1" @click="gozhifu(order.orderno)">去付款</button>
+                <button class="energetic1-foot1-btn2 bg5" v-if="order.orderstate==2 && order.is_refund==0" @click="contact()">联系平台</button>
+                <button class="energetic1-foot1-btn2 bg4" v-if="order.orderstate==1" @click="cancle(order.orderno,order.order_id)">取消订单</button>
+                <button class="energetic1-foot1-btn2 bg4" v-if="order.orderstate==2 && order.is_refund==0" @click="tuiKuan(order.orderno,order.order_id)">申请退款</button>
+                
+            </div>
+        </div>
+  </div>
+
+</div>
+
+<!--  / warpper  -->
+  
+
+<!--  / footer  -->
+<!--  / footer  -->
+</div>
+</body>
+<script>
+$(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+    	    return {
+    	        userId: (() => {
+    	                
+    	        })(),
+    	        vitality_order_list:'',
+                vitality_type:getCookie("vitalityType"),
+                vitality_type_txt:"全部订单",
+                flag1:false,  
+                flag2:false, 
+                flag3:false,
+                flag5:false,
+                wallet:[],
+                OrderNo:'',  
+                OrderId:'',
+                btnTxt:'确认取消订单？',
+                btnType:'',
+    	    }
+		},
+        created: function () {
+    		var $this = this;
+
+            if($this.vitality_type==0){
+                $this.vitality_type_txt="全部订单";
+                // alert(O)
+            }else if($this.vitality_type==1){
+                $this.vitality_type_txt="待付款";
+                // alert(1)
+            }else if($this.vitality_type==2){
+                $this.vitality_type_txt="已付款";
+                // alert(2)
+            }else if($this.vitality_type==3){
+                $this.vitality_type_txt="退款/售后";
+                // alert(3)
+            }
+
+        	$this.getorder_list();
+            
+        },
+        mounted:function(){
+        	
+        },
+        methods:{
+        	
+        	//活力订单
+        	getorder_list:function(){
+        		var $this = this;
+        		
+        		const data = {
+                   type:$this.vitality_type,
+        		}
+        		
+        		Axios.post(window.Url.Vitality_order_list, data).then((res) => {
+        			
+        			if(res.result == 1){
+        				$this.vitality_order_list = res.info.order_list;
+        				
+        			}
+        			else{
+        				alert('活力订单'+res.info)
+        			}
+        			
+            }).catch((err) => {
+              console.log('活力订单'+err)
+            })
+            
+        	},
+        	//跳转详情
+        	jump:function(order_id){
+        		setCookie('touristId',order_id);
+        		location.href = "tourItinerary.html";
+        	},
+            //支付订单弹出框显示
+            gozhifu:function(orderNo){
+                $this=this;
+                $this.OrderNo=orderNo;
+                $this.flag1=true;
+
+                //获取钱包余额
+                const data = {
+                      
+                }       
+                Axios.post(window.Url.Ucenter_wallet,data).then((res) => {              
+                  if(res.result == 1){  
+                    // alert("获取钱包余额成功");
+                    $this.wallet=res.info.wallet;                                             
+                  }else
+                  {
+                    console.log("获取钱包余额失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("获取钱包余额失败:"+err);
+                })
+            },
+
+            //支付订单弹出框隐藏
+            hideZhifu:function(){
+                $this=this;
+                $this.flag1=false;
+            },
+
+            //选择支付方式
+            selectZhifu:function(state){
+                $this=this;
+                $this.flag2=state;                       
+            },
+
+            //余额支付
+            sureZhifu:function(){
+                $this=this;
+                if(!$this.flag2){
+
+                  const data = {
+                      orderno:$this.OrderNo,
+                      type:3,
+                  }
+
+                  Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {              
+                    if(res.result == 1){  
+                      alert("余额支付成功");
+                      $this.flag1=false;
+                      location.reload();
+                                                       
+                    }else
+                    {
+                      console.log("余额支付失败:"+res.info);
+                    }
+                    
+                  }).catch((err) => {
+                    console.log("余额支付失败:"+err);
+                  })
+
+                }else if($this.flag2){
+                    const data = {
+                      orderno:$this.OrderNo,
+                      type:3,
+                      is_wxin:1
+                    }
+
+                    Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+                        if(res.result == 1){  
+                            // alert("res.info");
+                            sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                            sessionStorage.setItem('error_url', "user.html");
+                            sessionStorage.setItem('success_url', "orderList.html");
+                            window.location.href = 'wxpay.html';                                                          
+                        }else
+                        {
+                          console.log("微信支付失败:"+res.info);
+                        }
+                        
+                    }).catch((err) => {
+                        console.log("微信支付失败:"+err);
+                    })
+
+                }
+            },
+
+            //取消订单弹框显示
+            cancle:function(orderNo,orderId){
+                $this=this;
+                $this.OrderId=orderId;
+                $this.flag3=true;
+                $this.btnTxt="确认取消订单？";
+                $this.btnType=1;
+            },
+            //取消订单弹框隐藏(联系平台弹框隐藏)
+            cancleHide:function(){
+                $this=this;
+                $this.flag3=false;
+                $this.flag5=false;
+            },
+
+            //确认取消订单
+            cancleSure1:function(){
+                $this=this;
+                $this.flag3=false;
+
+                //取消订单
+                const data = {
+                  order_id:$this.OrderId              
+                }       
+                Axios.post(window.Url.VitalityCancel,data).then((res) => {              
+                  if(res.result == 1){  
+                    alert(res.info);
+                    // $this.wallet=res.info.wallet;
+                    location.reload();                                             
+                  }else
+                  {
+                    console.log("取消订单失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("取消订单失败:"+err);
+                })
+
+            },
+            //联系平台弹框显示
+            contact:function(){
+                $this=this;
+                $this.flag5=true;
+            },
+
+            //申请退款弹框显示
+            tuiKuan:function(orderNo,orderId){
+                $this=this;
+                $this.OrderId=orderId;
+                $this.flag3=true;
+                $this.btnTxt="确定取消订单并退款？";
+                $this.btnType=2;
+            },
+
+            //确认退款
+            cancleSure2:function(){
+                $this=this;
+                $this.flag3=false;
+
+                //确认退款
+                const data = {
+                  order_id:$this.OrderId              
+                }       
+                Axios.post(window.Url.VitalityRefunds,data).then((res) => {              
+                  if(res.result == 1){  
+                    alert(res.info);
+                    // $this.wallet=res.info.wallet;
+                    location.reload();                                             
+                  }else
+                  {
+                    console.log("退款失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("退款失败:"+err);
+                })
+
+            },
+
+            cancleSureType:function(){
+                $this=this;
+                if($this.btnType==1){
+                  $this.cancleSure1();
+                }else if($this.btnType==2){
+                  $this.cancleSure2();
+                }
+            }
+    	}
+})
+	
+	
+	
+//  $('.energetic1 li').on('click',function(){
+//    window.location.href = "tourItinerary.html";
+//  });
+    $('.bg4').on('click',function(){
+      $('.pinglun1_show').css('display','block');
+    })
+    $('.pinglun1_show_con_f1 a').on('click',function(){
+      $('.pinglun1_show').css('display','none');
+    })
+  $(window).load(function(){
+
+  })
+
+  $(window).resize(function(){
+
+  })
+})  
+</script>
+</html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -23,7 +23,7 @@
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/easing.js"></script>
 <script src="js/swiper-3.4.1.min.js"></script>
-<script src="js/index.js"></script>
+<script src="js/index.js?v=4"></script>
 <script src="js/main.js"></script>
 
 <script src="./js/vue.js"></script>
@@ -31,10 +31,12 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<script src="js/footer.js"></script>
 
 </head>
 
 <body>
+<div id="app" v-cloak>
 <div class="lianxi_show">
     <div class="lianxi_show_bg"></div>
     <div class="lianxi_show_con">
@@ -72,13 +74,14 @@
        <div class="user1-left">
            <div class="clearfix">
                <div class="user1-left-img1 fl">
-                   <img src="images/user_center_2.png" alt="">
-                   <img src="images/user_center_3.png" alt="" class="user1-left-img1-center">
+                   <img :src="userInfo.wx_img" alt="">
+                   <!-- <img src="images/user_center_3.png" alt="" class="user1-left-img1-center"> -->
                </div>
                <div class="fl user1-left-txt1">
-                   <p>葛晓星</p>
+                   <p>{{userInfo.wx_name}}</p>
                    <!-- <img src="images/sex.png" alt=""> -->
-                   <span>15869526680</span>
+                   <p style="margin-bottom:0;"><span>{{userInfo.mobile}}</span></p>
+                   <a href="javascript:void(0);" style="font-size: 0.12rem;color: rgba(247, 52, 18, 0.78);text-decoration: underline;" @click="goHuanbang()">修改手机号码</a>
                </div>
            </div>
            <!-- <div>修改我的资料</div> -->
@@ -134,6 +137,7 @@
         <img src="images/user_xiaoxi.png" alt="">
         <span class="user2-list1-txt1">平台消息</span>
         <img src="images/right.png" alt="" class="fr">
+        <div class="news_unRead" v-if="newsNum.pingtai>0">{{newsNum.pingtai}}</div>
   </div>
   <div class="user2-list1 date11">
         <img src="images/user_yiwen.png" alt="">
@@ -199,84 +203,142 @@
 </div>
 
 <!--  / footer  -->
-<div class="footer">
-                <ul class="clearfix">
-                  <a href="index.html">
-                  <li>
-                      <div class="footer_img footer_img1">
-                                      <img src="images/ic_home_home_gray.png">
-                                      <img src="images/ic_home_home_yellow.png">
-                      </div>
-                      <span>主页</span>
-                  </li>
-                  </a>
-                  <a href="stroy1.html">
-                  <li>
-                      <div class="footer_img footer_img1">
-                            <img src="images/ic_home_yishu_gray.png">
-                            <img src="images/ic_home_yishu_yellow.png">
-                      </div>
-                      <span>老故事</span>
-                  </li>
-                  </a>
-                  <a href="bigStage.html">
-                  <li class="ind_share_btn">
-                            <div class="footer_img footer_img2">
-                                <img src="images/ic_dibutiao_shandu_gray.png">
-                                <img src="images/ic_dibutiao_shandu_yellow.png">
-                            </div>
-                  </li>
-                  </a>
-                  <a href="orderList.html">
-                  <li id="goOrder">
-                            <div class="footer_img footer_img1">
-                                      <img src="images/ic_home_dingdan_gray.png">
-                                      <img src="images/ic_home_dingdan_yellow.png">
-                      </div>
-                      <span>订单</span>
-                  </li>
-                  </a>
-                  <a href="user.html">
-                  <li class="on">
-                          <div class="footer_img footer_img1">
-                                <img src="images/ic_home_geren_gray.png">	
-                                <img src="images/ic_home_geren_yellow.png">	
-                          </div>	
-                      <span>我的</span>
-                  </li>
-                  </a>
-                </ul>
-</div>
+<!-- <div class="footer">
+  <ul class="clearfix">
+    <a href="index.html">
+    <li>
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_home_gray.png">
+            <img src="images/ic_home_home_yellow.png">
+        </div>
+        <span>主页</span>
+    </li>
+    </a>
+    <a href="stroy1.html">
+    <li>
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_yishu_gray.png">
+            <img src="images/ic_home_yishu_yellow.png">
+        </div>
+        <span>老故事</span>
+    </li>
+  </a>
+  <a href="bigStage.html">
+    <li class="ind_share_btn">
+        <div class="footer_img footer_img2">
+            <img src="images/ic_dibutiao_shandu_gray.png">
+            <img src="images/ic_dibutiao_shandu_yellow.png">
+        </div>
+  </li>
+  </a>
+  
+  <a href="JavaScript:void(0);" id='getOrder'>
+    <li id="goOrder">
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_dingdan_gray.png">
+            <img src="images/ic_home_dingdan_yellow.png">
+        </div>
+        <span>订单</span>
+  </li>
+    </a>
+    
+    <a href="JavaScript:void(0);" id='getUser'>
+    <li id="goUser" class="on">
+      <div class="footer_img footer_img1">
+            <img src="images/ic_home_geren_gray.png"> 
+            <img src="images/ic_home_geren_yellow.png"> 
+      </div>  
+        <span>我的</span>
+    </li>
+    </a>
+  </ul>
+</div> -->
+<footer1></footer1>
 <!--  / footer  -->
 
-
+</div>
 </body>
 <script>
+var url = location.href;
+isToken2(url);
+// goOther();
+
 $(window).ready(function(){
 
-$('.banner').height($(window).width()*400/750);
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+       userInfo:[],
+       newsNum:''
+      }
+    },
+    created:function(){
+      var $this = this;   
+      $this.getUserInfo(); 
+      $this.newsCount();                                                      
+    },
+    mounted:function(){
+      var $this = this;                                         
+    },
+    methods:{
+      getUserInfo:function(){
+        var $this = this;
+        const data = {
+            
+        }
+        Axios.post(window.Url.user_info,data).then((res) => {
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/user.html');
+          if(res.result == 1){
+            $this.userInfo=res.info;            
+          }else if(res.result == 0){
+            console.log("活力健身-相关推荐:"+res.info);
+          }
+          
+        }).catch((err) => {
+            console.log("活力健身-相关推荐:"+err)
+        }) 
+      },
+      newsCount:function(){
+        var $this = this;
+        const data = {
+            
+        }
+        Axios.post(window.Url.newsCount,data).then((res) => {
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/user.html');
+          if(res.result == 1){
+            $this.newsNum=res.info;            
+          }else if(res.result == 0){
+            console.log("活力健身-相关推荐:"+res.info);
+          }
+          
+        }).catch((err) => {
+            console.log("活力健身-相关推荐:"+err)
+        })
+      },
+      goHuanbang:function(){
+        // sq('http://shandu.unohacha.com/wx_shandu/registered1.html');
+        window.location.href="registered1.html";
+      }
+    }
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+  })
+
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
-$('.collage1').click(function(){
-    window.location.href = "shopDetail.html";
-});
-$('.ind_share_btn').click(function(){
-	  window.location.href = "bigStage.html";
-});
-$('#goOrder').click(function(){
-	  window.location.href = "orderList.html";
-});
+// $('.longevity1 li').click(function(){
+//     window.location.href = "InformationDetails.html";
+// });
+// $('.collage1').click(function(){
+//     window.location.href = "shopDetail.html";
+// });
+// $('.ind_share_btn').click(function(){
+// 	  window.location.href = "bigStage.html";
+// });
+// $('#goOrder').click(function(){
+// 	  window.location.href = "orderList.html";
+// });
 $('.date1').click(function(){
 	  window.location.href = "myCollect.html";
 });
@@ -325,7 +387,10 @@ $('.pinglun1_show_con_f1 a').click(function(){
 $('.lianxi_show_con_f1 a').click(function(){
     $('.lianxi_show').css('display','none');
 })
+
   
 })  
+
+
 </script>
 </html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/style1.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+<style>
+    .stroy_join_sec4_list{
+        position: relative;
+        display: inline-block;
+    }
+    .stroy_join_sec4_list input{
+        position: absolute;
+        width:100%;
+        height: 100%;
+        top:0;
+        left:0;
+        filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity:0;
+        z-index: 10;
+    }
+    #picUpDemo img{
+        width: 25%;
+    }
+    .layui-upload-list{
+        margin: 10px 0;
+        padding: 0 15px;
+    }
+
+    .pic{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        margin-right:0.05rem;
+        margin-bottom: 0.05rem;
+    }
+    .pic img {
+        width: 100%;
+        height: 100%;
+    }
+    .stroy_join_sec4{
+        position: relative;
+    }
+    .addElement{
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div id="app" v-cloak>
+<form id= "uploadForm">
+
+<!--  / header  -->
+<div class="header_longevity">
+        <div class="header_map_longevity">   
+            <img src="images/jiantou.png" alt="">
+            <span>返回</span>
+        </div>
+        <div class="logo_longevity">评价</div>   
+</div>
+<!--  / header  -->
+
+<!--  / warpper  -->
+<div class="warpper" style="padding-bottom: 0%;">
+    <div class="pingjia_sec1">
+      <img src="images/pingjia_sec1_1.jpg" alt="" width="26">
+      <span>好评请给5星</span>
+    </div>
+   
+    <div class="luate">
+
+
+        <div class="evaluate_top clearfix" id="startone_1">
+            <div class="left">服务态度 : </div>
+            <div class="evaluate_top_right ">
+                <div class="star_score"></div>
+
+                <div class="attitude"></div>
+            </div>
+        </div>
+        <div class="evaluate_top clearfix" id="startone_2">
+            <div class="left">服务态度 : </div>
+            <div class="evaluate_top_right ">
+                <div class="star_score"></div>
+
+                <div class="attitude"></div>
+            </div>
+        </div>
+        <div class="evaluate_top clearfix" id="startone_3">
+            <div class="left">服务态度 : </div>
+            <div class="evaluate_top_right ">
+                <div class="star_score"></div>
+
+                <div class="attitude"></div>
+            </div>
+        </div>
+        <div class="pingjia_sec1 pingjia_sec2">
+          <img src="images/pingjia_sec1_2.jpg" alt="" width="26">
+          <span>投诉与建议</span>
+        </div>
+
+        <div class="evaluate_center">
+            <textarea
+                    onfocus="if(this.value=='您想说的话...') {this.value='';}this.style.color='#333333';"
+                    onblur="if(this.value=='') {this.value='您想说的话...';this.style.color='#999999';}" v-model="assess_text1">您想说的话...</textarea>
+            <div class="evaluate_center_img clearfix">
+                <div class="addElement" id="addElement"></div>
+                <div class="stroy_join_sec4_list" id="uploadImgBtn">
+                    <img src="images/xiangji.png" alt="">
+                    <br>
+                    <span>添加图片</span>
+                    <span>(最多6张)</span>
+                    <input name="file1" type="file" multiple="multiple" id="file">
+                </div>               
+            </div>
+            <!--<div class="evaluate_center_text on clearfix">-->
+            <!--<span class="uesr_check"></span>匿名 <div>您写的评价会以匿名的形式展现</div>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+    <div class="pingjia_btn">
+        <a href="javascript:void(0);" @click="evaluateOrder()">提交</a>
+    </div>
+
+</div>
+<!--  / warpper  -->
+</form>
+
+</div>
+
+</body>
+<script type="text/javascript" src="js/startScore.js"></script>
+
+<script>
+    
+    $(document).ready(function () {
+
+        var vm = new Vue({
+            el:"#app",
+            data(){
+              return{
+                order_id:sessionStorage.getItem('serviceOrderId'),
+                attitude1:'0',
+                integrity1:'0',
+                assess1:'0',
+                assess_text1:'',
+                pic1:[],
+                file1:'',
+              }
+            },
+            created:function(){
+              var $this = this;
+              // $this.order_id=sessionStorage.getItem('orderId');
+              
+                                           
+            },
+            mounted:function(){
+                var $this = this;  
+                scoreFun($("#startone_1"))
+                scoreFun($("#startone_2"))
+                scoreFun($("#startone_3"))   
+                $this.getStarts();
+                imgUpload();     
+            },
+            methods:{   
+
+                //提交评价
+                evaluateOrder:function(){
+                    $this=this;
+
+                    var formData = new FormData();
+                    formData.append("token", getCookie("token"));
+                    formData.append("service_order_id", $this.order_id);
+                    formData.append("attitude",$this.attitude1);
+                    formData.append("integrity", $this.integrity1);
+                    formData.append("assess", $this.assess1);
+                    formData.append("assess_text", $this.assess_text1);
+                    formData.append("pic", $this.file1[0]);
+                    // console.log($('#file')[0].files);
+                    $.ajax({  
+                         url: 'http://shandu.unohacha.com/Api/ServiceOrder/pingJia',  
+                         type: 'post',  
+                         data: formData,  
+                         cache: false,
+                         processData: false,
+                         contentType: false,
+                         async: false
+                    }).done(function(res) {
+                        // alert(res.info);  
+                        alert("评价完成，已赠送您一张优惠券，您可在优惠券列表中查看！"); 
+                        // setCookie("yuyueType",6);  
+                        sessionStorage.setItem("what1",2)
+                        window.location.href="myCoupon.html";                                           
+                    }).fail(function(res) {
+                        console.log("提交评价:"+res.info);
+                    });
+                    // const data = {
+                    //   service_order_id:$this.order_id,  
+                    //   attitude:$this.attitude1, 
+                    //   integrity:$this.integrity1,
+                    //   assess:$this.assess1, 
+                    //   assess_text:$this.assess_text1, 
+                    //   pic: $this.pic1  
+                    // }       
+                    // Axios.post(window.Url.service_pingJia,data).then((res) => {              
+                    //   if(res.result == 1){  
+                    //     alert(res.info);                                                              
+                    //   }else
+                    //   {
+                    //     console.log("提交评价失败:"+res.info);
+                    //   }
+                      
+                    // }).catch((err) => {
+                    //   console.log("提交评价失败:"+err);
+                    // })
+                },
+
+                //获取星星数
+                getStarts:function(){
+                    var $this = this;
+                    $("#startone_1 a").click(function () {
+
+                        var sumber = $(this).index() + 1;
+                        // console.log(sumber);
+                        $this.attitude1=sumber;
+                        console.log("attitude1:"+$this.attitude1);
+
+                    })
+
+                    $("#startone_2 a").click(function () {
+
+                        var sumber = $(this).index() + 1;
+                        // console.log(sumber);
+                        $this.integrity1=sumber;
+                        console.log("integrity1:"+$this.integrity1);
+
+                    })
+
+                    $("#startone_3 a").click(function () {
+
+                        var sumber = $(this).index() + 1;
+                        // console.log(sumber);
+                        $this.assess1=sumber;
+                        console.log("assess1:"+$this.assess1);
+                    })
+
+                }
+
+                   
+              
+            }
+
+        })
+
+        function imgUpload(){
+            //为外面的盒子绑定一个点击事件
+            $("#uploadImgBtn").click(function(){
+                /*
+                1、先获取input标签
+                2、给input标签绑定change事件
+                3、把图片回显
+                 */
+                // 1、先回去input标签
+                var $input = $("#file");
+                // console.log($input)
+                // 2、给input标签绑定change事件
+                $input.on("change" , function(){
+                    // console.log(this)
+                    //补充说明：因为我们给input标签设置multiple属性，因此一次可以上传多个文件
+                    //获取选择图片的个数
+                    var files = this.files;
+                    var length = files.length;
+                    // console.log("选择了"+length+"张图片");
+                    //3、回显
+                    $.each(files,function(key,value){
+                        //每次都只会遍历一个图片数据
+                        var div = document.createElement("div"),
+                            img = document.createElement("img");
+                        div.className = "pic";
+
+                        var fr = new FileReader();
+                        fr.onload = function(){
+                            img.src=this.result;
+                            div.appendChild(img);
+                            var element=document.getElementById("addElement");
+                            element.appendChild(div);
+                        }
+                        fr.readAsDataURL(value);
+                    })
+                    // console.log(files);
+                    vm.file1=files;
+
+                })
+
+                //4、我们把当前input标签的id属性remove
+                $input.removeAttr("id");
+                //我们做个标记，再class中再添加一个类名就叫test
+                var newInput = '<input class="uploadImg test" type="file" name="file" multiple id="file">';
+                $(this).append($(newInput));
+
+            })
+        }
+    })
+
+</script>
+<script>
+  $(window).ready(function(){
+    $('.header_map_longevity').click(function(){
+      history.go(-1);
+    });
+  })  
+</script>
+</html>

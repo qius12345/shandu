@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -43,11 +43,123 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+<style>
+  .pinglun1_show{
+    display: block;
+  }
+  .lianxi_show{
+    display: block;
+  }
+  .pinglun1_show_con{
+    padding:0;
+  }
+  .pinglun1_show_con h5{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    background: #eeedf3;
+    margin: 0;
+    padding: 0.24rem 0 0.16rem;
+    position: relative;
+    color:#222;
+  }
+  .pinglun1_show_con h4{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.24rem 0.24rem 0.1rem;
+    position: relative;
+    color: #222;
+    text-align: left;
+  }
+  .pinglun1_show_con h5 img{
+    position: absolute;
+    top: 0.08rem;
+    right: 0.08rem;
+  }
+  .pinglun1_show_con_f1 {
+    position: relative;
+    text-align: left;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f4 {
+    position: relative;
+    text-align: right;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f1_left{
+    float:left;
+    width:45%;
+  }
+  .pinglun1_show_con_f1_left img{
+    margin-right:0.12rem;
+    vertical-align: middle;
+  }
+  .pinglun1_show_con_f1_left span{
+    font-size:0.14rem;
+    color:#222;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  .pinglun1_show_con_f1_right span{
+    font-size: 0.14rem;
+    color: #9b9b9b;
+    vertical-align: middle;
+    display: block;
+    height: 0.25rem;
+    line-height: 0.25rem;
+  }
+  .pinglun1_show_con_f2{
+    border-bottom: 0.1rem solid #eeedf3;
+  }
+  .pinglun1_show_con_f3{
+    border-bottom: 1px solid #ebebeb;
+  }
+  .pinglun1_show_con_btn{
+    height:0.56rem;
+    line-height: 0.56rem;
+    width:100%;
+    background:#20b7fe;
+    color:#ff0000;
+    font-size:0.16rem;
+    text-align: center;
+    font-weight: 600;
+  }
+</style>
+
 </head>
 
 <body>
 
 <div id="app" v-cloak>
+
+<div class="pinglun1_show" v-show="flag1">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="hideZhifu()"> </h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_yue.jpg" alt="" width="25">
+              <span>余额</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>余额:{{wallet.wallet}}</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_weixin.jpg" alt="" width="25">
+              <span>微信</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
+    </div>
+</div>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -118,12 +230,13 @@
                         <span>60个字符以内</span>
                     </div>
             </div>
-            <input type="text" placeholder="请输入备注内容(选填)" class="input-text" v-model="remark1">
+            <!-- <input type="text" placeholder="请输入备注内容(选填)" class="input-text" v-model="remark1"> -->
+            <textarea name="" id="" style="resize:none;" class="input-text" v-model="remark1"></textarea>
         </div>        
 </div>
 <!--  / footer  -->
 <div class="footer2">
-    <span>合计 <i> ￥0.00</i></span>
+    <span>合计 <i> ￥{{energetic_fitnessDetail.price*num1}}.00</i></span>
     <button @click="goZhifu">预约支付</button> 
 </div> 
 <!--  / footer  -->
@@ -152,17 +265,22 @@ $(window).ready(function(){
             handler1:'',
             telephone1:'',
             remark1:'',
+            flag1:false,
+            flag2:false,
+            OrderNo:'',
+            wallet:''
           }
         },
         created:function(){
           var $this = this;
-          $this.getTourItinerary();                                          
+          $this.getTourItinerary(); 
+          $this.getWallet();                                         
          },
         mounted:function(){
           timeSelect();
         },
         methods:{
-          //预约服务
+            //预约服务
             getTourItinerary:function(){
                 var $this = this;
                 const data = {
@@ -183,9 +301,13 @@ $(window).ready(function(){
                 })
               
             },
+            //生成活力订单
             goZhifu:function(){
                 var $this = this;
-                console.log($this.handler1);
+                if ($this.telephone1 == '' || !/^[1][3,4,5,6,7,8][0-9]{9}$/.test($this.telephone1)) {
+                       alert('请输入正确的电话号码！')
+                       return
+                }
                 const data = {
                    tourist_id:getCookie("touristId"),
                    num:$this.num1,
@@ -197,10 +319,11 @@ $(window).ready(function(){
                 Axios.post(window.Url.vitality_order,data).then((res) => {
                   
                   if(res.result == 1){
-                    console.log("chenggong");  
-                    // alert("chenggong");
-                    
-                               
+                    // console.log("chenggong");  
+                    // alert("预约成功");
+                    $this.flag1=true;
+                    $this.OrderNo=res.info;
+                                                  
                   }else
                   {
                     console.log("预约服务:"+res.info);
@@ -210,6 +333,102 @@ $(window).ready(function(){
                 }).catch((err) => {
                   console.log("预约服务:"+err);
                 })
+            },
+
+            //支付订单弹出框隐藏
+            hideZhifu:function(){
+                $this=this;
+                $this.flag1=false;
+            },
+
+            //选择支付方式
+            selectZhifu:function(state){
+                $this=this;
+                $this.flag2=state;                       
+            },
+
+            //获取钱包余额
+            getWallet:function(){
+                $this=this;
+                const data = {
+                      
+                }       
+                Axios.post(window.Url.Ucenter_wallet,data).then((res) => {              
+                  if(res.result == 1){  
+                    // alert("获取钱包余额成功");
+                    $this.wallet=res.info.wallet;                                             
+                  }else
+                  {
+                    console.log("获取钱包余额失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("获取钱包余额失败:"+err);
+                })
+            },
+
+            //余额及微信支付
+            sureZhifu:function(){
+                $this=this;
+                if(!$this.flag2){
+
+                  const data = {
+                      orderno:$this.OrderNo,
+                      type:3,
+                  }
+
+                  Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {              
+                    if(res.result == 1){  
+                      // alert("余额支付成功");
+                      $this.flag1=false;
+                      window.location.href="orderList.html"; 
+                                                       
+                    }else
+                    {
+                      console.log("余额支付失败:"+res.info);
+                    }
+                    
+                  }).catch((err) => {
+                    console.log("余额支付失败:"+err);
+                  })
+
+                }else if($this.flag2){
+                    const data = {
+                      orderno:$this.OrderNo,
+                      type:3,
+                      is_wxin:1
+                    }
+
+                    Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+                        if(res.result == 1){  
+                            // alert("res.info");
+                            sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                            sessionStorage.setItem('error_url', "user.html");
+                            sessionStorage.setItem('success_url', "orderList.html");
+                            // setCookie("weixins",res.jsApiParameters);
+                            // setCookie("error_url","orderList.html");
+                            // setCookie("success_url","orderList.html");
+                            // window.wxinPay.appId = res.jsApiParameters.appId;
+                            // window.wxinPay.timeStamp = res.jsApiParameters.timeStamp;
+                            // window.wxinPay.nonceStr = res.jsApiParameters.nonceStr;
+                            // window.wxinPay.package = res.jsApiParameters.package;
+                            // window.wxinPay.signType = res.jsApiParameters.signType;
+                            // window.wxinPay.paySign = res.jsApiParameters.paySign;
+                            // window.wxinPay.error_url = 'orderList.html';
+                            // window.wxinPay.success_url = 'orderList.html';
+                            window.location.href = 'wxpay.html';
+                            // $this.flag1=false;
+                            // location.reload();                                                           
+                        }else
+                        {
+                          console.log("微信支付失败:"+res.info);
+                        }
+                        
+                    }).catch((err) => {
+                        console.log("微信支付失败:"+err);
+                    })
+
+                }
             },
          
         }

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -31,6 +31,7 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<script src="js/footer.js"></script>
 
 </head>
 
@@ -67,7 +68,7 @@
       <div class="swiper-wrapper">
       	
           <div class="swiper-slide" v-for="(item,index) in story_cate" @click="getCateList(item.cate_id)">
-          	<a href="##" class="stroy1_class_bt" :class="cateId==item.cate_id?'on':''">{{item.classname}}</a>
+          	<a href="javascript:void(0);" class="stroy1_class_bt" :class="cateId==item.cate_id?'on':''">{{item.classname}}</a>
           </div>
           
       </div>
@@ -79,7 +80,7 @@
   <div class="stroy-item1">
   
   <div class="stroy1_popularity mar_b" @click="goInner(stroy_best.oldstory_id)">
-    <a href="stroy1_inner.html">
+    <a href="javascript:void(0);">
       <h5 class="popular_tit">最佳人气</h5>
       
       <div class="popular_img mar_b">
@@ -106,7 +107,7 @@
   	<h5 class="popular_tit pad">热门故事 <a href="story1_hotList.html" class="more" @click="goList">更多</a></h5>
   	
     <div class="stroy1_hot_box clearfix" v-for="items2 in stroy_hot" @click="goInner(items2.oldstory_id)">
-      <a href="stroy1_inner.html">
+      <a href="javascript:void(0);">
         <div class="stroy1_hot_img">
           <img :src="items2.pic" width="100%">
         </div>
@@ -180,7 +181,7 @@
   <div class="stroy1_hot mar_b">
     <h5 class="popular_tit pad">全部故事 <a href="story1_allList.html" class="more" @click="goList">更多</a></h5>
     <div class="stroy1_hot_box clearfix" v-for="items3 in stroy_all" @click="goInner(items3.oldstory_id)">
-      <a href="stroy1_inner.html">
+      <a href="javascript:void(0);">
       <div class="stroy1_hot_img">
         <img :src="items3.pic" width="100%">
       </div>
@@ -210,54 +211,57 @@
 
 
 <!--  / footer  -->
-<div class="footer">
+<!-- <div class="footer">
   <ul class="clearfix">
     <a href="index.html">
     <li>
-    	  <div class="footer_img footer_img1">
-      		  <img src="images/ic_home_home_gray.png">
-      		  <img src="images/ic_home_home_yellow.png">
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_home_gray.png">
+            <img src="images/ic_home_home_yellow.png">
         </div>
         <span>主页</span>
     </li>
     </a>
     <a href="stroy1.html">
     <li class="on">
-    	  <div class="footer_img footer_img1">
-      		  <img src="images/ic_home_yishu_gray.png">
-      		  <img src="images/ic_home_yishu_yellow.png">
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_yishu_gray.png">
+            <img src="images/ic_home_yishu_yellow.png">
         </div>
         <span>老故事</span>
     </li>
-    </a>
-    <a href="bigStage.html">
+  </a>
+  <a href="bigStage.html">
     <li class="ind_share_btn">
-    	  <div class="footer_img footer_img2">
-    	  	  <img src="images/ic_dibutiao_shandu_gray.png">
-    	  	  <img src="images/ic_dibutiao_shandu_yellow.png">
-    	  </div>
-    </li>
-    </a>
-    <a href="orderList.html">
+        <div class="footer_img footer_img2">
+            <img src="images/ic_dibutiao_shandu_gray.png">
+            <img src="images/ic_dibutiao_shandu_yellow.png">
+        </div>
+  </li>
+  </a>
+  
+  <a href="JavaScript:void(0);" id='getOrder'>
     <li id="goOrder">
-    	  <div class="footer_img footer_img1">
-      		  <img src="images/ic_home_dingdan_gray.png">
-      		  <img src="images/ic_home_dingdan_yellow.png">
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_dingdan_gray.png">
+            <img src="images/ic_home_dingdan_yellow.png">
         </div>
         <span>订单</span>
-    </li>
+  </li>
     </a>
-    <a href="user.html">
-    <li>
-    	  <div class="footer_img footer_img1">
-    	      <img src="images/ic_home_geren_gray.png">	
-    	      <img src="images/ic_home_geren_yellow.png">	
-    	  </div>	
+    
+    <a href="JavaScript:void(0);" id='getUser'>
+    <li id="goUser">
+      <div class="footer_img footer_img1">
+            <img src="images/ic_home_geren_gray.png"> 
+            <img src="images/ic_home_geren_yellow.png"> 
+      </div>  
         <span>我的</span>
     </li>
     </a>
   </ul>
-</div>
+</div> -->
+<footer1></footer1>
 <!--  / footer  -->
 </div>
 </body>
@@ -273,19 +277,20 @@ $(window).ready(function(){
         stroy_best:[],
         stroy_hot:[],
         stroy_all:[],
-        cateId:'1',
+        cateId:'',
 			}
 		},
 		created:function(){
 			var $this = this;
 			$this.getCate();
       $this.getStoryRules();
-      $this.getBest();
-      $this.getHot();
-      $this.getAll();
+      // $this.getBest();
+      // $this.getHot();
+      // $this.getAll();
 																	
 		},
 		mounted:function(){
+      // goOther();
 			
 		},
     methods:{
@@ -299,10 +304,16 @@ $(window).ready(function(){
 					
 					if(res.result == 1){
 						$this.story_cate = res.info.cate;
+            $this.cateId=$this.story_cate[0].cate_id;
             $this.$nextTick(function () {
               var mySwiper_strclass = new Swiper ('.swiper-stroy1_class', {
                 slidesPerView: 4,
-              }) 
+              })  
+
+              $this.getBest();
+              $this.getHot();
+              $this.getAll();
+              
             })
            																	  
 					}else
@@ -364,7 +375,7 @@ $(window).ready(function(){
               cate_id:$this.cateId
         }
 
-        data.city=getCookie("cityLocation");
+        data.city=sessionStorage.getItem("cityLocation");
 
         Axios.post(window.Url.stroy_best,data).then((res) => {
           
@@ -391,7 +402,7 @@ $(window).ready(function(){
               cate_id:$this.cateId
         }
 
-        data.city=getCookie("cityLocation");
+        data.city=sessionStorage.getItem("cityLocation");
 
         Axios.post(window.Url.stroy_hot,data).then((res) => {
           
@@ -419,7 +430,7 @@ $(window).ready(function(){
               cate_id:$this.cateId
         }
 
-        data.city=getCookie("cityLocation");
+        data.city=sessionStorage.getItem("cityLocation");
 
         Axios.post(window.Url.stroy_all,data).then((res) => {
           
@@ -439,7 +450,8 @@ $(window).ready(function(){
 
       //跳转到老故事详情页
       goInner:function(oldstoryId){
-         setCookie("oldstoryId",oldstoryId);
+         // setCookie("oldstoryId",oldstoryId);
+         window.location.href = "stroy1_inner.html?id="+oldstoryId;
       }
 
 
@@ -465,12 +477,12 @@ $(window).ready(function(){
   $(window).resize(function(){
     $(".stroy1_hot_text").height($(".stroy1_hot_img").width()*268/359);
   })
-  $('.ind_share_btn').click(function(){
-	  window.location.href = "bigStage.html";
-  });
-  $('#goOrder').click(function(){
-	  window.location.href = "orderList.html";
-  });
+  // $('.ind_share_btn').click(function(){
+	 //  window.location.href = "bigStage.html";
+  // });
+  // $('#goOrder').click(function(){
+	 //  window.location.href = "orderList.html";
+  // });
 })  
 </script>
 </html>

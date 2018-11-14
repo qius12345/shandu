@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -54,7 +54,7 @@
 
 <div class="search2_main" style="margin-top:0.5rem;">
     <div class="stroy1_hot_box clearfix" v-for="items3 in stroy_searchList" @click="goInner(items3.oldstory_id)">
-      <a href="stroy1_inner.html">
+      <!-- <a href="stroy1_inner.html"> -->
       <div class="stroy1_hot_img">
         <img :src="items3.pic" width="100%">
       </div>
@@ -68,7 +68,7 @@
           <span class="right">编号：{{items3.number}}</span>
         </div>
       </div>
-      </a>
+      <!-- </a> -->
     </div>
 </div>
 
@@ -124,6 +124,10 @@ $(window).ready(function(){
             if(keycode=='13'){
                $this.getAllList();
             }
+          },
+          goInner:function(storyId){
+            // setCookie("oldstoryId",storyId);
+            window.location.href="stroy1_inner.html?id="+storyId;
           }
          
         }

@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/> 
+<title>微信安全支付</title>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+//调用微信JS api 支付
+function jsApiCall(){
+    var weiXins=JSON.parse(sessionStorage.getItem('weixins'));
+    var success_url=sessionStorage.getItem('success_url');
+    var error_url=sessionStorage.getItem('error_url');
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        {
+            "appId":weiXins.appId,     //公众号名称，由商户传入
+            "timeStamp":weiXins.timeStamp,         //时间戳，自1970年以来的秒数
+            "nonceStr":weiXins.nonceStr, //随机串
+            "package":weiXins.package,
+            "signType":weiXins.signType,         //微信签名方式：
+            "paySign":weiXins.paySign //微信签名
+        },
+        function(res){
+            //WeixinJSBridge.log(res.err_msg);
+            // alert(res.err_code+res.err_desc+res.err_msg);
+            if(res.err_msg=="get_brand_wcpay_request:ok"){
+                location.href=success_url;
+               // console.log(weiXins);
+            }else{  //取消支付
+               // console.log(weiXins);
+                location.href=error_url;
+            }
+        }
+    );
+}
+window.onload=callpay();
+function callpay(){
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    }else{
+        jsApiCall();
+    }
+}
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -17,6 +17,9 @@
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/mui.min.css">
+<link rel="stylesheet" type="text/css" href="css/app.css">
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -26,10 +29,60 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/mui.min.js"></script>
+
+<style>
+    .mui-table-view-cell{
+        padding:0;
+    }
+    .cart1-list-left input{
+        width:0.3rem;
+    }
+    .mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio] {
+        left: 0;
+        top:0;
+        margin:0;
+        padding:0;
+    }
+    .cart1-list-right input{
+        width: 0.2rem;
+        height: 0.2rem;
+        line-height: 0.1rem;
+        text-align: center;
+        font-size: 0.14rem;
+        color: #333;
+    }
+    input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
+        padding:0;
+        margin-bottom: 0;
+        border:none;
+    }
+    .mui-btn, button, input[type=button], input[type=reset], input[type=submit]{
+        padding:0;
+    }
+    .cart1-list-left .cart-sel{
+        display: none;
+    }
+    .cart1-list-left .cart-unsel{
+        display: block;
+    }
+    .cart1-list-left.on .cart-sel{
+        display: block;
+    }
+    .cart1-list-left.on .cart-unsel{
+        display: none;
+    }
+</style>
+
 </head>
 
 <body>
-
+<div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
         <div class="header_map_longevity">   
@@ -37,13 +90,13 @@
             <span>返回</span>
         </div>
         <div class="logo_longevity">购物车</div>
-        <div class="header_shop_longevity">编辑</div>   
+        <div class="header_shop_longevity" @click="cartEdit()" v-text="editText"></div>   
 </div>
 <!--  / header  -->
 
 
 <div class="aboutUrs">
-    <div class="cart1">
+    <!-- <div class="cart1">
         <div class="cart1-list clearfix">
             <div class="cart1-list-left">
                 <img src="images/cart_unsel.png" alt="" class="cart-unsel" width="30">
@@ -61,42 +114,242 @@
             </div>
             <div class="cart1-list-right">x1</div>
         </div>
+    </div> -->
+    <div class="cart1">
+        <ul id="OA_task_1" class="mui-table-view">
+            <li class="mui-table-view-cell" v-for="items1 in cartList">
+                <div class="mui-slider-right mui-disabled">
+                    <a class="mui-btn mui-btn-red" @click="delCart(items1.cart_id)">删除</a>
+                </div>
+                <div class="mui-slider-handle">
+                    <div class="cart1-list clearfix">
+                        <div class="cart1-list-left" @click="getPriceCount(items1,$event)">
+                            <img src="images/cart_unsel.png" alt="" class="cart-unsel" width="25">
+                            <img src="images/cart_sel.png" alt="" class="cart-sel" width="25">
+                        </div>
+                        <div class="cart1-list-center clearfix">
+                            <div class="cart1-list-center1">
+                                <img :src="items1.logo_pic" alt="" width="100%">
+                            </div>
+                            <div class="cart1-list-center2">
+                                <h2>{{items1.goods_name}}</h2>
+                                <h3>{{items1.sku_des}}</h3>
+                                <p>￥ {{items1.price}}</p>
+                            </div>
+                        </div>
+                        <div class="cart1-list-right" v-if="flag1">x{{items1.num}}</div>
+                        <div class="cart1-list-right" v-if="!flag1">
+                            <input type="button" value='-' :disabled="items1.num <= 1 ? 'disabled' : false" @click="changeNum(items1.cart_id,1,items1,$event)" />
+                            <input type="number" size='3' readonly v-model='items1.num' />
+                            <input type="button" value='+' @click="changeNum(items1.cart_id,2,items1)" />
+                        </div>
+                    </div>
+                </div>
+            </li>                
+        </ul>
     </div>
 </div>
 <div class="cart-foot clearfix">
-  <div class="cart-foot-left"><span>合计：￥<i>0.00</i></span></div>
-  <div class="cart-foot-right"><a href="##">结算</a></div>
+  <div class="cart-foot-left"><span>合计：￥<i>{{priceCount}}</i></span></div>
+  <div class="cart-foot-right" @click="goOrder()"><a href="javascript:void(0);">结算</a></div>
+</div>
+
 </div>
 
 </body>
 <script>
 $(window).ready(function(){
 
-$('.banner').height($(window).width()*400/750);
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            cartList:[], 
+            flag1:true,
+            editText:'编辑',  
+            priceCount:0.00,
+            cartId:'',
+            tuanIndex:{
+               cartids:'',
+               skulistid:'',
+               nums:''
+            },
+            changes:[]     
+          }
+        },
+        created:function(){
+          var $this = this;  
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
-$('.header_map_longevity').click(function(){
-    history.go(-1);
-});
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
-$('.date12').click(function(){
-    window.location.href = "remain.html";
-})
-$('.date13').click(function(){
-    window.location.href = "myCoupon.html";
-})
-$('.pingtai_news').click(function(){
-    window.location.href = "InformationDetails1.html";
-})
+          $this.getCartList(); 
+                                                        
+        },
+        mounted:function(){
+            var $this = this;
+            cehua();                              
+        },
+        methods:{
+          //团购列表-全部商品
+            getCartList:function(){
+                var $this = this;
+                const data = {
+                    
+                }
+                Axios.post(window.Url.cartList,data).then((res) => {
+                  if(res.result == 1){
+                    $this.cartList=res.info;
+                    $this.$nextTick(function(){
+                        // $this.getPriceCount();
+                    })
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                    console.log("活力健身-相关推荐:"+err)
+                })              
+            },
+            cartEdit:function(){
+                var $this=this;
+                if($this.editText=='编辑'){
+                   $this.editText='完成';
+                   $this.flag1=false;
+                }else if($this.editText=='完成'){
+                    $this.editText='编辑';
+                    $this.flag1=true;                   
+                }
+            },
+            changeNum:function(id,type,list,event){
+                var $this = this;
+                if(type==1){
+                    if(list.num>1){
+                        list.num--;
+                    }else{
+                        return;
+                    }
+                    
+                }else if(type==2){
+                    list.num++;
+                }
+                // if($(event.currentTarget).parents(".cart1-list-left").hasClass("on")){
+                //     $this.priceCount=parseFloat(list.price*list.num).toFixed(2);
+                // }
+                // console.log(event.currentTarget);
+                $this.changes=list.num;
+                $this.changeNumSure(id,list.num);
+            },
+            changeNumSure:function(cartId,num){
+                var $this = this;
+                const data = {
+                    cartid:cartId,
+                    nums:num
+                }
+                Axios.post(window.Url.changeNumCart,data).then((res) => {
+                  if(res.result == 1){
+                     // alert(res.info);
+                     console.log(res.info);
 
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                    console.log("活力健身-相关推荐:"+err)
+                })
+            },
+            getPriceCount: function(list1,event) {
+                var $this=this;
+                $this.changes=list1.num;
+                if($(event.currentTarget).hasClass("on")){
+                    $(event.currentTarget).removeClass("on");
+                    $this.priceCount=0.00;
+                    $this.cartId="";
+                }else{
+                    $(event.currentTarget).addClass("on");
+                    $(event.currentTarget).parents(".mui-table-view-cell").siblings().find(".cart1-list-left").removeClass("on");
+                    $this.priceCount = parseFloat(list1.price*$this.changes).toFixed(2);
+                    $this.cartId = list1.cart_id;
+                    // console.log($this.cartId);
+                }
+                // $(event.currentTarget).;
+                // $('.cart1-list-left').click(function(){
+                //     if($(this).hasClass("on")){
+                //         $(this).removeClass("on");
+                //     }else{
+                //         $(this).addClass("on");
+                //         $(this).parents(".mui-table-view-cell").siblings().find(".cart1-list-left").removeClass("on");
+                //         $this.priceCount=$(this).
+                //     }
+                // })
+            },
+            goOrder:function(){
+                var $this=this;
+                $this.tuanIndex.cartids=$this.cartId;
+                sessionStorage.setItem('TuanOrderIndex', JSON.stringify($this.tuanIndex));
+                window.location.href="order_sure.html"; 
+            },
+            delCart:function(cartId){
+                // alert(cartId);
+                var $_this = this;
+                const data = {
+                    cartid:cartId
+                }
+                // alert(data);
+                Axios.post(window.Url.delCart,data).then((res) => {
+                  // alert(res);
+                  if(res.result == 1){
+                    alert(res.info);
+                    window.location.reload();
+                    // $this.cartList=res.info;                   
+                  }else
+                  {
+                    console.log("活力健身-相关推荐:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                    console.log("活力健身-相关推荐:"+err)
+                })        
+            }
+
+        }
+
+    })
+
+    $('.header_map_longevity').click(function(){
+        history.go(-1);
+    });
   
-})  
+})
+
+function cehua(){
+    mui.init();
+    console.log(11);
+    // (function($) {        
+    //     //第一个demo，拖拽后显示操作图标，点击操作图标删除元素；
+    //     $('#OA_task_1').on('tap', '.mui-btn', function(event) {
+    //         var elem = this;
+    //         var li = elem.parentNode.parentNode;
+    //         mui.confirm('确认删除该条记录？', 'Hello MUI', btnArray, function(e) {
+    //             if (e.index == 0) {
+    //                 li.parentNode.removeChild(li);
+    //             } else {
+    //                 setTimeout(function() {
+    //                     $.swipeoutClose(li);
+    //                 }, 0);
+    //             }
+    //         });
+    //     });
+    //     var btnArray = ['确认', '取消'];
+    // })(mui);
+    mui('.mui-input-group').on('change', 'input', function() {
+        // var value = this.checked?"true":"false";
+        // this.previousElementSibling.innerText = "checked："+value;
+        // console.log(this);
+        alert(this);
+    });
+} 
+
 </script>
+
 </html>

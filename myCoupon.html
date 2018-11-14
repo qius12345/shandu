@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -56,13 +56,14 @@
         <span @click="getcoupon(2)">已过期</span>
         <span @click="getcoupon(3)">已使用</span>
     </div>
-    <div class="myCoupon3 clearfix" v-for="coupon in coupon_list">
+    <div class="myCoupon3 clearfix" v-for="coupon in coupon_list" @click="goOrderSure(coupon)">
         <div class="myCoupon3-left">
             <img src="images/myCoupon_1.jpg" alt="" width="100%">
+            <div class="myCoupon3-left-bg"><span>{{coupon.money}}</span></div>
         </div>
         <div class="myCoupon3-right">
-            <div class="myCoupon3-right1">{{coupon.name}}</div>
-            <div class="myCoupon3-right2">{{coupon.condition}}</div>
+            <div class="myCoupon3-right1">{{coupon.name}} &nbsp;满{{coupon.condit}}元可用</div>
+            <div class="myCoupon3-right2">限{{coupon.condition}}</div>
             <div class="myCoupon3-right3">截止时间：</div>
             <div class="myCoupon3-right4">{{coupon.useendtime}}</div>
         </div>
@@ -74,6 +75,9 @@
 
 </body>
 <script>
+var url = location.href;
+isToken(url);
+
 $(window).ready(function(){
 
 var vm = new Vue({
@@ -83,12 +87,15 @@ var vm = new Vue({
 	        userId: (() => {
 	                
 	            })(),
-	        coupon_list:''
+	        coupon_list:'',
+            goodsList:[]
 	    }
 		},
     created: function () {
-		var $this = this;
-    	$this.getcoupon();
+		var $_this = this;
+    	$_this.getcoupon(1);
+        $_this.goodsList=JSON.parse(sessionStorage.getItem('selCoupon'));
+        console.log($_this.goodsList);
         
     },
     mounted:function(){
@@ -101,27 +108,53 @@ var vm = new Vue({
     		var $this = this;
     		
     		const data = {
-    			type:1
+    			type:type
     		}
-    		if(type != ''){
-    			data.type = type;
-    		}
+    		// if(type != ''){
+    		// 	data.type = type;
+    		// }
     		Axios.post(window.Url.coupon, data).then((res) => {
     			
-    			if(res.result == 1){
+    			// tt(res.result,'http://shandu.unohacha.com/wx_shandu/myCoupon.html');
+                if(res.result == -1 || res.result == '-1'){
+                    sq('http://shandu.unohacha.com/wx_shandu/myCoupon.html');
+                }
+                if(res.result == 1){
+                    $this.coupon_list=[];
     				$this.coupon_list = res.info.coupon;
     				
-    			}
-    			else{
-    				$this.coupon_list = ''
-    				alert('我的优惠券'+res.info)
-    			}
+    			}else if(res.result == 0){
+                    $this.coupon_list=[];
+                    console.log('我的优惠券'+res.info)
+                }
     			
-        }).catch((err) => {
-          console.log('我的优惠券'+err)
-        })
+            }).catch((err) => {
+              console.log('我的优惠券'+err)
+            })
         
-    	}
+    	},
+
+
+        goOrderSure:function(coupons){
+            var $_this=this;
+            // console.log(parseFloat($_this.goodsList.price),parseFloat(coupons.condit));
+            if(sessionStorage.getItem("what1") && sessionStorage.getItem("what1")==1){
+                if(parseFloat($_this.goodsList.price * $_this.goodsList.price) < parseFloat(coupons.condit)){
+                    alert("消费未达到满减金额，优惠券不可用");
+                    return false;
+                }else if($_this.goodsList.cate_id == coupons.cate_id || coupons.cate_id==0){
+                    sessionStorage.setItem('coupons', JSON.stringify(coupons));
+                    window.location.href="order_sure.html";
+                }else{
+                    alert('限'+coupons.condition);
+                    return false;
+                }
+            }else{
+                return false;
+            }
+            // sessionStorage.setItem('coupons', JSON.stringify(coupons));
+            // window.location.href="order_sure.html";
+        }
 	}
 })
 
@@ -135,7 +168,15 @@ var mySwiper_banner = new Swiper ('.swiper-container-banner', {
 	autoplayDisableOnInteraction : false,
 })
 $('.header_map_longevity').click(function(){
-    history.go(-1);
+    if(sessionStorage.getItem("what1") && sessionStorage.getItem("what1")==1){
+        window.location.href = "order_sure.html";
+    }else if(sessionStorage.getItem("what1") && sessionStorage.getItem("what1")==2){
+        setCookie("yuyueType",5);
+        window.location.href = "payment-orders.html";
+    }else{
+        sessionStorage.setItem('tabType',4);
+        window.location.href = "user.html";
+    }    
 });
 $('.longevity1 li').click(function(){
     window.location.href = "InformationDetails.html";

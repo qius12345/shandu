@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -40,7 +40,7 @@
 
 <!--  / header  -->
 <div class="stroy_rhead">
-  <a href="javascript:history.go(-1)" class="back">
+  <a href="user.html" class="back">
     <img src="images/hl.png"> 返回
   </a>
   <h5>问题解答</h5>
@@ -50,7 +50,7 @@
 <!--  / warpper  -->
 <div class="myPage">
     <div class="myPage2">
-        <div class="myPage2-list1" v-for="help in help_list" @click="jump(help.id)">
+        <div class="myPage2-list1" v-for="help in help_list" @click="jump(help)">
                 <span class="myPage2-list1-txt1">{{help.title}}</span>
                 <img src="images/right.png" alt="" class="fr">
         </div>
@@ -120,7 +120,7 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+ 			  type:0
     		}
     		
     		Axios.post(window.Url.Ucenter_help, data).then((res) => {
@@ -140,7 +140,7 @@ $(window).ready(function(){
     	},
     	jump:function(help_id){
     		var $this = this;
-    		setCookie('help_id',help_id);
+    		sessionStorage.setItem('help_id',JSON.stringify(help_id));
     		location.href = 'explain.html';
     	}
 	}

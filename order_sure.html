@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -26,17 +26,126 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+<style>
+  .collage-order1-right1-left{
+    width:85%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .pinglun1_show{
+    display: block;
+  }
+  .pinglun1_show_con{
+    padding:0;
+  }
+  .pinglun1_show_con h5{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    background: #eeedf3;
+    margin: 0;
+    padding: 0.24rem 0 0.16rem;
+    position: relative;
+    color:#222;
+  }
+  .pinglun1_show_con h5 img{
+    position: absolute;
+    top: 0.08rem;
+    right: 0.08rem;
+  }
+  .pinglun1_show_con_f1 {
+    position: relative;
+    text-align: left;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f1_left{
+    float:left;
+    width:48%;
+  }
+  .pinglun1_show_con_f1_right{
+    float: right;
+    padding-right: 0.2rem;
+  }
+  .pinglun1_show_con_f1_left img{
+    margin-right:0.12rem;
+    vertical-align: middle;
+  }
+  .pinglun1_show_con_f1_left span{
+    font-size:0.14rem;
+    color:#222;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  .pinglun1_show_con_f1_right span{
+    font-size: 0.16rem;
+    font-weight: bold;
+    color: #f57618;
+    vertical-align: middle;
+    display: block;
+    height: 0.25rem;
+    line-height: 0.25rem;
+  }
+  .pinglun1_show_con_f2{
+    border-bottom: 0.1rem solid #eeedf3;
+  }
+  .pinglun1_show_con_f3{
+    border-bottom: 1px solid #ebebeb;
+  }
+  .pinglun1_show_con_btn{
+    height:0.56rem;
+    line-height: 0.56rem;
+    width:100%;
+    background:#20b7fe;
+    color:#ff0000;
+    font-size:0.16rem;
+    text-align: center;
+    font-weight: 600;
+  }
+  .imgHide{
+    display: none;
+  }
+  .imgshow{
+    display: inline-block;
+  }
+
+
+</style>
+
 </head>
 
 <body>
-<div class="pinglun1_show">
+<div id="app" v-cloak>
+<div class="pinglun1_show" v-show="flag1">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>确认取消订单？</h5>
-        <div class="pinglun1_show_con_f1">
-            <a href="##">取消</a>
-            <a href="##">确认</a>
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="hideZhifu(false)"> </h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_yue.jpg" alt="" width="20">
+              <span>钱包支付</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>{{goods_details.wallet}} 元</span>
+            </div>
         </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_weixin.jpg" alt="" width="20">
+              <span>微信支付</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
     </div>
 </div>
 <!--  / header  -->
@@ -47,12 +156,12 @@
   <h5>确认订单</h5>
 </div> -->
 <div class="header_longevity">
-     <div class="header_map_longevity">   
+     <div class="header_map_longevity" @click="goback()">   
         <img src="images/jiantou.png" alt="">
         <span>返回</span>
      </div>
      <div class="logo_longevity">确认订单</div> 
-     <a href="##"><div class="header_shop_longevity">新增地址</div></a>
+     <!-- <a href="##"><div class="header_shop_longevity">新增地址</div></a> -->
 </div>
 
 <!--  / header  -->
@@ -60,12 +169,12 @@
 <div class="orders"> 
   <div class="order-sure1">
      <div class="order-sure1-f1 clearfix">
-       <span class="order-sure1-f1-left">联系人：秋日</span>
-       <span class="order-sure1-f1-right">15856986582</span>
+       <span class="order-sure1-f1-left">联系人：{{goods_address.consignee}}</span>
+       <span class="order-sure1-f1-right">{{goods_address.telephone}}</span>
      </div>
-     <a href="myAddress.html">
+     <a href="javascript:void(0);" @click="goAddress()">
      <div class="order-sure1-f2">
-        <span>联系地址：浙江省杭州市西湖区华星时代广场</span>
+        <span>联系地址：{{goods_address.province}}{{goods_address.city}}{{goods_address.district}}{{goods_address.address}}</span>
         <img src="images/order_sure2.jpg" alt="" width="20" class="order-sure1-f2-img1"> 
         <img src="images/right1.png" alt="" width="20" class="order-sure1-f2-img2">
      </div>
@@ -75,17 +184,17 @@
      </div>
   </div>
   <div class="collage-order1">
-        <div class="collage-order1-text1 clearfix">
+        <div class="collage-order1-text1 clearfix" v-for="items1 in goods_details.goods">
             <div class="collage-order1-text-left">
-                <img src="images/collage-list2.jpg" alt="" width="100%">
+                <img :src="items1.logo_pic" alt="" width="100%">
             </div>
             <div class="collage-order1-text-right">
                 <div class="collage-order1-text-right1 clearfix">
-                  <span class="collage-order1-right1-left">张三</span>
-                  <span class="collage-order1-right1-right">x 1</span>
+                  <span class="collage-order1-right1-left">{{items1.goods_name}}</span>
+                  <span class="collage-order1-right1-right">x {{items1.num}}</span>
                 </div>
                 <div class="collage-order1-text-right2 clearfix">
-                  <span class="collage-order1-right2-left1">拼团价:<i>￥12.00</i></span>
+                  <span class="collage-order1-right2-left1">拼团价:<i>￥{{items1.price}}</i></span>
                 </div>
             </div>
         </div>
@@ -93,20 +202,25 @@
   <div class="order-sure2">
      <div class="order-sure2-f1 order-sure2-f">
        <label for="">配送方式</label>
-       <span>EMS</span>
+       <span><!--{{goods_details.sendway}}-->快递包邮</span>
      </div>
      <div class="order-sure2-f2 order-sure2-f">
-       <label for="">运险费</label>
-       <span>卖家赠送，若确认收货前退货，可获保险赔付</span>
+       <label for="">公益宝贝</label>
+       <span>该商品每笔成交都会有相应金额捐赠给公益</span>
      </div>
-     <div class="order-sure2-f3 order-sure2-f">
+     <div class="order-sure2-f3 order-sure2-f clearfix">
        <label for="">买家留言</label>
-       <input type="text" placeholder="(选填)对本次交易的要求及说明!(40字以内)">
+       <!-- <input type="text" placeholder="(选填)对本次交易的要求及说明!(40字以内)" v-model="remark1"> -->
+       <textarea name="" id="" placeholder="(选填)对本次交易的要求及说明!(40字以内)" v-model="remark1"></textarea>
      </div>
      <div class="order-sure2-f4 order-sure2-f">
        <label for="">使用优惠券</label>
-       <div class="order-sure2-text">
-         <span>您有可使用的优惠券</span>
+       <div class="order-sure2-text" v-if="goods_details.coupon==1" @click="goCoupon()">
+         <span class="couponSel">您有可使用的优惠券</span>
+         <img src="images/right1.png" alt="" width="20">
+       </div>       
+       <div class="order-sure2-text" v-if="goods_details.coupon==0" @click="goCoupon()">
+         <span>无可用的优惠券</span>
          <img src="images/right1.png" alt="" width="20">
        </div>
      </div>
@@ -118,13 +232,223 @@
 
 <!--  / footer  -->
 <div class="order_sure_foot">
-   <a href="##">支付订单</a><span>合计<i>￥12.00</i></span>
+   <a href="javascript:void(0);" @click="gozhifu()">支付订单</a><span>合计<i>￥{{reversedMessage.toFixed(2)}}</i></span>
 </div>
 <!--  / footer  -->
 
+</div>
 </body>
 <script>
+var url = location.href;
+isToken(url)
 $(window).ready(function(){
+
+    var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            goods_details:[],  
+            goods_address:[],
+            goods_goods:[],
+            goods_index:[],
+            flag1:false,   
+            flag2:false, 
+            remark1:'', 
+            orderId:'',  
+            wallet:[],
+            coupons:[],
+            couponsId:'',
+          }
+        },
+        created:function(){
+          var $this = this;
+          sessionStorage.removeItem('what1');
+          // $this.goods_details=JSON.parse(sessionStorage.getItem('TuanOrderDetail'));
+          $this.goods_index=JSON.parse(sessionStorage.getItem('TuanOrderIndex'));
+          // console.log($this.goods_details);
+          if(sessionStorage.getItem('coupons')){
+            $this.coupons=JSON.parse(sessionStorage.getItem('coupons'));
+            $this.couponsId=$this.coupons.couponid;
+            console.log($this.couponsId);
+            sessionStorage.removeItem('coupons');
+            $(".couponSel").html("-"+$this.coupons.money);
+          }
+          if(sessionStorage.getItem('addressDetail')){
+            $this.goods_address=JSON.parse(sessionStorage.getItem('addressDetail'));
+            sessionStorage.removeItem('addressDetail');
+            // console.log($this.goods_address);
+          }
+          $this.getOrder();
+                                       
+        },
+        computed:{
+            reversedMessage: function () {
+              // `this` 指向 vm 实例
+              var $this = this;
+              let totalPrice=0;
+              if(sessionStorage.getItem('coupons')){
+                totalPrice=$this.goods_details.goods[0].price*$this.goods_details.goods[0].num-$this.coupons.money;
+                if(totalPrice<0){
+                  totalPrice=0;
+                }
+              }else{
+                totalPrice=$this.goods_details.goods[0].price*$this.goods_details.goods[0].num
+              }
+              
+              return totalPrice;
+            }
+        },
+        mounted:function(){
+            var $this = this;          
+        },
+        methods:{
+          //支付订单弹出框显示
+          gozhifu:function(){
+            $this=this;
+            $this.flag1=true;
+            // $this.getWallet();
+            if($this.goods_address.addressid == '' || $this.goods_address.addressid == null || $this.goods_address.addressid == undefined){
+              alert('请选择收货地址');
+            }
+            if($this.goods_details.coupon == 0){
+              $this.couponsId='';
+            }
+            console.log($this.couponsId);
+
+            const data = {
+                  cartids:$this.goods_index.cartids,
+                  skulistid:$this.goods_index.skulistid,
+                  nums:$this.goods_index.nums,
+                  addressid:$this.goods_address.addressid,
+                  couponlistid:$this.couponsId,
+                  remark:$this.remark1,
+            }
+
+            Axios.post(window.Url.tuanOrderSave,data).then((res) => {    
+              tt(res.result,'http://shandu.unohacha.com/wx_shandu/order_sure.html');          
+              if(res.result == 1){  
+                // alert("生成订单成功");
+                $this.orderId=res.info;
+                sessionStorage.removeItem("coupons");
+                                                 
+              }else if(res.result == 0){
+                console.log("生成订单失败:"+res.info);
+              }
+              
+            }).catch((err) => {
+              console.log("生成订单失败:"+err);
+            })
+          },
+          //支付订单弹出框隐藏
+          hideZhifu:function(){
+            $this=this;
+            $this.flag1=false;
+          },
+          //选择支付方式
+          selectZhifu:function(state){
+             $this=this;
+             $this.flag2=state;                       
+          },
+          //确认支付
+          sureZhifu:function(){
+            $this=this;
+            if(!$this.flag2){
+
+              const data = {
+                  orderno:$this.orderId,
+                  type:2,
+              }
+
+              Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {  
+                tt(res.result,'http://shandu.unohacha.com/wx_shandu/order_sure.html');             
+                if(res.result == 1){  
+                  // alert("支付成功");
+                  $this.flag1=false;
+                  // setCookie("tuanType",3);
+                  window.location.href="orderList.html";              
+                                                   
+                }else if(res.result == 0){
+                  console.log("生成订单失败:"+res.info);
+                }
+                
+              }).catch((err) => {
+                console.log("生成订单失败:"+err);
+              })
+
+            }else if($this.flag2){
+                const data = {
+                  orderno:$this.orderId,
+                  type:2,
+                  is_wxin:1
+                }
+
+                Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+                    if(res.result == 1){  
+                        // alert("res.info");
+                        setCookie("tuanType",3);
+                        sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                        sessionStorage.setItem('error_url', "user.html");
+                        sessionStorage.setItem('success_url', "orderList.html");
+                        window.location.href = 'wxpay.html';                                                          
+                    }else
+                    {
+                      console.log("微信支付失败:"+res.info);
+                    }
+                    
+                }).catch((err) => {
+                    console.log("微信支付失败:"+err);
+                })
+
+            }
+          },
+          //获取下单信息
+          getOrder:function(){
+            var $this=this;
+            // cartids
+            const data = {
+                  cartids:$this.goods_index.cartids,
+                  skulistid:$this.goods_index.skulistid,
+                  nums:$this.goods_index.nums,
+            }
+            Axios.post(window.Url.TuanOrder_sure,data).then((res) => {
+              tt(res.result,'http://shandu.unohacha.com/wx_shandu/order_sure.html');
+              if(res.result == 1){
+                console.log(res.info);
+                $this.goods_details=res.info;                
+                if($this.goods_address=='' || $this.goods_address==null || $this.goods_address==undefined){
+                  $this.goods_address=res.info.address;
+                }
+                // $this.goods_goods=goods_details.goods[0];
+                // alert("购买成功");
+                // window.location.href="order_sure.html";                                  
+              }else if(res.result == 0){
+                console.log("团购失败:"+res.info);
+              }
+              
+            }).catch((err) => {
+              console.log("团购失败:"+err);
+            })
+          },
+          goback:function(){
+            // history.go(-1);
+            window.location.href = "shopDetail.html?id="+getCookie("goodId");
+          },
+          goAddress:function(){
+            window.location.href = "myAddress.html";
+            setCookie("what",2);
+          },
+          goCoupon:function(){
+            var $_this=this;
+            window.location.href = "myCoupon.html";
+            sessionStorage.setItem("what1",1);
+            sessionStorage.setItem("cateId",1);
+            sessionStorage.setItem('selCoupon', JSON.stringify($_this.goods_details.goods[0]));
+          }
+
+        }
+
+    })
+    
     $('.energetic1 li').click(function(){
       window.location.href = "tourItinerary.html";
     });
@@ -134,20 +458,13 @@ $(window).ready(function(){
     $('.pinglun1_show_con_f1 a').click(function(){
       $('.pinglun1_show').css('display','none');
     })
-    $('.order-sure2-f4').click(function(){
-      window.location.href = "myCoupon.html";
-    })
+    // $('.order-sure2-f4').click(function(){
+    //   window.location.href = "myCoupon.html";
+    // })
 
-    $('.header_map_longevity').click(function(){
-        history.go(-1);
-    });
-  $(window).load(function(){
-
-  })
-
-  $(window).resize(function(){
-
-  })
+    // $('.header_map_longevity').click(function(){
+    //     history.go(-1);
+    // });
 })  
 </script>
 </html>

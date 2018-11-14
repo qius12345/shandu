@@ -9,8 +9,8 @@
 	
 	var Axios = window.axios.create({
 		
-		//baseURL: 'http://shandu.unohacha.com', // 反向代理
-		baseURL: 'http://127.0.0.1:3000', // 反向代理
+		// baseURL: 'http://shandu.unohacha.com', // 反向代理
+		baseURL: 'http://shandu.unohacha.com', // 反向代理
 		timeout: 20000,
 		responseType: 'json',
 		withCredentials: true, // 是否允许带cookie这些
@@ -183,6 +183,42 @@
 		//提交预约订单
 		//service_id （当前服务的id）
 		service_order:'/Api/Order/service_order',
+
+		//取消预约订单
+		//token（登录状态）
+		//serviceorderid （当前服务订单的id）
+		service_cancel:'/Api/ServiceOrder/cancel',
+		//预约订单开始工作
+		//token（登录状态）
+		//serviceorderid （当前服务订单的id）
+		service_startWork:'/Api/ServiceOrder/startWork',
+		//预约订单申请退款
+		//token（登录状态）
+		//serviceorderid （当前服务订单的id）
+		service_applyRefund:'/Api/ServiceOrder/applyRefunds',
+		//预约订单结束工作
+		//token（登录状态）
+		//serviceorderid （当前服务订单的id）
+		//append_money （尾款 默认0）
+		service_endWork:'/Api/ServiceOrder/endWork',
+		//评价预约订单
+		//token（登录状态）
+		//serviceorderid （当前服务订单的id）
+		//attitude （3  服务态度,星星数）
+		//integrity （2  诚信守时,星星数）
+		//assess （5	成果验收,星星数）
+		//assess_text （评价内容,今天你做的很好的）
+		//pic （建议,反馈图片(最多6张),文件类型）		
+		service_pingJia:'/Api/ServiceOrder/pingJia',
+		//预约订单退款投诉原因列表	
+		//token（登录状态）	
+		service_complain:'/Api/serviceOrder/complain',
+		//预约订单退款投诉提交
+		//token（登录状态）
+		//service_order_id （当前服务订单的id）
+		//complain_id （投诉原因id）
+		//content （详细说明）		
+		service_report:'/Api/serviceOrder/report',
 		
 		
 		
@@ -225,6 +261,14 @@
 		//老故事搜索
 		//search （搜索的关键字）
 		stroy_searchList:'/Api/Oldstory/search',
+		//老故事发布
+		//token （登录状态）
+		//cate_id （老故事分类id）
+		//city （当前选中城市名）
+		//title （故事标题）
+		//collect （故事内容）
+		//file （上传图片）
+		stroy_issue:'/Api/Oldstory/issue',
 		
 		
 		/*大舞台*/
@@ -256,11 +300,50 @@
 		//团购列表-指定商品
 		//goodsid（指定商品的ID）
 		goods_info:'/Api/Tuan/goodsInfo',
-
 		//团购订单列表
         //token（登录状态）
 		//type  {1全部,2待付款,3代发货,4待收货,5待评价,6已完成,7申请退款中,8退款完成关闭,9退款售后,10待拼团}
 		TuanOrder_list:'/Api/TuanMyorder/index',
+		//团购确认订单页
+		//token（登录状态）
+		//nums（够买数量）
+		//skulistid（产品选择参数的sku_id）
+		TuanOrder_sure:'/Api/TuanOrder/index',
+		//团购生成订单页
+		//token（登录状态）
+		//nums（够买数量）
+		//skulistid（产品选择参数的sku_id）
+		//addressid（选中的地址id）
+		//couponlistid（选择的优惠券id）
+		//remark（用户留言 可选）
+		tuanOrderSave:'/Api/TuanOrder/tuanOrderSave',
+		//团购订单余额支付
+		//token（登录状态）
+		//orderno（订单号）
+		//type（1团购订单,2充值,3服务订单,4活力健身,5服务追加赏金）
+		tuanOrder_alipay:'/Api/BalancePay/alipay',
+
+		//取消团购订单
+		//token（登录状态）
+		//orderid（订单id）
+		tuanOrderCancel:'/Api/TuanOrder/tuanOrderCancel',
+		//团购订单申请退款
+		//token（登录状态）
+		//orderid（订单id）
+		tuanOrderApplyRefunds:'/Api/TuanOrder/tuanOrderApplyRefunds',
+		//团购订单查看物流
+		//token（登录状态）
+		//orderid（订单id）
+		tuanOrderLogistics:'/Api/TuanOrder/tuanOrderLogistics',
+		//团购订单确认收货
+		//token（登录状态）
+		//orderid（订单id）
+		tuanOrderReceived:'/Api/TuanOrder/tuanOrderReceived',
+		//团购订单申请退款信息
+		//token（登录状态）
+		//orderid（订单id）
+		orderDetails:'/Api/TuanMyorder/orderDetails',
+		
 		
 		
 		/*活力健身订单*/
@@ -269,10 +352,25 @@
 		/*活力健身订单统计*/
 		//token（登录状态）
 		Vitality_order_num:'/Api/Vitality/index',
+		//取消活力健身订单
+		//token（登录状态）
+		//order_id（订单id）
+		VitalityCancel:'/Api/Vitality/cancel',
+		//活力健身订单申请退款
+		//token（登录状态）
+		//order_id（订单id）
+		VitalityRefunds:'/Api/Vitality/refund',
 		
 		/*购买商品订单*/
 		//token（登录状态）
 		Service_order_num:'/Api/Service/index',
+
+		/*微信支付订单*/
+		//token（登录状态）
+		//is_wxin（1 是否微信支付）
+		//orderno（活力订单号）
+		//type（订单类型）
+		order_WeixinPay:'/Api/WeixinPay/pay',
 		
 		
 		/*预约服务订单*/
@@ -308,11 +406,11 @@
 		//修改地址（获取详情）
 		//token（登录状态）
 		//addressid（地址ID）
-		edit_details:'Api/Address/info',
+		edit_details:'/Api/Address/info',
 		//删除地址
 		//token（登录状态）
 		//addressid（地址ID）
-		delete_ress:'Api/address/del',
+		delete_ress:'/Api/address/del',
 		
 		
 		//个人收藏
@@ -327,6 +425,13 @@
 		//平台消息
 		//token（登录状态）
 		Ucenter_messaging:'/Api/Ucenter/messaging',
+		//平台消息 未读消息数量
+		//token（登录状态）
+		newsCount:'/Api/Ucenter/newsCount',
+		//平台消息删除
+		//token（登录状态）
+		//message_ids = messageid-type,messageid-type（消息id-消息类型，消息id-消息类型）
+		message_delall:'/Api/Ucenter/message_delall',
 		
 		//意见反馈
 		//token（登录状态）
@@ -344,9 +449,31 @@
 		//消费明细
 		//token（登录状态）
 		Money_details:'/Api/Money/index',
+		//支付宝账号信息列表
+		//token（登录状态）
+		alipayList:'/Api/Ucenter/alipayList',
+		//支付宝账号添加
+		//token（登录状态）
+		//account（支付宝账号）
+		//name（名称）
+		alipayAdd:'/Api/Ucenter/alipayAdd',
+		//支付宝账号删除
+		//token（登录状态）
+		//alipay_id（支付宝账号id）
+		alipayDel:'/Api/Ucenter/alipayDel',
+		//支付宝提现信息
+		//token（登录状态）
+		getCashInfo:'/Api/Ucenter/getCashInfo',
+		//支付宝提现
+		//token（登录状态）
+		cashMoney:'/Api/Ucenter/cashMoney',
 		
 		//获取版本号
 		//token（登录状态）
+		//price（提现金额）
+		//bank_id（银行卡id）
+		//alipay_id（支付宝账号id）
+		//type（1-银行卡提现 2-支付宝提现）
 		Ucenter_versions:'/Api/Ucenter/versions',
 		
 		//签到列表
@@ -358,11 +485,43 @@
 		
 		//帮助中心
 		Ucenter_help:'/Api/Ucenter/help',
-		
-		
-		
-		//登录
-		user_login:'/Api/User/login',
+
+		//获取验证码
+		send_code:'/Api/BaseH5/send_code',
+
+		//绑定
+		user_bound:'/Api/BaseH5/bound',
+
+		//注册
+		user_sign:'/Api/BaseH5/sign_in',
+
+		//修改手机号码
+		user_exchange:'/Api/BaseH5/exchange',
+
+		//获取用户头像和昵称等信息
+		user_info:'/Api/BaseH5/userInfo',
+
+		//加入购物车
+		//token（登录状态）
+		//goodsId（商品id）
+		//skulistid（商品sku id）
+		//nums（加入购物车的数量）
+		addToCart:'/Api/TuanCart/addToCart',
+		//购物车列表 
+		//token（登录状态）
+		cartList:'/Api/TuanCart/index',
+		//改变购物车商品数量
+		//token（登录状态）
+		//cartId（购物车id）
+		//nums（加入购物车的数量）
+		changeNumCart:'/Api/TuanCart/changeNumCart',
+		//删除购物车
+		//token（登录状态）
+		//cartId（购物车id）
+		delCart:'/Api/TuanCart/delCart',
+
+		//获取微信SDK配置
+		user_share:'/Api/BaseShare/WShareDeploy_url'
 	}
 	//用户信息
 	window.userInfo = {
@@ -372,5 +531,17 @@
 		forbidden:'',
 		type:''
 	}
+
+	//微信支付信息
+    window.wxinPay = {
+        appId:'',
+        timeStamp:'',
+        nonceStr:'',
+        package:'',
+        signType:'',
+        paySign:'',
+        error_url:'',
+        success_url:''
+    }
 })();
 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
+</head>
+
+<body style="background:#f5f5f5;">
+<div id="app" v-cloak>
+
+<!--  / warpper  -->
+<div class="registered">
+  <h5>修改手机号码</h5>  
+  <p><span>手机号</span><input type="text" placeholder="请输入未注册的手机号码" v-model="tel1"></p>
+  <p><span>验证码</span><input type="text" placeholder="请输入验证码" v-model="code1"><i v-show="show" @click="getCode()">获取验证码</i><i v-show="!show" style="background:#ccc;">{{count}} s</i></p>
+  <!-- <button>未有账号去注册</button> -->
+
+  
+ <!--  <div class="registered_zi_a">
+    <div class="registered_zi_a2">
+      <span>提示：</span>请输入正确的电话。
+    </div>
+  </div> -->
+  
+  
+  
+  <a class="registered_btn" href="javascript:void(0);" @click="goBound">修改手机号</a>
+</div>
+<!--  / warpper  -->
+
+
+</div>
+</body>
+<script>
+var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            goods_list:[],
+            list: [],
+            myCode:'',
+            tel1:'',
+            code1:'',
+            show:true,
+            count: '',
+            timer: null,
+          }
+        },
+        created:function(){
+          var $this = this;                                                   
+        },
+        mounted:function(){
+                     
+        },
+        methods:{
+          //团购列表-全部商品
+            getCode:function(){
+                var $this = this;
+                if($this.tel1 == ""){
+                    alert("请输入您的电话");
+                    return false;
+                }else{
+                    var reg= /^[1][3456789][0-9]{9}$/;
+                    var r = $this.tel1.match(reg);
+                    if(r==null) {
+                        alert("手机号格式不正确");
+                        return  false;
+                    }
+                }
+                const data = {
+                  tel:$this.tel1,
+                  type:'3',                    
+                }
+                Axios.post(window.Url.send_code,data).then((res) => {
+                  if(res.result == 1){
+                      $this.myCode=res.info; 
+                      const TIME_COUNT = 60;
+                      if (!$this.timer) {
+                         $this.count = TIME_COUNT;
+                         $this.show = false;
+                         $this.timer = setInterval(() => {
+                         if ($this.count > 0 && $this.count <= TIME_COUNT) {
+                           $this.count--;
+                          } else {
+                           $this.show = true;
+                           clearInterval($this.timer);
+                           $this.timer = null;
+                          }
+                         }, 1000)
+                      }                     
+                  }else
+                  {
+                    console.log("获取验证码失败:"+res.info);
+                    alert(res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("获取验证码失败:"+err)
+                  alert(res.info);
+                })              
+            },  
+            goBound:function(){
+                var $this = this;
+                const data = {
+                  code:$this.code1,
+                  tel:$this.tel1,
+                    
+                }
+                Axios.post(window.Url.user_exchange,data).then((res) => {
+                  if(res.result == 1){
+                    alert("手机号修改成功");
+                    sessionStorage.setItem('tabType',5);                      
+                    window.location.href="user.html";                    
+                  }else
+                  {
+                    console.log("手机号绑定失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("手机号绑定失败:"+err)
+                })              
+            }, 
+        }
+
+    })
+
+
+
+</script>
+</html>

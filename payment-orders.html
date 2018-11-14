@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/style1.css">
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -32,39 +33,250 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+<style>
+  .energetic1-title3{
+    position: relative;
+  }
+  .energetic1-title3 span.energetic1-title3_btn{
+    position: absolute;
+    top: 0.13rem;
+    right: 0.10rem;
+    font-size: 0.12rem;
+    color: #e60012;
+    border: 1px solid #e60012;
+    padding: 0.02rem 0.04rem;
+    border-radius: 0.03rem;
+  }
+  .lianxi_show{
+    display: block;
+  }
+  .pinglun1_show{
+    display: block;
+  }
+  .service_show{
+    display: block;
+  }
+  .service_show_con p{
+    padding-left:0;
+  }
+  .payMoney_show{
+    display: block;
+  }
+  .energetic1-title3 a.payment_btn{
+    position: absolute;
+    top: 0;
+    right: 0rem;
+    font-size: 0.12rem;
+    color: #e60012;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    width: 25%;
+    height: 100%;
+  }
+  .energetic1-foot2 div.paymentOrderAddress{
+    padding:0;
+    border:none;
+  }
+  .energetic1-foot2 div.paymentOrderAddress1{
+    padding:0;
+    border:none;
+    text-align: left;
+  }
+  .energetic1-foot2 div.paymentOrderAddress1 b{
+    font-weight: normal;
+    font-size:0.15rem;
+  }
+  .energetic1-foot2 div.paymentOrderAddress2{
+    padding:0;
+    border:none;
+    text-align: left;
+    font-weight: normal;
+    font-size:0.15rem;
+    margin-top:0.1rem;
+  }
+
+  .pinglun1_show{
+    display: block;
+  }
+  .lianxi_show{
+    display: block;
+  }
+  .pinglun1_show_con{
+    padding:0;
+  }
+  .pinglun1_show_con h5{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    background: #eeedf3;
+    margin: 0;
+    padding: 0.24rem 0 0.16rem;
+    position: relative;
+    color:#222;
+  }
+  .pinglun1_show_con h4{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.24rem 0.24rem 0.1rem;
+    position: relative;
+    color: #222;
+    text-align: left;
+  }
+  .pinglun1_show_con h5 img{
+    position: absolute;
+    top: 0.08rem;
+    right: 0.08rem;
+  }
+  .pinglun1_show_con_f1 {
+    position: relative;
+    text-align: left;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f4 {
+    position: relative;
+    text-align: right;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f1_left{
+    float:left;
+    width:48%;
+  }
+  .pinglun1_show_con_f1_right{
+    float: right;
+    padding-right: 0.2rem;
+  }
+  .pinglun1_show_con_f1_left img{
+    margin-right:0.12rem;
+    vertical-align: middle;
+  }
+  .pinglun1_show_con_f1_left span{
+    font-size:0.14rem;
+    color:#222;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  .pinglun1_show_con_f1_right span{
+    font-size: 0.16rem;
+    font-weight: bold;
+    color: #f57618;
+    vertical-align: middle;
+    display: block;
+    height: 0.25rem;
+    line-height: 0.25rem;
+  }
+  .pinglun1_show_con_f2{
+    border-bottom: 0.1rem solid #eeedf3;
+  }
+  .pinglun1_show_con_f3{
+    border-bottom: 1px solid #ebebeb;
+  }
+  .pinglun1_show_con_btn{
+    height:0.56rem;
+    line-height: 0.56rem;
+    width:100%;
+    background:#20b7fe;
+    color:#ff0000;
+    font-size:0.16rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+</style>
+
 
 </head>
 
 <body>
 <div id="app" v-cloak>
 	
-<div class="lianxi_show">
+<div class="service_show" v-if="flag1">
+  <div class="service_show_bg"></div>
+  <div class="service_show_con">
+    <h5>温馨提示 :</h5>
+    <p>在预约时间前取消订单，将从您的服务订单中扣除5元作为出工路途费支付给服务人员</p>
+    <h4><span @click="cancleClose()">返回</span><a href="javascript:void(0);" @click="tuiKuanSure()"><b>确认</b></a></h4>
+  </div>
+</div>
+
+<div class="lianxi_show" v-if="flag2">
     <div class="lianxi_show_bg"></div>
     <div class="lianxi_show_con">
-        <h5>4008089949</h5>
+        <h5 v-html="serviceTel">4008089949</h5>
         <div class="lianxi_show_con_f1">
-            <a href="##">取消</a>
-            <a href="##" class="active">拨打电话</a>
+            <a href="javascript:void(0);" @click="cancleTel()">取消</a>
+            <a :href="'tel:'+serviceTel" class="active">拨打电话</a>
         </div>
     </div>
 </div>
 
-<div class="pinglun1_show">
+<div class="pinglun1_show pinglun1_show1" v-if="flag3">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>确认取消订单并退款？</h5>
+        <h5 v-html="btnTxt">确认取消订单并退款？</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##">取消</a>
-            <a href="##">确认</a>
+            <a href="javascript:void(0);" class="a_cancle" @click="cancleClose()">取消</a>
+            <a href="javascript:void(0);" class="a_sure" @click="canclesure()">确认</a>
         </div>
+    </div>
+</div>
+
+<div class="pinglun1_show pinglun1_show2" v-if="flag4">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>开始工作成功</h5>
+        <div class="pinglun1_show_con_f1">
+            <a href="javascript:void(0);" class="a_sure1" @click="cancleClose()">好的，知道了</a>
+        </div>
+    </div>
+</div>
+
+<div class="payMoney_show" v-if="flag5">
+    <div class="payMoney_show_bg"></div>
+    <div class="payMoney_show_con">
+        <div class="payMoney_show_con_f1">需支付余额 <input type="text" v-model="append_money1"> ￥</div>
+        <div class="payMoney_show_con_f1" style="margin-top: 0.2rem;font-size:0.12rem;">若无需支付余额，请填写0元即可</div>
+        <div class="payMoney_show_con_f2 clearfix">            
+            <a href="javascript:void(0);" class="payMoney_show_con_f2_left" @click="zhifuSure()">完成</a>
+            <a href="javascript:void(0);" class="payMoney_show_con_f2_right" @click="cancleClose()">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="pinglun1_show" v-show="flag6">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="flag6 = false;"></h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag7">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag7">
+              <img src="images/order_sure_yue.jpg" alt="" width="20">
+              <span>钱包支付</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>{{wallet.wallet}} 元</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag7">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag7">
+              <img src="images/order_sure_weixin.jpg" alt="" width="20">
+              <span>微信支付</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
     </div>
 </div>
 <!--  / header  -->
 <div class="stroy_rhead">
-  <a href="javascript:history.go(-1)" class="back">
+  <a href="javascript:void(0);" class="back" @click="goback()">
     <img src="images/hl.png"> 返回
   </a>
-  <h5>全部订单</h5>
+  <h5 v-html="pay_type_txt">全部订单</h5>
 </div>
 
 <!--  / header  -->
@@ -73,30 +285,33 @@
   <div class="payment-orders1" v-for="ServiceOrder in ServiceOrder_list">
         <div class="energetic1-title3">
             <span>订单编号：<i>{{ServiceOrder.orderno}}</i></span>
-            <span>下单时间：<i>{{ServiceOrder.add_time}}</i></span>
+            <span>下单时间：<i>{{ServiceOrder.addtime}}</i></span>
+            <span class="energetic1-title3_btn" v-html="ServiceOrder.is_refund==2?'退款成功':(ServiceOrder.orderstate==1?'待付款':(ServiceOrder.orderstate==2?'待确认':(ServiceOrder.orderstate==3 || ServiceOrder.orderstate==4?'进行中':(ServiceOrder.orderstate==5?'待评价':(ServiceOrder.orderstate==6?'再次下单':'退款中')))))" v-if="ServiceOrder.is_refund!=1 && ServiceOrder.orderstate!=6">待确认</span>
+            <span v-if="ServiceOrder.orderstate==6" class="energetic1-title3_btn" @click="jump(ServiceOrder.service_id)">再次下单</span>
+            <span v-if="ServiceOrder.is_refund==1" class="energetic1-title3_btn">退款中</span>
         </div>
         <div class="service_pro_list service_pro_list1">
-          <a href="service_inner_1.html">
+          <a href="javascript:void(0);" @click="jump(ServiceOrder.service_id)">
             <div class="clearfix service_pro_list_detail">
               <div class="service_pro_list_left">
                 <div class="service_pro_list_left_img">
                   <img :src="ServiceOrder.logo_pic">
-                  <!-- <span>无保证金</span> -->
-                  <i><img src="images/nv.png"></i>
+                  <i><img src="images/nv.png" v-if="ServiceOrder.sex==0"><img src="images/nan.png" v-if="ServiceOrder.sex==1"></i>
                 </div>
                 <div class="service_pro_list_left_zi">
-                  <h5>{{ServiceOrder.name}} <b>已认证</b><i>无保证金</i></h5>
-                  <p>21岁 <i></i><em>上个月订单数 {{ServiceOrder.order_num}}个</em></p>
-                  <h6>服务时间 6:00 - 22:00</h6>
+                  <h5>{{ServiceOrder.name}}</h5>
+                  <h5><b v-if="true">已认证</b><b style="color: #999999;border: 1px solid #999999;" v-else>未认证</b><i v-if="ServiceOrder.is_bzj==0">无保证金</i><i style="color: #ff421a;border: 1px solid #ff421a;" v-else>有保证金</i></h5>
+                  <p style="font-size:0.13rem;"><span v-if="ServiceOrder.service_num">服务员工{{ServiceOrder.service_num}}人</span><span v-if="ServiceOrder.age">{{ServiceOrder.age}}岁</span><i></i></p>
                 </div>
               </div>
               <div class="service_pro_list_right">
                 <h5>好评率{{ServiceOrder.favorable_rate}}</h5>
+                <h5>上个月订单数 {{ServiceOrder.order_num}}个</h5>
                 <span>￥{{ServiceOrder.price}}/小时</span>
               </div>
             </div>
           </a> 
-        </div>
+        </div>        
         <div class="yuyue-btn clearfix" @click="more($event)">
           <a href="##">详情</a>
         </div>
@@ -104,9 +319,17 @@
            <div class="text-right"><span>预约服务类型：</span><i>{{ServiceOrder.service_type}}</i></div>
            <div class="text-right"><span>预约开始时间：</span><i>{{ServiceOrder.timing}}</i></div>
            <div class="text-right"><span>每天服务时长：</span><i>{{ServiceOrder.duration}}小时</i></div>
-           <div><span>预约时长：</span><i>2018-01-11 至 2018-01-12 &nbsp;共{{ServiceOrder.days}}天</i></div>                               
-           <div><span>预约地址：</span><i>{{ServiceOrder.address}}</i></div>           
-           <div class="text-right"><span>预约服务费：</span><i>{{ServiceOrder.total_price}}元</i></div>
+           <div><span>预约时长：</span><i>{{ServiceOrder.subscribe}} 至 {{ServiceOrder.endsubscribe}} &nbsp;共{{ServiceOrder.days}}天</i></div>                               
+           <!-- <div><span>预约地址：</span><i>{{ServiceOrder.address}}</i></div>   -->
+           <div>
+              <span style="top:0.22rem;">预约地址：</span>
+              <div class="paymentOrderAddress" style="text-align:left;">
+                <div class="paymentOrderAddress1 clearfix"><b style="float:left;">{{ServiceOrder.contacts}}</b><b style="float:right;">{{ServiceOrder.tel}}</b></div>
+                <div class="paymentOrderAddress2">{{ServiceOrder.province}}{{ServiceOrder.city}}{{ServiceOrder.district}}{{ServiceOrder.address}}</div>
+              </div>
+           </div>
+           <div class="text-right" v-if="ServiceOrder.is_company==2"><span>是否允许他人代替服务：</span><i>{{ServiceOrder.istake==1?'是':'否'}}</i></div>         
+           <div class="text-right"><span>预约服务订金：</span><i>{{ServiceOrder.total_price}}元</i></div>
            <div class="service_inner_text service_inner_textOrder">
               <h5>服务内容 :</h5>
               <p>{{ServiceOrder.content}}</p>
@@ -115,6 +338,25 @@
               <h5>其它说明 :</h5>
               <p>{{ServiceOrder.special}}</p>
            </div>
+        </div>
+        <div class="user_order_list_bot clearfix"> 
+          <a href="javascript:void(0);" class="on" v-if="ServiceOrder.orderstate==2" @click="contactService(ServiceOrder.s_tel)">联系服务人员</a> 
+          <a href="javascript:void(0);" class="on" v-if="ServiceOrder.orderstate==5" @click="evaluate(ServiceOrder.serviceorderid)">去评价</a>
+          <a href="javascript:void(0);" class="on" v-if="ServiceOrder.orderstate==3 && ServiceOrder.is_refund==0" @click="startWorkService(ServiceOrder.serviceorderid)">开始工作</a>
+          <a href="javascript:void(0);" v-if="ServiceOrder.orderstate==3 && ServiceOrder.is_refund==0 && (new Date()).getHours()<parseInt(ServiceOrder.timing)" @click="tuiKuanService(ServiceOrder.serviceorderid)">申请退款</a>   
+          <a href="javascript:void(0);" v-if="ServiceOrder.orderstate==3 && ServiceOrder.is_refund==0 && (new Date()).getHours()>=parseInt(ServiceOrder.timing)" @click="tousuService(ServiceOrder.serviceorderid)">退款投诉</a>     
+          <!-- <a href="javascript:void(0);" class="on">确认收货</a> -->
+          <!-- <a href="javascript:void(0);">查看物流</a> -->
+          <a href="javascript:void(0);" v-if="ServiceOrder.orderstate==3 && ServiceOrder.is_refund==0" @click="contactService(ServiceOrder.s_tel)">联系商家</a>
+          <a href="javascript:void(0);" v-if="ServiceOrder.orderstate==2" @click="cancleService(ServiceOrder.serviceorderid)">取消订单</a>
+          <a href="javascript:void(0);" v-if="ServiceOrder.is_refund!=0 && ServiceOrder.is_refund!=2" @click="contactService(ServiceOrder.service_tel)">服务热线</a>
+        </div>
+        <!-- <div class="energetic1-foot1-txt5 clearfix energetic1-foot1-txt6">
+            <button class="energetic1-foot1-btn2 bg5 energetic1-foot1-button">开始工作</button>
+            <button class="energetic1-foot1-btn2 bg4">退款投诉</button>
+        </div> -->
+        <div class="energetic1-foot1-txt7" v-if="ServiceOrder.orderstate==4" style="display:block;">
+          <a href="javascript:void(0);" @click="zhifuService(ServiceOrder.serviceorderid,ServiceOrder.orderno)">完成并支付余额</a>
         </div>
   </div>
 </div>
@@ -139,13 +381,41 @@ $(window).ready(function(){
 	                
 	            })(),
 	        ServiceOrder_list:'',
-          yuyue_type:getCookie("yuyueType"),  
+          yuyue_type:getCookie("yuyueType"),
+          pay_type_txt:"全部订单",
+          flag1:false,  
+          flag2:false,
+          flag3:false,  
+          flag4:false,
+          flag5:false,
+          flag6:false,
+          flag7:false,
+          serviceTel:4008089949,
+          OrderId:'',
+          btnTxt:'确认取消订单并退款？',
+          btnType:'',
+          append_money1:'',
+          wallet:'',
+          OrderNo:''
 	    }
 		},
     created: function () {
-		var $this = this;
-    	$this.getServiceOrder_list();
-        
+		  var $this = this;
+      if($this.yuyue_type==1){
+        $this.pay_type_txt="全部订单";
+      }else if($this.yuyue_type==3){
+        $this.pay_type_txt="待接单";
+      }else if($this.yuyue_type==4){
+        $this.pay_type_txt="进行中";
+      }else if($this.yuyue_type==5){
+        $this.pay_type_txt="待评价";
+      }else if($this.yuyue_type==6){
+        $this.pay_type_txt="已完成";
+      }else if($this.yuyue_type==7){
+        $this.pay_type_txt="退款/售后";
+      }
+    	$this.getServiceOrder_list(); 
+      $this.getWallet();     
     },
     mounted:function(){
     	
@@ -175,6 +445,7 @@ $(window).ready(function(){
         })
         
     	},
+
     	//查看详情
     	more:function(event){
           // showMore();
@@ -196,7 +467,281 @@ $(window).ready(function(){
 		        // $this.html("详情");
 		        // $this.parent().css("border-bottom","none");
 		      }
-	    }
+	    },
+
+      //联系服务人员弹框显示
+      contactService:function(s_tel){
+        $this=this;
+        $this.serviceTel=s_tel;
+        $this.flag2=true;
+      },
+
+      //联系服务人员弹框关闭
+      cancleTel:function(){
+        $this.flag2=false;
+      },
+
+      //取消预约订单弹框显示
+      cancleService:function(order_id){
+        $this=this;
+        $this.OrderId=order_id;
+        $this.flag3=true;
+        $this.btnTxt="确认取消订单并退款？";
+        $this.btnType=1;
+      },
+
+      //预约订单开始工作弹框显示
+      startWorkService:function(order_id){
+        $this=this;
+        $this.OrderId=order_id;
+        $this.flag3=true;
+        $this.btnTxt="确定开始工作？";
+        $this.btnType=2;
+      },
+
+      //申请退款弹框显示
+      tuiKuanService:function(order_id){
+        $this=this;
+        $this.OrderId=order_id;
+        $this.flag1=true;
+      },
+
+      //退款投诉页面跳转
+      tousuService:function(order_id){
+        sessionStorage.setItem("serviceOrderId",order_id);
+        window.location.href="complaint.html";
+      },
+
+      //支付预约订单弹框显示
+      zhifuService:function(order_id,order_no){
+        $this=this;
+        $this.OrderId=order_id;
+        // $this.OrderNo=order_no;
+        $this.flag5=true;
+      },
+
+      //取消预约订单弹框关闭
+      cancleClose:function(){
+        $this.flag3=false;
+        $this.flag4=false;
+        $this.flag1=false;
+        $this.flag5=false;
+      },
+
+      //确认取消预约订单
+      canclesure:function(){
+        $this=this;
+        if($this.btnType==1){
+          $this.cancleService1();
+        }else if($this.btnType==2){
+          $this.cancleService2();
+        }else if($this.btnType==3){
+          // $this.cancleService3();
+        }
+
+      },
+
+      //取消预约订单确认
+      cancleService1:function(){
+        $this=this;
+        $this.flag3=false;
+
+        //取消预约订单
+        const data = {
+          serviceorderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.service_applyRefund,data).then((res) => {              
+          if(res.result == 1){  
+            alert(res.info);
+            // $this.wallet=res.info.wallet;
+            location.reload();                                             
+          }else
+          {
+            console.log("取消预约订单失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("取消预约订单失败:"+err);
+        })
+      },
+
+      //开始工作预约订单确认
+      cancleService2:function(){
+        $this=this;
+        $this.flag3=false;
+
+        //开始工作预约订单确认
+        const data = {
+          serviceorderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.service_startWork,data).then((res) => {              
+          if(res.result == 1){  
+            $this.flag4=true;
+            // $this.wallet=res.info.wallet;
+            location.reload();                                             
+          }else
+          {
+            console.log("开始工作失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("开始工作失败:"+err);
+        })
+      },
+
+      //申请退款确认
+      tuiKuanSure:function(){
+        $this=this;
+        $this.flag1=false;
+
+        //取消预约订单
+        const data = {
+          serviceorderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.service_applyRefund,data).then((res) => {              
+          if(res.result == 1){  
+            alert(res.info);
+            // $this.wallet=res.info.wallet;
+            location.reload();                                             
+          }else
+          {
+            console.log("申请退款失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("申请退款失败:"+err);
+        })
+      },
+
+      //结束工作确认
+      zhifuSure:function(){
+        $this=this;
+        if($this.append_money1==''){
+          alert("请输入支付余额");
+          return false;
+        }
+
+        //结束工作确认
+        const data = {
+          serviceorderid:$this.OrderId,
+          append_money: $this.append_money1            
+        }       
+        Axios.post(window.Url.service_endWork,data).then((res) => {              
+          if(res.result == 1){  
+            // alert(res.info);
+            $this.flag5=false;
+            sessionStorage.setItem("serviceOrderId",$this.OrderId);
+            window.location.href="pingjia.html";
+            // $this.wallet=res.info.wallet;
+            // location.reload();                                             
+          }else if(res.result == 2){
+            $this.flag6=true;
+            $this.OrderNo=res.info;
+          }else if(res.result == 0){
+            console.log("结束工作确认:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("结束工作确认:"+err);
+        })
+
+      },
+
+      //去评价
+      evaluate:function(order_id){
+        sessionStorage.setItem("serviceOrderId",order_id);
+        window.location.href="pingjia.html";
+      },
+
+      jump:function(type_id){
+        window.location.href="service_inner_1.html";
+        setCookie('service_details_id',type_id);
+      },
+
+      goback:function(){
+        sessionStorage.setItem('tabType',4);
+        window.location.href="orderList.html";
+      },
+
+      //选择支付方式
+      selectZhifu:function(state){
+         $this=this;
+         $this.flag7=state;                       
+      },
+      //确认支付
+      sureZhifu:function(){
+        $this=this;
+        if(!$this.flag7){
+
+          const data = {
+              orderno:$this.OrderNo,
+              type:5,
+          }
+
+          Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {  
+            tt(res.result,'http://shandu.unohacha.com/wx_shandu/order_sure.html');             
+            if(res.result == 1){  
+              // alert("支付成功");
+              $this.flag6=false;
+              // setCookie("tuanType",3);
+              window.location.href="pingjia.html";              
+                                               
+            }else if(res.result == 0){
+              console.log("生成订单失败:"+res.info);
+            }
+            
+          }).catch((err) => {
+            console.log("生成订单失败:"+err);
+          })
+
+        }else if($this.flag7){
+            const data = {
+              orderno:$this.OrderNo,
+              type:5,
+              is_wxin:1
+            }
+
+            Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+                if(res.result == 1){  
+                    // alert("res.info");
+                    // setCookie("tuanType",3);
+                    setCookie("yuyueType",5);
+                    sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                    sessionStorage.setItem('error_url', "user.html");
+                    sessionStorage.setItem('success_url', "pingjia.html");
+                    window.location.href = 'wxpay.html';                                                          
+                }else
+                {
+                  console.log("微信支付失败:"+res.info);
+                }
+                
+            }).catch((err) => {
+                console.log("微信支付失败:"+err);
+            })
+
+        }
+      },
+      //获取钱包余额
+      getWallet:function(){
+        var $_this=this;
+        //获取钱包余额
+        const data = {
+              
+        }       
+        Axios.post(window.Url.Ucenter_wallet,data).then((res) => {              
+          if(res.result == 1){  
+            // alert("获取钱包余额成功");
+            $_this.wallet=res.info.wallet;                                             
+          }else
+          {
+            console.log("获取钱包余额失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("获取钱包余额失败:"+err);
+        })
+      }
+
     }
 })
     

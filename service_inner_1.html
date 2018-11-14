@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -63,8 +63,8 @@
 		<div class="service_inner_con_left">
 			<div class="service_pro_list_left_img">
 				<img :src="service_details.logo_pic">
-				<span v-if='service_details.is_bzj'>有保证金</span>
-				<span v-else style="1px solid #999999;background-color: #999;">无保证金</span>
+				<img src="images/youbzj2.png" alt="" v-if='service_details.is_bzj' class="bzj"> 
+				<img src="images/wubzj2.png" alt="" v-else class="bzj">
 			</div>
 			<h5>{{service_details.name}}</h5>
 			 <p v-if="service_details.age">{{service_details.age}}岁</p> 
@@ -73,27 +73,28 @@
 		<div class="service_inner_con_right">
 			<ul>
 				<li>服务态度 :
-					<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>{{service_details.integrity}}</b>
+					<i class="fa fa-star"></i><i class="fa" :class="parseFloat(service_details.service_attitude)<parseFloat('70%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.service_attitude)<parseFloat('80%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.service_attitude)<parseFloat('90%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.service_attitude)<parseFloat('100%')?'fa-star-o':'fa-star'"></i><b>{{service_details.service_attitude}}</b>
 				</li>
 				<li>诚实守信 :
-					<i class="fa fa-star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></i><i class="fa fa-star-o"></i><b>{{service_details.integrity}}</b>
+					<i class="fa fa-star"></i><i class="fa" :class="parseFloat(service_details.integrity)<parseFloat('70%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.integrity)<parseFloat('80%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.integrity)<parseFloat('90%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.integrity)<parseFloat('100%')?'fa-star-o':'fa-star'"></i><b>{{service_details.integrity}}</b>
 				</li>
 				<li>成果验收 :
-					<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><b>{{service_details.achievement}}</b>
+					<i class="fa fa-star"></i><i class="fa" :class="parseFloat(service_details.achievement)<parseFloat('70%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.achievement)<parseFloat('80%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.achievement)<parseFloat('90%')?'fa-star-o':'fa-star'"></i><i class="fa" :class="parseFloat(service_details.achievement)<parseFloat('100%')?'fa-star-o':'fa-star'"></i><b>{{service_details.achievement}}</b>
 				</li>
 			</ul>
 			<p>上月订单数 :<span>{{service_details.alternative}}</span>  <i>好评率 :<b>{{service_details.favorable_rate}}</b></i></p>
-			<h5>联系方式 :<span>{{service_details.tel}}</san> <i class="go-chakan">查看</i></h5>
+			<!-- <h5>联系方式 :<span>{{service_details.tel}}</san> <i class="go-chakan">查看</i></h5> -->
 		</div>
 	</div>
 	
 	<div class="service_sp"></div>
 	
-	<div class="service_inner_list">
-		<span>公司(门市)地址 :</span>
+	<div class="service_inner_list" style="padding-left:1.4rem;">
+		<span v-if="isCompany==1">公司(门市)地址 :</span><span v-if="isCompany==2">现住址 :</span>
 		{{service_details.province}}
-		{{service_details.ser_city}}
+		{{service_details.city}}
 		{{service_details.district}}
+		{{service_details.address}}
 	</div>
 	
 	<div class="service_inner_list">
@@ -152,7 +153,7 @@
 </div>
 
 
-<div class="service_show">
+<!-- <div class="service_show">
 	<div class="service_show_bg"></div>
 	<div class="service_show_con">
 		<h5>e闪度提示 :</h5>
@@ -162,7 +163,7 @@
 		<p>【闪度平台】客服电话:400-808-9949</p>
 		<h4><span>取消</span><a href="service_inner1.html"><b>好的,知道了</b></a></h4>
 	</div>
-</div>
+</div> -->
 
 
 
@@ -176,8 +177,9 @@ var vm = new Vue({
 		el:"#app",
 		data() {
             return {
-                city_name:getCookie("cityLocation"),
-                service_details:{}
+                city_name:sessionStorage.getItem("cityLocation"),
+                service_details:{},
+                isCompany:getCookie("service_is_company"),
             }
 		},
     created: function () {
@@ -252,18 +254,19 @@ $('.order3').click(function(){
 
 
 $('.header_shop_longevity_yyxd').click(function(){
-	$('.service_show').stop(true).fadeIn(600)
+	// $('.service_show').stop(true).fadeIn(600)
+	window.location.href = "service_inner1.html";
 })
 
-$('.service_show_con h4 span').click(function(){
-	$('.service_show').stop(true).fadeOut(600)
-})
-$('.go-chakan').click(function(){
-    $('.chakan_show').css('display','block');
-});
-$('.chakan_show_bg').click(function(){
-    $('.chakan_show').css('display','none');
-})
+// $('.service_show_con h4 span').click(function(){
+// 	$('.service_show').stop(true).fadeOut(600)
+// })
+// $('.go-chakan').click(function(){
+//     $('.chakan_show').css('display','block');
+// });
+// $('.chakan_show_bg').click(function(){
+//     $('.chakan_show').css('display','none');
+// })
 
   
 })  

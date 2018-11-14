@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -36,6 +36,34 @@
   .pinglun1_show{
     display: block;
   }
+  .stroy_inn_box1 .stroy_function{
+    line-height: 0.2rem;
+    padding:0.1rem 0.15rem;
+  }
+  .stroy_inn_box1 .stroy_function p{
+    font-size:0.13rem;
+    color:#666;
+  }
+
+  .share_show_bg img{
+        position: absolute;
+        top: 0.05rem;
+        right: 0.2rem;
+    }
+    .share_show_bg {
+        opacity: 0.7;
+        -moz-opacity: 0.7;
+        -khtml-opacity: 0.7;
+        -webkit-opacity: 0.7;
+        filter: alpha(opacity=70);
+    }
+    .share_show_bg .shareTxt{
+        position: absolute;
+        top: 0.4rem;
+        right: 0.2rem;
+        font-size: 0.15rem;
+        color: #fff;
+    }
 </style>
 
 </head>
@@ -48,18 +76,34 @@
 <div class="warpper warpper_str">
     <div class="stroy_inn_box1">
       <div class="stroyinn_box">
-        <img src="images/stroy_pu1.jpg" width="100%">
+        <!-- <img src="images/stroy_pu1.jpg" width="100%"> -->
+        <div class="swiper-container swiper-storyDetail">
+          <div class="swiper-wrapper">            
+              <div class="swiper-slide" v-for="(items1,index) in stroy_details.pic_list">                
+                <img :src="items1" width="100%">              
+              </div>                           
+          </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination swiper-pagination-storyDetail"></div>
+        </div>
         <a class="back" href="javascript:history.go(-1)"><img src="images/hl.png" width="100%"></a>
       </div>
       <div class="stroy_function clearfix">
-        <span class="left">支持数：10</span>
-        <span class="right">编号：00045</span>
+        <div class="stroy_function1 clearfix">
+          <span class="left">发布人：{{stroy_details.person_name}}</span>
+          <span class="right">编号：{{stroy_details.number}}</span>
+        </div>
+        <!-- <p>{{stroy_details.add_time}}</p> -->
+        <p>
+          <span class="left">{{stroy_details.add_time}}</span>
+          <span class="right">{{stroy_details.city}}</span>
+        </p>
       </div>
     </div>
     <div class="stroy_inn_text">
-      <h5>子不语怪力乱神<span>发布人：闪度新8980<i>杭州市</i></span></h5>
+      <h5>{{stroy_details.title}}<span>支持数：{{stroy_details.popularity}}</span></h5>
       <div class="content">
-      子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神子不语怪力乱神
+        {{stroy_details.content}}
       </div>
     </div>
 </div>
@@ -68,10 +112,11 @@
 
 <!--  / footer  -->
   <div class="stroy_footer">
-      <div class="stroy_fbox stroy_fbox_zhichi" @click="zhichi">
-        <img src="images/zc.jpg" class="InformationDetails7_f3_f2_img1" v-show="flag1">
-        <img src="images/zc-sel.jpg" class="InformationDetails7_f3_f2_img2" v-show="!flag1">
-        <p v-html="stroy_supportStatu">我要支持</p>
+      <div class="stroy_fbox stroy_fbox_zhichi">
+        <img src="images/zc.jpg" class="InformationDetails7_f3_f2_img1" v-if="stroy_details.is_popularity==1" @click="zhichi">
+        <img src="images/zc-sel.jpg" class="InformationDetails7_f3_f2_img2" v-else @click="zhichi1">
+        <p v-if="stroy_details.is_popularity==1">我要支持</p>
+        <p v-else>已支持</p>
       </div>
       <div class="stroy_fbox stroy_fbox_enter">
         <img src="images/stroy_footer2.jpg">
@@ -85,7 +130,7 @@
 <!--  / footer  -->
 
 
-<div class="share_show">
+<!-- <div class="share_show">
 	<div class="share_show_bg"></div>	
 	<div class="share_show_con">
 		<h5>选择要分享到的平台</h5>
@@ -111,11 +156,19 @@
 		<a href="##">取消分享</a>
 		
 	</div>
+</div> -->
+
+<div class="share_show">
+  <div class="share_show_bg">
+      <img src="images/jt.png" alt="" width="50">   
+      <span class="shareTxt">点此处分享</span>
+    </div>  
 </div>
+
 <div class="pinglun1_show" v-show="flag2">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5 v-html='stroy_popular'>支持成功</h5>
+        <h5>你已经支持过了</h5>
         <div class="pinglun1_show_con_f1" @click="closeSupport">
             <a href="##">好的，知道了</a>
         </div>
@@ -137,13 +190,14 @@ $(window).ready(function(){
         flag1:true,
         flag2:false,
         stroy_supportStatu:'我要支持',
+        oldstory_id:''
       }
     },
     created:function(){
       var $this = this;
-      $this.getCate();
-      
-                            
+      var Request=new UrlSearch();
+      $this.oldstory_id=Request.id;
+      $this.getCate();                                  
     },
     mounted:function(){
       
@@ -153,12 +207,21 @@ $(window).ready(function(){
       getCate:function(){
         var $this = this;
         const data = {
-           oldstory_id:getCookie("oldstoryId"),
+           oldstory_id:$this.oldstory_id,
         }
         Axios.post(window.Url.stroy_details,data).then((res) => {
           
           if(res.result == 1){
-            $this.stroy_details = res.info;                                  
+            $this.stroy_details = res.info.cheats;  
+            $this.$nextTick(function(){
+              $('.stroyinn_box .swiper-storyDetail img').height($(window).width()*380/750);
+              mySwiper_detail = new Swiper ('.swiper-storyDetail', {
+                  loop: true,
+                  pagination: '.swiper-pagination-storyDetail',
+                autoplay : 5000,
+                autoplayDisableOnInteraction : false
+              })
+            })                                
           }else
           {
             console.log("老故事详情:"+res.info);
@@ -172,16 +235,12 @@ $(window).ready(function(){
       zhichi:function(){
         var $this = this;
         const data = {
-           oldstory_id:getCookie("oldstoryId"),
-           // token:'71213e27892e38b1f7d528d5977f4bd9',
+           oldstory_id:$this.oldstory_id
         }
         Axios.post(window.Url.stroy_popularity,data).then((res) => {
           
           if(res.result == 1){
-            $this.stroy_popular = res.info;
-            $this.flag1  =false; 
-            $this.flag2  =true;   
-            $this.stroy_supportStatu ="已支持";                  
+            window.location.reload();                
           }else
           {
             console.log("老故事详情:"+res.info);
@@ -196,6 +255,10 @@ $(window).ready(function(){
       closeSupport:function(){
         $this=this;
         $this.flag2  =false;
+      },
+      zhichi1:function(){
+        $this=this;
+        $this.flag2  =true;
       }
      
     }
@@ -224,22 +287,7 @@ $('.share_show_bg').click(function(){
 $('.share_show_con a').click(function(){
 	$('.share_show').stop(true).fadeOut(600);
 })
-// $('.stroy_fbox_zhichi').click(function(){
-//   if(flag){
-//     $(this).find('.InformationDetails7_f3_f2_img1').addClass('img-hidden');
-//     $(this).find('.InformationDetails7_f3_f2_img2').removeClass('img-hidden');
-//     $(this).find('p').html('已支持');
-//     $('.pinglun1_show').css('display','block');
-//     $('.pinglun1_show h5').html('支持成功');
-//     flag=false;
-//   }else{ 
-//      $('.pinglun1_show').css('display','block');
-//      $('.pinglun1_show h5').html('你已经支持过了');
-//   }
-// })
-// $('.pinglun1_show_con_f1 a').click(function(){
-//     $('.pinglun1_show').css('display','none');
-// })
+
 
 })  
 </script>

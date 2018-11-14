@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>关闭</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -20,6 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/style1.css">
 
 <script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/easing.js"></script>
@@ -33,12 +34,71 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <style>
     .banner_bg2_right2 span b{
         font-weight:normal;
     }
     .shopDetail6_bg1{
        top: 20%;
+    }
+    .shopDetail8_sec1{
+        padding-top: 0.10rem;
+        padding-bottom: 0.10rem;
+        border-bottom: 1px solid #eee;
+    }
+    .shopDetail8_sec1_left{
+        width:50%;
+        float:left;
+    }
+    .shopDetail8_sec1_right{
+        float: right;
+        font-size: 0.15rem;
+        line-height: 0.42rem;
+    }
+    .shopDetail8_sec1_left1{
+        font-size:0.15rem;
+        color:#333;
+    }
+    .shopDetail8_sec1_left2{
+        color: #fff;
+        display: inline-block;
+        background: #ff5114;
+        font-size: 0.10rem;
+        padding: 0.02rem 0.03rem;
+        border-radius: 0.03rem;
+        margin-top: 0.02rem;
+    }
+    .share_show_bg img{
+        position: absolute;
+        top: 0.05rem;
+        right: 0.2rem;
+    }
+    .share_show_bg {
+        opacity: 0.7;
+        -moz-opacity: 0.7;
+        -khtml-opacity: 0.7;
+        -webkit-opacity: 0.7;
+        filter: alpha(opacity=70);
+    }
+    .share_show_bg .shareTxt{
+        position: absolute;
+        top: 0.4rem;
+        right: 0.2rem;
+        font-size: 0.15rem;
+        color: #fff;
+    }
+    .banner{
+        width:100%;
+        height:3.75rem;
+        background:url(./images/user-1.jpg) center/cover no-repeat;
+        margin-top:0.38rem;
+    }
+    .footer3-right.end button{
+        background: #e0e0e0;
+    }
+    .pinglun1_show{
+        display: block;
     }
 </style>
 
@@ -53,17 +113,17 @@
     <div class="lianxi_show_con">
         <h5>4008089949</h5>
         <div class="lianxi_show_con_f1">
-            <a href="##" class="quxiao1">取消</a>
+            <a href="javascript:void(0);" class="quxiao1">取消</a>
             <a href="tel:4008089949" class="active">拨打电话</a>
         </div>
     </div>
 </div>
-<div class="pinglun1_show">
+<div class="pinglun1_show" v-if="flag1">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
         <h5>拼团已结束</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##">好的，知道了</a>
+            <a href="javascript:void(0);" @click="flag1=false;">好的，知道了</a>
         </div>
     </div>
 </div>
@@ -77,8 +137,8 @@
 </div>
 <!--  / header  -->
 
-<div class="banner">
-  <img :src="goods_list.logo_pic" width="100%">
+<div class="banner" :style="{backgroundImage: 'url(' + goods_list.logo_pic + ')'}">
+  <!-- <img :src="goods_list.logo_pic" width="100%"> -->
   <!-- <div class="swiper-container swiper-container-banner">
     <div class="swiper-wrapper">
         <div class="swiper-slide"><img :src="goods_list.logo_pic" width="100%"></div>
@@ -88,19 +148,21 @@
     如果需要分页器
     <div class="swiper-pagination swiper-pagination-banner"></div>
   </div> -->
-  <div class="banner_bg1">
+  <!-- <div class="banner_bg1">
+  </div> -->
+  
+</div>
+<div class="banner_bg2 clearfix banner_bg1">
+  <div class="banner_bg2_left">
+      <div class="banner_bg2_left1">拼团价：<span>￥{{goods_list.group_price}}</span></div>
+      <div class="banner_bg2_left2">原价：￥{{goods_list.oprice}}<span></span></div>
   </div>
-  <div class="banner_bg2 clearfix">
-      <div class="banner_bg2_left">
-          <div class="banner_bg2_left1">拼团价：<span>￥{{goods_list.price}}</span></div>
-          <div class="banner_bg2_left2">原价：<span>￥100.00</span></div>
-      </div>
-      <div class="banner_bg2_right">
-          <div class="banner_bg2_right1">距结束仅剩</div>
-          <div class="banner_bg2_right2"><span><b v-if="list.dd<=9">0</b>{{list.dd}}</span> : <span><b v-if="list.hh<=9">0</b>{{list.hh}}</span> : <span><b v-if="list.mm<=9">0</b>{{list.mm}}</span> : <span><b v-if="list.ss<=9">0</b>{{list.ss}}</span></div>
-      </div>
-      <!-- <div class="banner_bg2_pintuan">10人团</div> -->
+  <div class="banner_bg2_right">
+      <div class="banner_bg2_right1">距结束仅剩</div>
+      <div class="banner_bg2_right2" v-if="goods_list.second>0"><span><b v-if="list.dd<=9">0</b>{{list.dd}}</span> : <span><b v-if="list.hh<=9">0</b>{{list.hh}}</span> : <span><b v-if="list.mm<=9">0</b>{{list.mm}}</span> : <span><b v-if="list.ss<=9">0</b>{{list.ss}}</span></div>
+      <div class="banner_bg2_right2" v-else><span>00</span> : <span>00</span> : <span>00</span> : <span>00</span></div>
   </div>
+  <!-- <div class="banner_bg2_pintuan">10人团</div> -->
 </div>
 
 <!--  / tourItinerary  -->
@@ -147,32 +209,17 @@
             </ul>
         </div>
         <div class="shopDetail8">
-            <div class="shopDetail8_sec1">10人正在拼团</div>
-            <div class="shopDetail8_sec2 clearfix">
-                <div class="shopDetail8_sec2_left">
-                    <img src="images/yonghu.png" alt="" width="35">
-                    <span>154****4525</span>
+            <div class="shopDetail8_sec1 clearfix">
+                <div class="shopDetail8_sec1_left">
+                    <div class="shopDetail8_sec1_left1">{{goods_list.tuan}}人团</div>
+                    <div class="shopDetail8_sec1_left2">{{goods_list.salesnum}}人已参团</div>
                 </div>
-                <!-- <div class="shopDetail8_sec2_right">
-                   <a href="##">去拼团</a>
-                </div> -->
-                <div class="shopDetail8_sec2_center">
-                    <p>还差<span>1人</span>拼成团</p>
-                    <h6>剩余20:10:10:10</h6>
-                </div>                 
+                <div class="shopDetail8_sec1_right">
+                    已成交{{goods_list.sales}}笔
+                </div>
             </div>
-            <div class="shopDetail8_sec2 clearfix shopDetail8_sec3">
-                <div class="shopDetail8_sec2_left">
-                    <img src="images/yonghu.png" alt="" width="35">
-                    <span>154****4525</span>
-                </div>
-               <!--  <div class="shopDetail8_sec2_right">
-                   <a href="##">去拼团</a>
-                </div> -->
-                <div class="shopDetail8_sec2_center">
-                    <p>还差<span>1人</span>拼成团</p>
-                    <h6>剩余20:10:10:10</h6>
-                </div>                 
+            <div class="shopDetail8_sec1_img">
+                <img src="images/liucheng.jpg" alt="" width="100%">
             </div>
         </div>
         <div class="shopDetail4">
@@ -184,7 +231,9 @@
             </div>
         </div>
         <div class="shopDetail5">
-            <img src="images/shopDetail-list8.png" alt="">
+            <div class="content_xqcont">
+                  <iframe :src="goods_list.detailurl" style="width: 100%;border:none;" id="cnt_iframe" iframeborder="0"></iframe>
+            </div>
         </div>      
 </div>
 <!--  / tourItinerary  -->
@@ -197,11 +246,11 @@
           <img src="images/user_icon_10.png" alt="">
           <span>4008089949</span>  
       </li>
-      <li class="footer3-center">
+      <li class="footer3-center" @click="isEnd(1)">
           <img src="images/shopcar.png" alt="">
           <span>购物车</span>  
       </li>
-      <li class="footer3-right">
+      <li class="footer3-right" :class="goods_list.second>0?'':'end'" @click="isEnd(2)">
           <button>立即拼团</button>
       </li>
     </ul>
@@ -210,30 +259,38 @@
 
 
 <div class="share_show">
-	<div class="share_show_bg"></div>	
-	<div class="share_show_con">
-		<h5>选择要分享到的平台</h5>
-		<ul class="clearfix">
-			<li>
-				<span><img src="images/share_icon1.png"></span>
-				微信
-			</li>
-			<li>
-				<span><img src="images/share_icon2.png"></span>
-				微信朋友圈
-			</li>
-			<li>
-				<span><img src="images/share_icon3.png"></span>
-				QQ
-			</li>
-			<li>
-				<span><img src="images/share_icon4.png"></span>
-				QQ空间
-			</li>
-		</ul>		
-		<a href="##">取消分享</a>		
-	</div>
+	<div class="share_show_bg">
+      <img src="images/jt.png" alt="" width="50">   
+      <span class="shareTxt">点此处分享</span>
+    </div>	
 </div>
+
+
+<!-- <div class="share_show">
+    <div class="share_show_bg"></div>   
+    <div class="share_show_con">
+        <h5>选择要分享到的平台</h5>
+        <ul class="clearfix">
+            <li>
+                <span><img src="images/share_icon1.png"></span>
+                微信
+            </li>
+            <li>
+                <span><img src="images/share_icon2.png"></span>
+                微信朋友圈
+            </li>
+            <li>
+                <span><img src="images/share_icon3.png"></span>
+                QQ
+            </li>
+            <li>
+                <span><img src="images/share_icon4.png"></span>
+                QQ空间
+            </li>
+        </ul>       
+        <a href="##">取消分享</a>       
+    </div>
+</div> -->
 
 <!-- <div class="buy_show">
   <div class="buy_show_bg"></div> 
@@ -257,9 +314,11 @@
 <div class="show_div show_xz">
     <div class="show_div_con">
         <div class="show_xz_t clearfix">
-            <img src="images/collage-list2.jpg" width="100">
+            <img v-if="goods_ps_cont.img=='' || goods_ps_cont.img==null || goods_ps_cont.price=='' || goods_ps_cont.price==null" src="images/collage-list2.jpg" width="100" height="100">
+            <img v-else :src="goods_ps_cont.img" width="100" height="100">
             <h3>请选择分类规格</h3>
-            <h4>拼团价: <span>￥<i>{{goods_list.price}}</i></span> </h4>
+            <h4 v-if="goods_ps_cont.img=='' || goods_ps_cont.img==null || goods_ps_cont.price=='' || goods_ps_cont.price==null" >拼团价: <span>￥<i>请选择分类</i></span> </h4>
+            <h4 v-else>拼团价: <span>￥<i>{{goods_ps_cont.price*num}}</i></span> </h4>
         </div>
         <div class="show_div_cons" style="margin-top:88px; height:258px;">
             <!-- <div class="show_xza">
@@ -270,24 +329,28 @@
                 <span>19:00前付款，承诺11月20送到，可选送货时间</span>
             </div> -->
             <div class="show_xzb">
-                <p><b>礼盒装</b></br>
-                    <span class="show_xzb_on">2盒装</span>
+                <p v-for="items2 in goods_list.sku"><b>{{items2.skuName}}</b></br>
+                    <span class="wait_box" v-for="(items3,index) in items2.data" :data-pid="items3.sku_id">{{items3.name}}</span>
                 </p>
-                <p><b>种类</b></br>
+                <!-- <p><b>种类</b></br>
                     <span class="show_xzb_on">纯棉</span><span>纯棉</span><span>纯棉</span>
                 </p>
                 <p><b>年份</b></br>
                     <span class="show_xzb_on">2年</span><span>3年</span><span>4年</span>
-                </p>
+                </p> -->
             </div>
 
             <div class="show_xzc">
                 <h5>购买数量
-                    <span class="pro_jia">+</span><span class="pro_num">1</span><span class="pro_jian">-</span>
+                    <span class="pro_jian" @click="delNum(goods_ps_cont.store)">-</span><span class="pro_num">{{num}}</span><span class="pro_jia" @click="addNum(goods_ps_cont.store)">+</span>
+                    <span class="kucun" v-if="goods_ps_cont.img!='' && goods_ps_cont.img!=null && goods_ps_cont.price!='' && goods_ps_cont.price!=null">库存  {{goods_ps_cont.store}}</span>
+                    <div class="kucun_title" v-if="kucunShow">商品库存不足</div>
                 </h5>
+
             </div>
-            <div class="show_sure">
-                <a href="order_sure.html">确定</a>
+            <div class="show_sure" @click="goOrderSure()">
+                <!-- <a href="order_sure.html">确定</a> -->
+                <a href="javascript:void(0);" :class="kucunShow?'enable':''">确定</a>
             </div>
 
         </div>
@@ -300,9 +363,14 @@
 </div>
 
 </body>
+<!-- <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script> -->
 <script>
+var url = location.href;
+isToken(url);
 $(window).ready(function(){
 
+
+    // FastClick.attach(document.body);
     var vm = new Vue({
         el:"#app",
         data(){
@@ -314,11 +382,29 @@ $(window).ready(function(){
                 mm:'',
                 ss:'',
             },
+            goods_ps:{},
+            goods_ps_cont:{},
+            num:1,
+            products_id:'',
+            flag1:false,
+            flag2:'',
+            kucunShow:false,
+            tuanIndex:{
+               cartids:'',
+               skulistid:'',
+               nums:''
+            }
           }
         },
         created:function(){
           var $this = this;
-          $this.getGoodsList();                                        
+          var Request=new UrlSearch();
+          // var index = window.location.href.lastIndexOf("=");  
+          // $this.products_id = window.location.href.substring(index + 1, window.location.href.length);
+          $this.products_id=Request.id;
+          // console.log($this.products_id);
+          $this.getGoodsList();  
+          $this.getQianming();                                      
         },
         mounted:function(){
             var $this = this;
@@ -345,25 +431,181 @@ $(window).ready(function(){
             getGoodsList:function(){
                 var $this = this;
                 const data = {
-                   goodsid:getCookie("goodId"),
+                   goodsid:$this.products_id,
                 }
                 Axios.post(window.Url.goods_info,data).then((res) => {
-                  if(res.result == 1){
-                    $this.goods_list = res.info.goods[0];  
-                    console.log($this.goods_list);
-                    $this.$nextTick(function(){
-                        InitTime($this.goods_list.end_time);
-                        bgshow();
-                    })
-                  }else
-                  {
-                    console.log("活力健身-相关推荐:"+res.info);
-                  }
+                    tt(res.result,'http://shandu.unohacha.com/wx_shandu/shopDetail.html?id='+$this.products_id);
+                    if(res.result == 1){
+                        $this.goods_list = res.info.goods[0];  
+
+                        $this.goods_ps = $this.goods_list.sku_attr;
+                        console.log($this.goods_ps)
+                        // console.log($this.goods_list);
+                        $this.$nextTick(function(){
+                            InitTime($this.goods_list.end_time);
+                            bgshow();
+                            swiperBanner();
+                            setIframeHeight();
+
+                            $('.show_xzb p span').click(function () {
+                                $(this).parent().find('span').removeClass('show_xzb_on');
+                                $(this).addClass('show_xzb_on');
+
+                                var objSel=document.getElementsByClassName("show_xzb_on");
+                                //    console.log(objSel);
+                                var arr1=[];
+                                for(var i=0;i<objSel.length;i++){
+                                    // console.log(1);
+                                    // console.log($(objSel[k]));
+                                        var str=$(objSel[i]).data("pid");
+                                        // console.log(str);
+                                        arr1.push(str); 
+                                        // console.log(arr1)                             
+                                    }
+                                    var t = '-';
+                                    arr1.map((r)=>{
+                                        t += r + '-';
+                                    })
+                                    var tid = t;
+
+                                    console.log(tid)
+                                    for(let j in $this.goods_ps){
+                                        if(j == tid){
+                                            // console.log(j);
+                                            // console.log($this.goods_ps[j]);
+                                            $this.goods_ps_cont = $this.goods_ps[j]
+                                        }
+                                    }
+                                    // console.log($this.goods_ps_cont);
+                                    if($this.num>$this.goods_ps_cont.store){
+                                        $this.kucunShow=true;
+                                    }else{
+                                        $this.kucunShow=false;
+                                    }
+                            })
+
+                            
+                        })
+                        var url=window.location.href;
+                        url=encodeURIComponent(url);
+                        const data = {
+                           url:url,
+                        }
+                        Axios.post(window.Url.user_share,data).then((g) => {
+                          if(g.status == 1){
+                            weChatConfig(g.share_deploy,$this.goods_list);
+                          }else
+                          {
+                            console.log("活力健身-相关推荐:"+g.info);
+                          }
+                          
+                        }).catch((err) => {
+                          console.log("活力健身-相关推荐:"+err)
+                        }) 
+                    }else if(res.result == 0){
+                        console.log("活力健身-相关推荐:"+res.info);
+                    }
                   
                 }).catch((err) => {
                   console.log("活力健身-相关推荐:"+err)
                 })              
-            },        
+            },
+            getQianming:function(){
+            },     
+            addNum:function(store){
+               var $this=this;
+               $this.num++;
+               if($this.num>store){
+                $this.kucunShow=true;
+               }else{
+                $this.kucunShow=false;
+               }
+            }, 
+            delNum:function(store){
+               var $this=this;
+               if($this.num>1){
+                 $this.num--;
+                 if($this.num>store){
+                    $this.kucunShow=true;
+                 }else{
+                    $this.kucunShow=false;
+                 } 
+               }
+
+            },
+            goOrderSure:function(){
+                var $this = this;
+                if($this.flag2==1){
+                    $this.addCart();
+                }else if($this.flag2==2){
+                    $this.goOrder();
+                }                
+            },
+            goOrder:function(){
+                var $this=this;
+                $this.tuanIndex.skulistid=$this.goods_ps_cont.sku_list_id;
+                $this.tuanIndex.nums=$this.num;
+                $this.tuanIndex.cartids='';
+                // cartids
+                const data = {
+                      skulistid:$this.goods_ps_cont.sku_list_id,
+                      nums:$this.num
+                }
+
+                Axios.post(window.Url.TuanOrder_sure,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    // sessionStorage.setItem('TuanOrderDetail', JSON.stringify(res.info));  
+                    sessionStorage.setItem('TuanOrderIndex', JSON.stringify($this.tuanIndex));
+                    // alert("购买成功");
+                    window.location.href="order_sure.html";                                  
+                  }else
+                  {
+                    console.log("团购失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("团购失败:"+err);
+                })                
+            }, 
+            addCart:function(){
+                var $this=this;
+                const data = {
+                    goodsid:$this.goods_list.goods_id,
+                    skulistid:$this.goods_ps_cont.sku_list_id,
+                    nums:$this.num
+                }
+                Axios.post(window.Url.addToCart,data).then((res) => {
+                  
+                  if(res.result == 1){
+                    // sessionStorage.setItem('TuanOrderDetail', JSON.stringify(res.info));  
+                    alert("加入购物车成功");
+                    window.location.href="cart.html";                                  
+                  }else
+                  {
+                    console.log("加入购物车失败:"+res.info);
+                  }
+                  
+                }).catch((err) => {
+                  console.log("加入购物车失败:"+err);
+                })
+            },
+            buy:function(){
+                var $this=this;
+                if($this.goods_list.second>0){
+                    $('.pro_show_bg').stop(true, true).fadeIn(300);
+                    $('.show_xz').stop(true, true).animate({bottom: "0"}, 500);
+                    $('body').addClass('body_on');
+                }else{
+                    $this.flag1=true;
+                } 
+            },
+            isEnd:function(num){                
+                var $this=this;
+                $this.flag2=num;
+                var url1 = location.href;
+                isLogin(url1,$this.buy());
+            }
         }
 
     })
@@ -379,30 +621,82 @@ function InitTime(time1){
         hh1 = Math.floor((time /1000 / 60 / 60) % 24);
         mm1 = Math.floor((time /1000 / 60) % 60);
         ss1 = Math.floor(time /1000 % 60);
-        console.log(dd1);
-        console.log($this.list);
+        // console.log(dd1);
+        // console.log($this.list);
         // var obj1=new Object();
         vm.list.dd=dd1;
         vm.list.hh=hh1;
         vm.list.mm=mm1;
         vm.list.ss=ss1;
-        console.log(vm.list);
+        // console.log(vm.list);
         // $this.={dd:dd1,hh:hh1,mm:mm1,ss:ss1};
         // var str = dd1+"tian";
         // return obj1;
     }
 }
 
-// $('.banner').height($(window).width()*400/750);
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+function swiperBanner(){
+    var mySwiper_banner = new Swiper ('.swiper-container-banner', {
+        loop: true,
+        pagination: '.swiper-pagination-banner',
+        autoplay : 5000,
+        autoplayDisableOnInteraction : false,
+    })
+}
+
+function weChatConfig(config,share){
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: config.appId, // 必填，公众号的唯一标识
+        timestamp: config.timestamp, // 必填，生成签名的时间戳
+        nonceStr: config.nonceStr, // 必填，生成签名的随机串
+        signature: config.signature,// 必填，签名
+        jsApiList: ['updateAppMessageShareData'] // 必填，需要使用的JS接口列表
+    });
+    //,'updateTimelineShareData','onMenuShareWeibo'
+    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+        wx.updateAppMessageShareData({ 
+            title: 'dfdf', // 分享标题
+            desc: 'dfdf', // 分享描述
+            link: 'http://shandu.unohacha.com/wx_shandu/shopDetail.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://shandu.unohacha.com/Uploads/Picture/uploads/20180904/5b8e47c28c1c6.png', // 分享图标
+        }, function(res) { 
+        //这里是回调函数 
+        }); 
+    });
+    // wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
+    //     wx.updateTimelineShareData({ 
+    //         title: '', // 分享标题
+    //         link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //         imgUrl: '', // 分享图标
+    //     }, function(res) { 
+    //     //这里是回调函数 
+    //     }); 
+    // });
+    // wx.onMenuShareWeibo({
+    //     title: '', // 分享标题
+    //     desc: '', // 分享描述
+    //     link: '', // 分享链接
+    //     imgUrl: '', // 分享图标
+    //     success: function () {
+    //     // 用户确认分享后执行的回调函数
+    //     },
+    //     cancel: function () {
+    //     // 用户取消分享后执行的回调函数
+    //     }
+    // });
+}
+
+// function selectCate(){
+//     $('.show_xzb p span').click(function () {
+//         $(this).parent().find('span').removeClass('show_xzb_on');
+//         $(this).addClass('show_xzb_on');
+//     })
+// }
+
 $('.header_map_longevity').click(function(){
-    history.go(-1);
+    window.location.href = "collage.html";
 });
 $('.footer1-right').click(function(){
     window.location.href = "reservationPayment.html";
@@ -426,38 +720,41 @@ $('.footer3-left').click(function(){
 $('.lianxi_show_con_f1 .quxiao1').click(function(){
     $('.lianxi_show').css('display','none');
 })
-$('.footer3-center').click(function(){
-            $('.pro_show_bg').stop(true, true).fadeIn(300);
-            $('.show_xz').stop(true, true).animate({bottom: "0"}, 500);
-            $('body').addClass('body_on');
-})
-$('.pinglun1_show_con_f1 a').click(function(){
-    $('.pinglun1_show').css('display','none');
-})
+// $('.footer3-center').click(function(){
+
+//             $('.pro_show_bg').stop(true, true).fadeIn(300);
+//             $('.show_xz').stop(true, true).animate({bottom: "0"}, 500);
+//             $('body').addClass('body_on');
+// })
+// $('.pinglun1_show_con_f1 a').click(function(){
+//     $('.pinglun1_show').css('display','none');
+// })
 // $('.footer3-right').click(function(){
 //   $('.buy_show').stop(true).fadeIn(600);
 // })
 
-$('.footer3-right').click(function () {
-            $('.pro_show_bg').stop(true, true).fadeIn(300);
-            $('.show_xz').stop(true, true).animate({bottom: "0"}, 500);
-            $('body').addClass('body_on');
-})
-$('.show_xzb p span').click(function () {
-            $(this).parent().find('span').removeClass('show_xzb_on');
-            $(this).addClass('show_xzb_on');
-        })
-  
+// $('.footer3-right').click(function () {
+//     $('.pro_show_bg').stop(true, true).fadeIn(300);
+//     $('.show_xz').stop(true, true).animate({bottom: "0"}, 500);
+//     $('body').addClass('body_on');
+// })
+
 }) 
 function bgshow(){
     $('.pro_show_bg').click(function () {
 
-            $('.pro_show_bg').stop(true, true).fadeOut(300);
-            $('.pro_share_con').stop(true, true).fadeOut(300);
+        $('.pro_show_bg').stop(true, true).fadeOut(300);
+        $('.pro_share_con').stop(true, true).fadeOut(300);
 
-            $('.show_div').stop(true, true).animate({bottom: "-450px"}, 500);
-            $('body').removeClass('body_on');
+        $('.show_div').stop(true, true).animate({bottom: "-450px"}, 500);
+        $('body').removeClass('body_on');
     }) 
+}
+function setIframeHeight() {
+    setTimeout(function(){
+      var iframe_height = $("#cnt_iframe").contents().find("#content").height();
+      $('#cnt_iframe').height(iframe_height+20);
+    },800);
 }
 
 </script>

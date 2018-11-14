@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="app" v-cloak>
+
+<!--  / header  -->
+<div class="header_longevity">
+     <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+     </div>
+     <div v-if="is_company == 2" class="logo_longevity">个人服务分类</div> 
+     <div v-else class="logo_longevity">商家服务分类</div> 
+     <!-- <div class="header_shop_longevity">重新提交</div> -->
+</div>
+<!--  / header  -->
+
+
+<div class="service">
+	
+	<div class="nav_class clearfix">
+    
+    <div class="nav_class_con">
+      <div class="nav_class_list" style="display:block;">
+        <div class="nav_class_list_banner">
+          <img src="images/nav_class_banner_1.jpg" width="100%">
+        </div>
+        <div class="nav_class_list_con" v-for="type in type_list">
+          <h5>{{type.classname}}<span></span></h5> 
+          <div class="nav_class_list_cons"> 
+            <ul class="clearfix">
+              <a href="service_list_1.html" v-for="tp in type.second" @click="jump(tp.type_id)"><li><img :src="tp.pic"><span>{{tp.classname}}</span></li></a>
+              <!--<a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>皮沙发护理</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_3.jpg"><span>手足护理</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_5.jpg"><span>医院陪护</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>-->
+            </ul>  
+          </div>
+        </div>
+        <!--<div class="nav_class_list_con">
+          <h5>居家服务类<span></span></h5> 
+          <div class="nav_class_list_cons"> 
+            <ul class="clearfix">
+              <a href="service_list_1.html"><li><img src="images/class_nav1_6.jpg"><span>月嫂</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>保洁</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_8.jpg"><span>洗护</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_9.jpg"><span>打扫</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>保洁</span></li></a>
+            </ul>  
+          </div>
+        </div>
+        <div class="nav_class_list_con">
+          <h5>康复理疗类 <span></span></h5> 
+          <div class="nav_class_list_cons"> 
+            <ul class="clearfix">
+              <a href="service_list_1.html"><li><img src="images/class_nav1_10.jpg"><span>足疗</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_11.jpg"><span>按摩</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_12.jpg"><span>康复训练</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_1.jpg"><span>医护上门</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>体验</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_3.jpg"><span>就医陪诊</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>心理健康</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_5.jpg"><span>小儿推拿</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_6.jpg"><span>居家服务</span></li></a>
+            </ul>  
+          </div>
+        </div>
+        <div class="nav_class_list_con">
+          <h5>日常服务类<span></span></h5> 
+          <div class="nav_class_list_cons"> 
+            <ul class="clearfix">
+              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>拉货</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_8.jpg"><span>6776</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_9.jpg"><span>搬家</span></li></a>
+              <a href="service_list_1.html"><li><img src="images/class_nav1_10.jpg"><span>跑腿</span></li></a>
+            </ul>  
+          </div>
+        </div>-->
+      </div>          
+    </div>  
+  </div>
+	
+	
+	
+</div>
+
+
+</div>
+
+</body>
+<script>
+$(window).ready(function(){
+
+var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                city_name:sessionStorage.getItem("cityLocation"),
+                type_list:[],
+                is_company:getCookie('service_is_company')
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getService_type();
+//        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	//服务类型
+    	getService_type:function(){
+    		var $this = this;
+    		
+    		const data = {
+//  			type:1
+//				city:sessionStorage.getItem("cityLocation"),
+				city:$this.city_name,
+				type:1,
+				is_company:$this.is_company
+    		}
+    		
+    		Axios.post(window.Url.service_type, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.type_list = res.info.type;
+    			}
+    			else{
+    				alert('服务类型：'+res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log('服务类型：'+err)
+        })
+    	},
+    	//跳转详情页
+    	jump:function(type_id){
+    		setCookie('service_type_id',type_id);
+    	}
+	}
+})
+
+
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.longevity1 li').click(function(){
+    window.location.href = "InformationDetails.html";
+});
+$('.header_shop_longevity').click(function(){
+	window.location.href = "CompanyDocuments.html";
+})
+ 
+})  
+</script>
+</html>

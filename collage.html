@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -40,7 +40,7 @@
         color: #0e0e0e;
         font-size: 0.14rem;
         text-align: justify;
-        line-height: 0.24rem;
+        line-height: 0.26rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
@@ -80,14 +80,14 @@
 	<div class="row clm4">
 		<div class="col-xs-6 clp4" v-for="items1 in list" @click="goShopDetail(items1.goods_id)">
 			<div class="collage1">
-                <div class="collage1-top">
-                        <img :src="items1.logo_pic" alt="" width="100%">
+                <div class="collage1-top" :style="{backgroundImage: 'url(' + items1.logo_pic + ')', backgroundSize:'cover'}">
+                        <!-- <img :src="items1.logo_pic" alt="" width="100%"> -->
                         <div class="collage1-bg"></div>
                         <div class="collage1-txt" v-if="items1.second>=0">距结束 <span><i><b v-if="items1.djs.dd<=9">0</b>{{items1.djs.dd}}</i> : <i><b v-if="items1.djs.hh<=9">0</b>{{items1.djs.hh}}</i> : <i><b v-if="items1.djs.mm<=9">0</b>{{items1.djs.mm}}</i> : <i><b v-if="items1.djs.ss<=9">0</b>{{items1.djs.ss}}</i></span></div>
                         <div class="collage1-txt" v-else>拼团已结束</div>
                 </div>        
                 <div class="collage1-bottom">
-                        <p>【{{items1.goods_name}}】<span>{{items1.goods_des}}</span></p>
+                        <p>{{items1.goods_name}}{{items1.goods_des}}</p>
                         <div class="collage1-bottom-txt clearfix">
                             <span class="collage1-bottom-left">￥<i>{{items1.price}}</i></span>
                             <span class="collage1-bottom-right">已拼团 <i>{{items1.salesnum}}</i>/{{items1.tuan}}</span>
@@ -153,8 +153,7 @@ $(window).ready(function(){
                             obj,"djs",InitTime(obj.end_time)
                         );
                     })
-                    $this.list = $this.goods_list;   
-
+                    $this.list = $this.goods_list;  
                   }else
                   {
                     console.log("活力健身-相关推荐:"+res.info);
@@ -166,7 +165,7 @@ $(window).ready(function(){
             },   
             goShopDetail:function(goods_id){
                 setCookie("goodId",goods_id);
-                window.location.href="shopDetail.html";
+                window.location.href="shopDetail.html?id="+goods_id;
             }      
         }
 
@@ -204,7 +203,8 @@ var mySwiper_banner = new Swiper ('.swiper-container-banner', {
 	autoplayDisableOnInteraction : false,
 })
 $('.header_map_longevity').click(function(){
-    history.go(-1);
+    window.location.href = "index.html";
+    // history.go(-1);
 });
 // $('.longevity1 li').click(function(){
 //     window.location.href = "InformationDetails.html";

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -43,18 +43,18 @@
             <span>返回</span>
         </div>
         <div class="logo_longevity">平台消息</div>
-        <div class="header_shop_longevity">编辑</div>   
+        <div class="header_shop_longevity" @click="delMessage()">{{titles}}</div>   
 </div>
 <!--  / header  -->
 
 
 <div class="aboutUrs">
-    <div class="pingtai_news clearfix" v-for="messaging in messaging_list" @click="jump(messaging.messageid,messaging.url)">
+    <div class="pingtai_news clearfix" v-for="messaging in messaging_list">
         <div class="pingtai_news_left">
             <span>平台</span>
             <span>消息</span>
         </div>
-        <div class="pingtai_news_center">
+        <div class="pingtai_news_center" @click="jump(messaging.messageid,messaging.url)">
           <div class="pingtai_news_center_top clearfix">
             <span class="pingtai_news_center_txt1">{{messaging.title}}</span>
             <span class="pingtai_news_center_txt2">{{messaging.addtime}}</span>
@@ -63,8 +63,8 @@
               	{{messaging.content}}
           </div>                
         </div>
-        <span v-show="messaging.isready" class="pingtai_news_quan"></span>
-        <input type="checkbox">
+        <span v-show="messaging.isready==0" class="pingtai_news_quan"></span>
+        <input type="checkbox" name="cateNum" :data-id="messaging.messageid" value="" :data-type="messaging.type">
     </div>
     <!--<div class="pingtai_news clearfix">
             <div class="pingtai_news_left">
@@ -170,7 +170,8 @@ $(window).ready(function(){
                 userId: (() => {
                         
                     })(),
-                messaging_list:''
+                messaging_list:'',
+                titles:'编辑'
             }
 		},
     created: function () {
@@ -188,16 +189,17 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.Ucenter_messaging, data).then((res) => {
-    			
+
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/pingtai_news.html');
+
     			if(res.result == 1){
     				$this.messaging_list = res.info;
     				
-    			}
-    			else{
+    			}else if(res.result == 0){
     				alert('我的平台消息'+res.info)
     			}
     			
@@ -206,17 +208,69 @@ $(window).ready(function(){
         })
         
     	},
+      //跳转我的平台消息详情
     	jump:function(messageid,messageidUrl){
     		setCookie('messagesid',messageid);
         setCookie('pingtaiUrl',messageidUrl);
     		window.location.href = "InformationDetails1.html";
-    	}
+    	},
+      //我的平台编辑
+      delMessage:function(){
+        var $this=this;
+        if($this.titles=="编辑"){
+          $('.pingtai_news input').show();
+          $('.foot-check').show();
+          $this.titles="删除";
+        }else{
+          $this.del_messaging();
+          $('.pingtai_news input').hide();
+          $this.titles="编辑";
+          $('.foot-check').hide();
+        }
+      },
+      //我的平台消息删除
+      del_messaging:function(){
+        var $this = this;
+        var obj = document.getElementsByName("cateNum");
+        var check_val = '';
+        for(k in obj){
+            if(obj[k].checked){
+              var str1=$(obj[k]).data("id");
+              var str2=$(obj[k]).data("type");
+              check_val +=str1+"-"+str2+',';
+            }                     
+        }
+        if(check_val==''){
+          alert('请选择删除内容');
+          return;
+        }
+        const data = {
+          message_ids:check_val
+        }
+        
+        Axios.post(window.Url.message_delall, data).then((res) => {
+
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/pingtai_news.html');
+
+          if(res.status == 1 || res.status == '1'){
+            alert(res.info);
+            window.location.reload();
+            
+          }else if(res.status == 0){
+            alert('我的平台消息'+res.info)
+          }
+          
+        }).catch((err) => {
+          console.log('我的平台消息'+err)
+        })
+        
+      }
 	}
 })
 	
 	
 	
-var flag1=true;
+// var flag1=true;
 var flag2=true;
 $('.header_map_longevity').click(function(){
     history.go(-1);
@@ -224,19 +278,19 @@ $('.header_map_longevity').click(function(){
 //$('.pingtai_news *').not('input').click(function(){
 //  window.location.href = "InformationDetails1.html";
 //})
-$('.header_shop_longevity').click(function(){
-  if(flag1){
-    $('.pingtai_news input').show();
-    $('.foot-check').show();
-    $(this).html("确定");
-    flag1=false;
-  }else{
-    $('.pingtai_news input').hide();
-    $(this).html("编辑");
-    $('.foot-check').hide();
-    flag1=true;
-  }
-})
+// $('.header_shop_longevity').click(function(){
+//   if(flag1){
+//     $('.pingtai_news input').show();
+//     $('.foot-check').show();
+//     $(this).html("删除");
+//     flag1=false;
+//   }else{
+//     $('.pingtai_news input').hide();
+//     $(this).html("编辑");
+//     $('.foot-check').hide();
+//     flag1=true;
+//   }
+// })
 $('.foot-check').click(function(){
   if(flag2){
     $(this).html("取消");

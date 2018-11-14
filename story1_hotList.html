@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -96,7 +96,7 @@ $(window).ready(function(){
             var $this = this;
             const data = {
                 cate_id:getCookie("cateId"),
-                city:getCookie("cityLocation"),
+                city:sessionStorage.getItem("cityLocation"),
             }
             Axios.post(window.Url.stroy_hotList,data).then((res) => {
               

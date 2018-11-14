@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -59,60 +59,17 @@
     <div class="nav_class_con">
       <div class="nav_class_list" style="display:block;">
         <div class="nav_class_list_banner">
-          <img src="images/nav_class_banner_1.jpg" width="100%">
+          <!-- <img src="images/nav_class_banner_1.jpg" width="100%"> -->
+          <img :src="banner.pic" width="100%">
         </div>
         <div class="nav_class_list_con" v-for="type in type_list">
           <h5>{{type.classname}}<span></span></h5> 
           <div class="nav_class_list_cons"> 
             <ul class="clearfix">
-              <a href="service_list_1.html" v-for="tp in type.second" @click="jump(tp.type_id)"><li><img src="images/class_nav1_1.jpg"><span>{{tp.classname}}</span></li></a>
-              <!--<a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>皮沙发护理</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_3.jpg"><span>手足护理</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_5.jpg"><span>医院陪护</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>育儿师</span></li></a>-->
+              <a href="service_list_1.html" v-for="tp in type.second" @click="jump(tp.type_id,tp.classname)"><li><img :src="tp.pic"><span>{{tp.classname}}</span></li></a>
             </ul>  
           </div>
         </div>
-        <!--<div class="nav_class_list_con">
-          <h5>居家服务类<span></span></h5> 
-          <div class="nav_class_list_cons"> 
-            <ul class="clearfix">
-              <a href="service_list_1.html"><li><img src="images/class_nav1_6.jpg"><span>月嫂</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>保洁</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_8.jpg"><span>洗护</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_9.jpg"><span>打扫</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>保洁</span></li></a>
-            </ul>  
-          </div>
-        </div>
-        <div class="nav_class_list_con">
-          <h5>康复理疗类 <span></span></h5> 
-          <div class="nav_class_list_cons"> 
-            <ul class="clearfix">
-              <a href="service_list_1.html"><li><img src="images/class_nav1_10.jpg"><span>足疗</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_11.jpg"><span>按摩</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_12.jpg"><span>康复训练</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_1.jpg"><span>医护上门</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_2.jpg"><span>体验</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_3.jpg"><span>就医陪诊</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_4.jpg"><span>心理健康</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_5.jpg"><span>小儿推拿</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_6.jpg"><span>居家服务</span></li></a>
-            </ul>  
-          </div>
-        </div>
-        <div class="nav_class_list_con">
-          <h5>日常服务类<span></span></h5> 
-          <div class="nav_class_list_cons"> 
-            <ul class="clearfix">
-              <a href="service_list_1.html"><li><img src="images/class_nav1_7.jpg"><span>拉货</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_8.jpg"><span>6776</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_9.jpg"><span>搬家</span></li></a>
-              <a href="service_list_1.html"><li><img src="images/class_nav1_10.jpg"><span>跑腿</span></li></a>
-            </ul>  
-          </div>
-        </div>-->
       </div>          
     </div>  
   </div>
@@ -132,13 +89,22 @@ var vm = new Vue({
 		el:"#app",
 		data() {
             return {
-                city_name:getCookie("cityLocation"),
+                city_name:sessionStorage.getItem("cityLocation"),
                 type_list:[],
-                is_company:getCookie('service_is_company')
+                is_company:getCookie('service_is_company'),
+                banner:[],
+                banner1:[]
             }
 		},
     created: function () {
-		var $this = this;
+  		var $this = this;
+      if($this.is_company == 1){
+        $this.getBanner(5);
+      }else if($this.is_company == 2){
+        $this.getBanner(6);
+      }
+      // $this.getBanner(5);
+      // $this.getBanner(6);
     	$this.getService_type();
 //        $this.userLogin();
         
@@ -153,10 +119,10 @@ var vm = new Vue({
     		
     		const data = {
 //  			type:1
-//				city:getCookie("cityLocation"),
-				city:$this.city_name,
-				type:1,
-				is_company:$this.is_company
+//				city:sessionStorage.getItem("cityLocation"),
+  				city:$this.city_name,
+  				type:1,
+  				is_company:$this.is_company
     		}
     		
     		Axios.post(window.Url.service_type, data).then((res) => {
@@ -173,9 +139,35 @@ var vm = new Vue({
         })
     	},
     	//跳转详情页
-    	jump:function(type_id){
+    	jump:function(type_id,type_name){
     		setCookie('service_type_id',type_id);
-    	}
+        setCookie('service_type_name',type_name);
+    	},
+      //banner
+      getBanner:function(type){
+        var $this = this;
+        
+        const data = {
+          type:type
+        }
+        
+        Axios.post(window.Url.home_banner, data).then((res) => {
+          
+          if(res.result == 1){
+            // if(type == 5){
+            //     $this.banner = res.info.banner;
+            // }else if(type == 6){
+            //     $this.banner1 = res.info.banner;
+            // }     
+            $this.banner = res.info.banner[0];      
+          }
+          else{
+            alert(res.info)
+          }          
+        }).catch((err) => {
+          console.log(err)
+        })                
+      }
 	}
 })
 

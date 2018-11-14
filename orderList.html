@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -23,7 +23,7 @@
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/easing.js"></script>
 <script src="js/swiper-3.4.1.min.js"></script>
-<script src="js/index.js"></script>
+<script src="js/index.js?v=1"></script>
 <script src="js/main.js"></script>
 
 <script src="./js/vue.js"></script>
@@ -31,6 +31,7 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<script src="js/footer.js"></script>
 
 </head>
 
@@ -38,10 +39,10 @@
 <div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
-     <div class="header_map_longevity">   
+     <!-- <div class="header_map_longevity">   
         <img src="images/jiantou.png" alt="">
         <span>返回</span>
-     </div>
+     </div> -->
      <div class="logo_longevity">我的订单</div>
      <div class="header_shop_longevity">
         <a href="cart.html"><span>购物车</span></a>
@@ -66,14 +67,14 @@
              <img src="images/orderList-1.png" alt="">
              <br>
              <span>待接单</span>
-             <div v-if="Service_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dfk}}</span></div>
+             <div v-if="Service_order_num.dqr != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Service_order_num.dqr}}</div>
           </div>
 
           <div class="orderList1-detail" @click="goPaymentOrder(4)">
              <img src="images/orderList-2.png" alt="">
              <br>
              <span>进行中</span>
-             <div v-if="Service_order_num.jxz != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.jxz}}</span></div>
+             <div v-if="Service_order_num.jxz != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Service_order_num.jxz}}</div>
           </div>
 
 
@@ -81,7 +82,7 @@
              <img src="images/orderList-3.png" alt="">
              <br>
              <span>待评价</span>
-             <div v-if="Service_order_num.dpj != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.dpj}}</span></div>
+             <div v-if="Service_order_num.dpj != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Service_order_num.dpj}}</div>
           </div>
 
 
@@ -89,7 +90,7 @@
              <img src="images/orderList-4.png" alt="">
              <br>
              <span>已完成</span>
-             <div v-if="Service_order_num.ywc != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.ywc}}</span></div>
+             <!-- <div v-if="Service_order_num.ywc != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.ywc}}</span></div> -->
           </div>
 
 
@@ -97,7 +98,7 @@
              <img src="images/orderList-5.png" alt="">
              <br>
              <span>退款/售后</span>
-             <div v-if="Service_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Service_order_num.tksh}}</span></div>
+             <div v-if="Service_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Service_order_num.tksh}}</div>
           </div>
 
         </div>
@@ -117,7 +118,7 @@
                        <img src="images/orderList-2.png" alt="">
                        <br>
                        <span>待付款</span>
-                       <div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfk}}</span></div>
+                       <div v-if="tugou_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;">{{tugou_order_num.dfk}}</div>
                     </div>
                   </a>
                   <a href="javascript:void(0);" @click="goCollageOrder(10)">
@@ -125,7 +126,7 @@
                      <img src="images/orderList-1.png" alt="">
                      <br>
                      <span>待拼团</span>
-                     <div v-if="tugou_order_num.dpt != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dpt}}</span></div>
+                     <div v-if="tugou_order_num.dpt != 0 " class="index_sec1_list_tishi" style="top: 0;">{{tugou_order_num.dpt}}</div>
                   </div>
                   </a>
                   <a href="javascript:void(0);" @click="goCollageOrder(3)">
@@ -133,7 +134,7 @@
                      <img src="images/orderList-2.png" alt="">
                      <br>
                      <span>待发货</span>
-                     <div v-if="tugou_order_num.dfh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dfh}}</span></div>
+                     <div v-if="tugou_order_num.dfh != 0 " class="index_sec1_list_tishi" style="top: 0;">{{tugou_order_num.dfh}}</div>
                   </div>
                   </a>
                   <a href="javascript:void(0);" @click="goCollageOrder(4)">
@@ -141,7 +142,7 @@
                      <img src="images/orderList-3.png" alt="">
                      <br>
                      <span>待收货</span>
-                     <div v-if="tugou_order_num.dsh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.dsh}}</span></div>
+                     <div v-if="tugou_order_num.dsh != 0 " class="index_sec1_list_tishi" style="top: 0;">{{tugou_order_num.dsh}}</div>
                   </div>
                   </a>
                   <a href="javascript:void(0);" @click="goCollageOrder(6)">
@@ -157,14 +158,14 @@
                      <img src="images/orderList-5.png" alt="">
                      <br>
                      <span>退款/售后</span>
-                     <div v-if="tugou_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{tugou_order_num.tksh}}</span></div>
+                     <div v-if="tugou_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;">{{tugou_order_num.tksh}}</div>
                   </div>
                   </a>
                 </div>
     </div>
     <div class="orderList2"></div>
     <div class="orderList1 clearfix">
-                <div class="orderList1-title  order3 clearfix">
+                <div class="orderList1-title  order3 clearfix" @click="goVitalityOrder(0)">
                   <span class="orderList1-title-left">活力健身订单</span>
                   <div class="orderList1-title-right">
                       <span>更多活力订单</span>
@@ -172,88 +173,93 @@
                   </div>
                 </div>
                 <div class="orderList1-content">
-                  <a href="energetic-orders.html">	
-                  <div class="orderList1-detail" style="position: relative;">
-                     <img src="images/orderList-1.png" alt="">
-                     <br>
-                     <span>待付款</span>
-                     <div v-if="Vitality_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dfk}}</span></div>
-                  </div>
+                  <a href="javascript:void(0);" @click="goVitalityOrder(1)">	
+                    <div class="orderList1-detail" style="position: relative;">
+                       <img src="images/orderList-1.png" alt="">
+                       <br>
+                       <span>待付款</span>
+                       <div v-if="Vitality_order_num.dfk != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Vitality_order_num.dfk}}</div>
+                    </div>
                   </a>
-                  <a href="energetic-orders.html">
-                  <div class="orderList1-detail">
-                     <img src="images/orderList-3.png" alt="">
-                     <br>
-                     <span>已付款</span>
-                     <div v-if="Vitality_order_num.dqr != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.dqr}}</span></div>
-                  </div>
+                  <a href="javascript:void(0);" @click="goVitalityOrder(2)">
+                    <div class="orderList1-detail">
+                       <img src="images/orderList-3.png" alt="">
+                       <br>
+                       <span>已付款</span>
+                       <div v-if="Vitality_order_num.dqr != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Vitality_order_num.dqr}}</div>
+                    </div>
                   </a>
-                  <a href="energetic-orders.html">
-                  <div class="orderList1-detail">
-                     <img src="images/orderList-5.png" alt="">
-                     <br>
-                     <span>退款/售后</span>
-                     <div v-if="Vitality_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;"><span style="color: #FFFFFF;">{{Vitality_order_num.tksh}}</span></div>
-                  </div>
+                  <a href="javascript:void(0);" @click="goVitalityOrder(3)">
+                    <div class="orderList1-detail">
+                       <img src="images/orderList-5.png" alt="">
+                       <br>
+                       <span>退款/售后</span>
+                       <div v-if="Vitality_order_num.tksh != 0 " class="index_sec1_list_tishi" style="top: 0;">{{Vitality_order_num.tksh}}</div>
+                    </div>
                   </a>
                 </div>
     </div>
 </div>
 
 <!--  / footer  -->
-<div class="footer">
-                <ul class="clearfix">
-                                <a href="index.html">
-                                <li>
-                                    <div class="footer_img footer_img1">
-                                                    <img src="images/ic_home_home_gray.png">
-                                                    <img src="images/ic_home_home_yellow.png">
-                                    </div>
-                                    <span>主页</span>
-                                </li>
-                                </a>
-                                <a href="stroy1.html">
-                                <li>
-                                    <div class="footer_img footer_img1">
-                                          <img src="images/ic_home_yishu_gray.png">
-                                          <img src="images/ic_home_yishu_yellow.png">
-                                    </div>
-                                    <span>老故事</span>
-                                </li>
-                                </a>
-                                <a href="bigStage.html">
-                                <li class="ind_share_btn">
-                                          <div class="footer_img footer_img2">
-                                              <img src="images/ic_dibutiao_shandu_gray.png">
-                                              <img src="images/ic_dibutiao_shandu_yellow.png">
-                                          </div>
-                                </li>
-                                </a>
-                                <a href="orderList.html">
-                                <li id="goOrder" class="on">
-                                          <div class="footer_img footer_img1">
-                                                    <img src="images/ic_home_dingdan_gray.png">
-                                                    <img src="images/ic_home_dingdan_yellow.png">
-                                    </div>
-                                    <span>订单</span>
-                                </li>
-                                </a>
-                                <a href="user.html">
-                                <li>
-                                        <div class="footer_img footer_img1">
-                                              <img src="images/ic_home_geren_gray.png">	
-                                              <img src="images/ic_home_geren_yellow.png">	
-                                        </div>	
-                                    <span>我的</span>
-                                </li>
-                                </a>
-                </ul>
-</div>
+<!-- <div class="footer">
+  <ul class="clearfix">
+    <a href="index.html">
+    <li>
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_home_gray.png">
+            <img src="images/ic_home_home_yellow.png">
+        </div>
+        <span>主页</span>
+    </li>
+    </a>
+    <a href="stroy1.html">
+    <li>
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_yishu_gray.png">
+            <img src="images/ic_home_yishu_yellow.png">
+        </div>
+        <span>老故事</span>
+    </li>
+  </a>
+  <a href="bigStage.html">
+    <li class="ind_share_btn">
+        <div class="footer_img footer_img2">
+            <img src="images/ic_dibutiao_shandu_gray.png">
+            <img src="images/ic_dibutiao_shandu_yellow.png">
+        </div>
+  </li>
+  </a>
+  
+  <a href="JavaScript:void(0);" id='getOrder'>
+    <li id="goOrder"  class="on">
+        <div class="footer_img footer_img1">
+            <img src="images/ic_home_dingdan_gray.png">
+            <img src="images/ic_home_dingdan_yellow.png">
+        </div>
+        <span>订单</span>
+  </li>
+    </a>
+    
+    <a href="JavaScript:void(0);" id='getUser'>
+    <li id="goUser">
+      <div class="footer_img footer_img1">
+            <img src="images/ic_home_geren_gray.png"> 
+            <img src="images/ic_home_geren_yellow.png"> 
+      </div>  
+        <span>我的</span>
+    </li>
+    </a>
+  </ul>
+</div> -->
+<footer1></footer1>
 <!--  / footer  -->
 </div>
 
 </body>
 <script>
+var url = location.href;
+isToken(url);
 $(window).ready(function(){
 	
 	
@@ -270,13 +276,13 @@ $(window).ready(function(){
 	    }
 		},
     created: function () {
-		var $this = this;
+		  var $this = this;
     	$this.getVitality_order_num();
     	$this.getService_order_num();
     	$this.gettugou_order_num();
     },
     mounted:function(){
-    	
+      // goOther();   	
     },
     methods:{
     	
@@ -290,12 +296,9 @@ $(window).ready(function(){
     		
     		Axios.post(window.Url.Vitality_order_num, data).then((res) => {
     			
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/orderList.html');
     			if(res.result == 1){
-    				$this.Vitality_order_num = res.info;
-    				
-    			}
-    			else{
-    				alert('活力健身订单数量统计'+res.info)
+    				$this.Vitality_order_num = res.info;    				
     			}
     			
         }).catch((err) => {
@@ -312,13 +315,10 @@ $(window).ready(function(){
     		}
     		
     		Axios.post(window.Url.Service_order_num, data).then((res) => {
-    			
+
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/orderList.html');    			
     			if(res.result == 1){
-    				$this.Service_order_num = res.info;
-    				
-    			}
-    			else{
-    				alert('预约订单数量统计'+res.info)
+    				$this.Service_order_num = res.info;  				
     			}
     			
         }).catch((err) => {
@@ -335,15 +335,11 @@ $(window).ready(function(){
     		}
     		
     		Axios.post(window.Url.tugou_order_num, data).then((res) => {
-    			
-    			if(res.result == 1){
+          // console.log(res);
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/orderList.html');
+    			if(res.result == 1 || res.result == '1'){
     				$this.tugou_order_num = res.info;
-    				
-    			}
-    			else{
-    				alert('团购订单数量统计'+res.info)
-    			}
-    			
+    			}    			
         }).catch((err) => {
           console.log('团购订单数量统计'+err)
         })
@@ -363,41 +359,39 @@ $(window).ready(function(){
         setCookie("yuyueType",yuyue_type);
         window.location.href = "payment-orders.html";                
       },
+
+      //跳转到全部活力订单列表页面
+      goVitalityOrder:function(vitality_type){
+        var $this = this;
+        setCookie("vitalityType",vitality_type);
+        window.location.href = "energetic-orders.html";                
+      },
 	  }
   })
 
-$('.banner').height($(window).width()*400/750);
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
+
 $('.collage1').click(function(){
     window.location.href = "shopDetail.html";
 });
-$('.ind_share_btn').click(function(){
-	  window.location.href = "bigStage.html";
-});
-$('#goOrder').click(function(){
-	  window.location.href = "orderList.html";
-});
+// $('.ind_share_btn').click(function(){
+// 	  window.location.href = "bigStage.html";
+// });
+// $('#goOrder').click(function(){
+// 	  window.location.href = "orderList.html";
+// });
 // $('.order1').click(function(){
 // 	  window.location.href = "payment-orders.html";
 // });
 // $('.order2').click(function(){
 //     window.location.href = "collage-orders.html";
 // });
-$('.order3').click(function(){
-	  window.location.href = "energetic-orders.html";
-});
+// $('.order3').click(function(){
+// 	  window.location.href = "energetic-orders.html";
+// });
 
   
 })  

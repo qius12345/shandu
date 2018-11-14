@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
+</head>
+
+<body>
+<div id="app" v-cloak>
+
+<!--  / header  -->
+<div class="header_longevity">
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">选择账户</div>
+    <div class="header_shop_longevity">添加</div>   
+</div>
+<!--  / header  -->
+
+<div class="myRemain">
+
+<div class="user2">
+
+  <div class="user2-list1 zfbList" v-for="(items1,index) in zfbList" :class="index==0?'on':''" @click="selZfb(items1,$event)">        
+        <img src="images/bankUnsel.png" alt="" class="bankUnsel">
+        <img src="images/bankSel.png" alt="" class="bankSel">
+        <img src="images/zfb1.png" alt="" class="zfbImg">
+        <span class="user2-list1-txt1 name1">{{items1.name}}</span>
+        <span class="user2-list1-txt1">{{items1.account}}</span>
+        <img src="images/delete.png" alt="" class="fr" @click="delZfb(items1.alipay_id)">
+  </div>
+  <!-- <div class="user2-list1 zfbList">
+        <img src="images/bankUnsel.png" alt="">
+        <img src="images/zfb1.png" alt="" class="zfbImg">
+        <span class="user2-list1-txt1 name1">XXX</span>
+        <span class="user2-list1-txt1">15698658965</span>
+        <img src="images/delete.png" alt="" class="fr">
+  </div>  -->
+</div>
+<div class="zfbSure" @click="zfbSure()">确定</div>
+    
+</div>
+
+<!--  / footer  -->
+
+<!--  / footer  -->
+
+</div>
+</body>
+<script>
+
+$(window).ready(function(){
+
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+       zfbList:[], 
+       account_id:'',
+       list:[]   
+      }
+    },
+    created:function(){
+      var $this = this;  
+      $this.getUcenter_alipayList();                                                              
+    },
+    mounted:function(){
+      var $this = this;                                         
+    },
+    methods:{
+      goZfbTx:function(){
+        window.location.href = "remain.html";
+      },
+      //支付宝账号信息列表
+      getUcenter_alipayList:function(){
+        var $this = this;
+        
+        const data = {
+
+        }
+        
+        Axios.post(window.Url.alipayList, data).then((res) => {
+
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/zfb_list.html');
+          if(res.result == 1){
+            $this.zfbList = res.info;
+            $this.list = res.info[0];        
+          }else if(res.result == 0){
+            console.log('支付宝账号信息列表:'+res.info)
+          }
+          
+          
+        }).catch((err) => {
+          console.log('支付宝账号信息列表:'+err)
+        })
+        
+      },
+      delZfb:function(accoutId){
+        var $this = this;
+        
+        const data = {
+          alipay_id:accoutId,
+        }
+        
+        Axios.post(window.Url.alipayDel, data).then((res) => {
+
+          tt(res.result,'http://shandu.unohacha.com/wx_shandu/zfb_list.html');
+          if(res.result == 1){
+            // alert(res.info); 
+            location.reload();      
+          }else if(res.result == 0){
+            console.log('支付宝账号信息列表:'+res.info);
+          }
+          
+          
+        }).catch((err) => {
+          console.log('支付宝账号信息列表:'+err)
+        })
+      },
+      selZfb:function(list,event){
+        var $this = this;
+        // console.log(event.currentTarget);
+        if($(event.currentTarget).hasClass("on")){
+            $(event.currentTarget).removeClass("on");  
+            $this.list=[];          
+        }else{
+            $(event.currentTarget).addClass("on");
+            $(event.currentTarget).siblings().removeClass("on");
+            $this.list=list;
+        }
+      },
+      zfbSure:function(){
+        var $this = this;
+        if($this.list==''){
+          alert('请选择支付宝账号');
+        }else{
+          window.location.href = "remain.html";
+          sessionStorage.setItem('zfbInfo', JSON.stringify($this.list));
+        }
+      }
+      
+    }
+
+  })
+
+$('.header_map_longevity').click(function(){
+    history.go(-1);
+});
+$('.header_shop_longevity').click(function(){
+    window.location.href = "zfb_add.html";
+});
+
+  
+})  
+
+
+</script>
+</html>

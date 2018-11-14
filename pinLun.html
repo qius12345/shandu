@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -58,7 +58,7 @@
     <div class="InformationDetails7" v-for="evaluate in evaluate_list">
       <div class="InformationDetails7_f1 clearfix">
         <div class="InformationDetails7_f1_left">
-            <a href="##"><img :src="evaluate.person_img" alt="" width="100%"></a>
+            <a href="javascript:void(0);"><img :src="evaluate.person_img" alt="" width="100%"></a>
             <span>{{evaluate.person_name}}</span>
         </div>
         <div class="InformationDetails7_f1_right">{{evaluate.add_time}}</div> 
@@ -69,10 +69,10 @@
       <div class="InformationDetails7_f3">
           <div class="row">
               <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f1" @click="pageview(evaluate.evaluate_id)">阅<span>{{evaluate.pageview}}</span></a>
+                  <a href="javascript:void(0);" class="InformationDetails7_f3_f1">阅<span>{{evaluate.pageview}}</span></a>
               </div>
               <div class="col-xs-4 InformationDetails7-col">
-                  <a href="##" class="InformationDetails7_f3_f2" @click="zan(evaluate.evaluate_id)">
+                  <a href="javascript:void(0);" class="InformationDetails7_f3_f2" @click="zan(evaluate.evaluate_id)">
                       <img v-if="evaluate.is_zan" src="images/pinglun-zan1.png" alt="" width="20" class="InformationDetails7_f3_f2_img2">
                       <img v-else src="images/pinglun-zan.png" alt="" width="20" class="InformationDetails7_f3_f2_img1">
                       <span>{{evaluate.zan}}</span>
@@ -171,15 +171,15 @@
   </ul>
 </div> --> 
 <div class="pinglun-show">
-    <input type="text" v-model="comment" placeholder="请输入要评论内容...(限80字)">
-    <a href="##" @click="publish">发表</a>
+    <input type="text" v-model="comment" placeholder="请输入要评论内容...(限80字)" autofocus="autofocus">
+    <a href="javascript:void(0);" @click="publish">发表</a>
 </div>
 <div class="pinglun1_show">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
         <h5>{{remind}}</h5>
         <div class="pinglun1_show_con_f1">
-            <a href="##" @click="yes">好的，知道了</a>
+            <a href="javascript:void(0);" @click="yes">好的，知道了</a>
         </div>
     </div>
 </div>
@@ -243,7 +243,6 @@ $(window).ready(function(){
     			$this.remind = res.info
     			console.log($this.remind);
     			if(res.result == 1){
-//  				$this.CheatsCateDetails = res.info.cheats;
 					
     			}
     			else{
@@ -260,6 +259,8 @@ $(window).ready(function(){
     	},
     	//评论详情页
     	jump:function(cheats_id){
+        var $_this=this;
+        $_this.pageview(cheats_id);
     		setCookie('evaluate_id',cheats_id)
     		window.location.href = "pinLun_detail.html";
     	},
@@ -274,7 +275,6 @@ $(window).ready(function(){
     		Axios.post(window.Url.Cheats_evaluate_zan,data).then((res) => {
     			$this.remind = res.info
     			if(res.result == 1){
-//  				$this.CheatsCateDetails = res.info.cheats;
 					
     			}
     			else{
@@ -291,15 +291,13 @@ $(window).ready(function(){
     		const data = {
     			evaluate_id : evaluate_id,
     		}
-    		$('.pinglun1_show').show();
+    		// $('.pinglun1_show').show();
     		
     		Axios.post(window.Url.Cheats_evaluate_pageview,data).then((res) => {
     			$this.remind = res.info
     			if(res.result == 1){
-//  				$this.CheatsCateDetails = res.info.cheats;
 					
-    			}
-    			else{
+    			}else if(res.result == 0){
     				console.log('阅读:'+res.info);
     			}
     			

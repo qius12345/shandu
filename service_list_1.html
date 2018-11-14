@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -32,6 +32,27 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+<style>
+	.service_pro_list_right{
+		position: relative;
+	}
+	.service_pro_list_right .zhiding{
+		position: absolute;
+	    top: -14px;
+	    right: 0;
+	    font-size: 0.08rem;
+	    border: 1px solid #ff5114;
+	    color: #ff5114;
+	    padding: 0 0.05rem;
+	    line-height: 0.12rem;
+	    height:0.13rem;
+	    border-radius: 0.02rem;
+	}
+	.service_pro_list_left_zi h5 img{
+		margin-right:0.04rem;
+	}
+</style>
+
 </head>
 
 <body>
@@ -43,7 +64,7 @@
         <img src="images/jiantou.png" alt="">
         <span>返回</span>
      </div>
-     <div class="logo_longevity">产后护理</div> 
+     <div class="logo_longevity">{{type_name}}</div> 
 </div>
 <!--  / header  -->
 
@@ -53,10 +74,10 @@
 	<div class="service_pro">
 		<div class="service_pro_h">
 			<ul class="clearfix">
-				<li class="city">全{{city_name}}<i class="fa fa-angle-down"></i><!-- <span></span> -->
-				    <ul class="city-show">
+				<li class="city" @click="selectCity()">全{{city_name}}<i class="fa fa-angle-down" v-if="!cityShow"></i><i class="fa fa-angle-up" v-if="cityShow"></i>
+				    <ul class="city-show" v-show="cityShow">
 				    	
-				    	<li v-for="city in Province_list">{{city.name}}</li>
+				    	<li v-for="city in Province_list" @click="selectCity1(city.name)">{{city.name}}</li>
 				    	<!--<li>下城区</li>
 				    	<li>江干区</li>
 				    	<li>拱墅区</li>
@@ -71,15 +92,15 @@
 				    	<li>临安市</li>-->
 				    </ul>  
 				</li>
-				<li class="haoping">好评率 <i class="fa fa-angle-down"></i><!-- <span></span> -->
+				<li class="haoping" @click="selectHao()">好评率 <i class="fa fa-angle-down" v-if="!haopingShow"></i><i class="fa fa-angle-up" v-if="haopingShow"></i>
 				    <ul>
 				    	<li></li>
 				    </ul>
 				</li>
-				<li style="width: 35.4%;" class="jiage">价格范围 <i class="fa fa-angle-down"></i>
-				    <ul class="jiage-show">
-				    	<li>0-20/小时</li>
-				    	<li>20-40/小时</li>
+				<li style="width: 35.4%;" class="jiage" @click="selectPrice()">价格范围 <i class="fa fa-angle-down" v-if="!jiageShow"></i><i class="fa fa-angle-up" v-if="jiageShow"></i>
+				    <ul class="jiage-show" v-show="jiageShow">
+				    	<li v-for="price in priceRange" @click="selectPrice1(price)">{{price}}/小时</li>
+				    	<!-- <li>20-40/小时</li>
 				    	<li>40-60/小时</li>
 				    	<li>60-80/小时</li>
 				    	<li>80-100/小时</li>
@@ -87,7 +108,7 @@
 				    	<li>120-140/小时</li>
 				    	<li>140-160/小时</li>
 				    	<li>160-180/小时</li>
-				    	<li>180-200/小时</li>
+				    	<li>180-200/小时</li> -->
 				    </ul>
 				</li>
 			</ul>
@@ -96,30 +117,39 @@
 	<div class="service_sp1"></div>
 	
 	<div class="service_pro_con">
-		<div class="service_pro_list" v-for="Service in Service_list">
-			<a href="service_inner_1.html" @click="jump(Service.service_id)">
-				<div class="clearfix service_pro_list_detail">
-					<div class="service_pro_list_left">
-						<div class="service_pro_list_left_img">
-							<img :src="Service.logo_pic">
-							<!-- <span>无保证金</span> -->
-							<i><img src="images/nv.png"></i>
+	    <div v-for="Service in Service_list">
+			<div class="service_pro_list">
+				<a href="service_inner_1.html" @click="jump(Service.service_id)">
+					<div class="clearfix service_pro_list_detail">
+						<div class="service_pro_list_left">
+							<div class="service_pro_list_left_img">
+								<img :src="Service.logo_pic">
+								<!-- <span>无保证金</span> -->
+								<i><img src="images/nv.png" v-if="Service.sex==0"><img src="images/nan.png" v-if="Service.sex==1"></i>
+							</div>
+							<div class="service_pro_list_left_zi">
+								<h5>{{Service.name}}</h5>
+								<!-- <h5><b v-if="true">已认证</b><b style="color: #999999;border: 1px solid #999999;" v-else>未认证</b><i v-if="!Service.is_bzj">无保证金</i><i style="color: #ff421a;border: 1px solid #ff421a;" v-else>有保证金</i></h5> -->
+								<h5><img src="images/yirz.png" alt="" v-if="true" style="height:0.16rem;"><img src="images/wubzj1.png" alt="" v-if="!Service.is_bzj" style="height:0.16rem;"><img src="images/youbzj1.png" alt="" v-else style="height:0.16rem;"></h5>
+								<p style="font-size:0.13rem;"><span v-if="Service.service_num">服务员工{{Service.service_num}}人</span><span v-else>{{Service.age}}岁</span><i></i><!-- <em>上个月订单数 {{Service.alternative}}个</em> --></p>
+								<!-- <h6>服务时间 {{Service.service_time}}</h6> -->
+							</div>
 						</div>
-						<div class="service_pro_list_left_zi">
-							<h5>{{Service.name}} <b v-if="Service.is_assure">已认证</b><b style="color: #999999;border: 1px solid #999999;" v-else>未认证</b><i v-if="!Service.is_bzj">无保证金</i><i style="color: #20b7fe;border: 1px solid #20b7fe;" v-else>有保证金</i></h5>
-							<p><span v-if="Service.service_num">服务员工{{Service.service_num}}人</span><span v-else>{{Service.age}}岁</span><i></i><em>上个月订单数 {{Service.alternative}}个</em></p>
-							<h6>服务时间 {{Service.service_time}}</h6>
-						</div>
-					</div>
-				    <div class="service_pro_list_right">
-				    	<h5>好评率{{Service.favorable_rate}}</h5>
-				    	<span>￥{{Service.price}}/小时</span>
+					    <div class="service_pro_list_right">
+					    	<h5>好评率{{Service.favorable_rate}}</h5>
+					    	<h5>上个月订单数 {{Service.alternative}}个</h5>
+					    	<span>￥{{Service.price}}/小时</span>
+					    	<span class="zhiding">置顶</span>
+					    </div>
 				    </div>
-			    </div>
-		    </a>
-		    <h4><img src="images/map_2.png" alt="">服务商圈 : {{Service.business_area}}</h4>	
+			    </a>
+			    <h4>
+				    <div class="shangquan"><img src="images/map_2.png" alt=""><span style="color:#333;font-weight:600;">服务商圈 : </span></div>
+				    <span>{{Service.business_area}}</span>
+			    </h4>	
+			</div>
+			<div class="service_sp1"></div>
 		</div>
-		<div class="service_sp1"></div>
 		<!--<div class="service_pro_list">
 			<a href="service_inner_1.html">
 				<div class="clearfix service_pro_list_detail">
@@ -183,17 +213,23 @@ var vm = new Vue({
 	el:"#app",
 	data() {
         return {
-            city_name:getCookie("cityLocation"),
+            city_name:sessionStorage.getItem("cityLocation"),
             Service_list:[],
-            Province_list:''
+            Province_list:'',
+            cityShow:false,
+            jiageShow:false,
+            haopingShow:false,
+            range_price1:'',
+            favorable_rate1:'',
+            area1:'',
+            priceRange:["0-20","20-40","40-60","60-80","80-100","100-120","120-140","140-160","160-180","180-200"],
+            type_name:getCookie('service_type_name'),
         }
 	},
     created: function () {
 		var $this = this;
     	$this.getService_list();
-    	$this.getProvince_list();
-//        $this.userLogin();
-        
+    	$this.getProvince_list();        
     },
     mounted:function(){
     	
@@ -204,11 +240,12 @@ var vm = new Vue({
     		var $this = this;
     		
     		const data = {
-//  			type:1
-//				city:getCookie("cityLocation"),
 				city:$this.city_name,
 				type_id:getCookie('service_type_id'),
-				is_company:getCookie('service_is_company')
+				is_company:getCookie('service_is_company'),
+				range_price:$this.range_price1,
+				favorable_rate:$this.favorable_rate1,
+				area:$this.area1,
     		}
     		
     		Axios.post(window.Url.service_list, data).then((res) => {
@@ -218,12 +255,12 @@ var vm = new Vue({
     			}
     			else{
     				alert('服务列表：'+res.info)
-    			}
-    			
-        }).catch((err) => {
-          console.log('服务列表：'+err)
-        })
+    			}    			
+	        }).catch((err) => {
+	          console.log('服务列表：'+err)
+	        })
     	},
+
     	//获取城市对应区
     	getProvince_list:function(){
 	    		var $this = this;
@@ -245,10 +282,61 @@ var vm = new Vue({
 	          console.log('服务列表：'+err)
 	        })
     	},
+
     	//跳转详情页
     	jump:function(type_id){
     		setCookie('service_details_id',type_id);
+    	},
+
+    	//城市筛选弹框显示及隐藏
+    	selectCity :function(){
+    		var $this=this;
+    		if($this.cityShow==false){
+    			$this.cityShow=true;
+    		}else{
+    			$this.cityShow=false;
+    		}
+    	},
+
+    	//城市筛选弹框显示及隐藏
+    	selectPrice :function(){
+    		var $this=this;
+    		if($this.jiageShow==false){
+    			$this.jiageShow=true;
+    		}else{
+    			$this.jiageShow=false;
+    		}
+    	},
+
+    	//好评率筛选弹框显示及隐藏
+    	selectHao :function(){
+    		var $this=this;
+    		if($this.haopingShow==false){
+    			$this.haopingShow=true;
+    			$this.favorable_rate1=2;
+    		}else{
+    			$this.haopingShow=false;
+    			$this.favorable_rate1=1;
+    		}
+    		$this.Service_list=[];
+    		$this.getService_list();
+    	},
+    	//城市筛选
+    	selectCity1 :function(cityName){
+    		var $this=this;
+    		$this.area1=cityName;
+    		$this.Service_list=[];
+    		$this.getService_list();    		
+    	},
+
+    	//价格筛选
+    	selectPrice1 :function(Price){
+    		var $this=this;
+    		$this.range_price1=Price;
+    		$this.Service_list=[];
+    		$this.getService_list();    		
     	}
+    	
 	}
 })
 
@@ -256,72 +344,72 @@ var vm = new Vue({
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.jiage').click(function(){
-	$('.jiage-show').css("display","block");
-	$('.service_list_bg1').show();
-	$(this).find('i').removeClass('fa-angle-down');
-	$(this).find('i').addClass('fa-angle-up');
-})
-$('.service_list_bg1').click(function(){
-	$(this).hide();
-    $('.jiage-show').hide();
-    $('.jiage').find('i').addClass('fa-angle-down');
-	$('.jiage').find('i').removeClass('fa-angle-up');
-})
-$(".jiage li").click(function(){
-	// $('.jiage').find('i').addClass('fa-angle-down');
-	// $('.jiage').find('i').removeClass('fa-angle-up');
-	$(this).css("background","#e1e1e1");
-	$(this).siblings().css("background","transparent");
-	$(this).parents(".jiage-show").fadeOut();
-	$('.service_list_bg1').fadeOut();
-	$(this).parents(".jiage").find('i').addClass('fa-angle-down');
-	$(this).parents(".jiage").find('i').removeClass('fa-angle-up');
-})
-$('.city').click(function(){
-	$('.city-show').css("display","block");
-	$('.service_list_bg1').show();
-	$(this).find('i').removeClass('fa-angle-down');
-	$(this).find('i').addClass('fa-angle-up');
-})
-$('.service_list_bg1').click(function(){
-	$(this).hide();
-    $('.city-show').hide();
-    $('.city').find('i').addClass('fa-angle-down');
-	$('.city').find('i').removeClass('fa-angle-up');
-})
-$(".city li").click(function(){
-	// $('.jiage').find('i').addClass('fa-angle-down');
-	// $('.jiage').find('i').removeClass('fa-angle-up');
-	$(this).css("background","#e1e1e1");
-	$(this).siblings().css("background","transparent");
-	$(this).parents(".city-show").fadeOut();
-	$('.service_list_bg1').fadeOut();
-	$(this).parents(".city").find('i').addClass('fa-angle-down');
-	$(this).parents(".city").find('i').removeClass('fa-angle-up');
-})
-$('.haoping').click(function(){
-	$('.haoping-show').css("display","block");
-	$('.service_list_bg1').show();
-	$(this).find('i').removeClass('fa-angle-down');
-	$(this).find('i').addClass('fa-angle-up');
-})
-$('.service_list_bg1').click(function(){
-	$(this).hide();
-    $('.haoping-show').hide();
-    $('.haoping').find('i').addClass('fa-angle-down');
-	$('.haoping').find('i').removeClass('fa-angle-up');
-})
-$(".haoping li").click(function(){
-	// $('.jiage').find('i').addClass('fa-angle-down');
-	// $('.jiage').find('i').removeClass('fa-angle-up');
-	$(this).css("background","#e1e1e1");
-	$(this).siblings().css("background","transparent");
-	$(this).parents(".haoping-show").fadeOut();
-	$('.service_list_bg1').fadeOut();
-	$(this).parents(".haoping").find('i').addClass('fa-angle-down');
-	$(this).parents(".haoping").find('i').removeClass('fa-angle-up');
-})
+// $('.jiage').click(function(){
+// 	$('.jiage-show').css("display","block");
+// 	$('.service_list_bg1').show();
+// 	$(this).find('i').removeClass('fa-angle-down');
+// 	$(this).find('i').addClass('fa-angle-up');
+// })
+// $('.service_list_bg1').click(function(){
+// 	$(this).hide();
+//     $('.jiage-show').hide();
+//     $('.jiage').find('i').addClass('fa-angle-down');
+// 	$('.jiage').find('i').removeClass('fa-angle-up');
+// })
+// $(".jiage li").click(function(){
+// 	// $('.jiage').find('i').addClass('fa-angle-down');
+// 	// $('.jiage').find('i').removeClass('fa-angle-up');
+// 	$(this).css("background","#e1e1e1");
+// 	$(this).siblings().css("background","transparent");
+// 	$(this).parents(".jiage-show").fadeOut();
+// 	$('.service_list_bg1').fadeOut();
+// 	$(this).parents(".jiage").find('i').addClass('fa-angle-down');
+// 	$(this).parents(".jiage").find('i').removeClass('fa-angle-up');
+// })
+// $('.city').click(function(){
+// 	$('.city-show').css("display","block");
+// 	$('.service_list_bg1').show();
+// 	$(this).find('i').removeClass('fa-angle-down');
+// 	$(this).find('i').addClass('fa-angle-up');
+// })
+// $('.service_list_bg1').click(function(){
+// 	$(this).hide();
+//     $('.city-show').hide();
+//     $('.city').find('i').addClass('fa-angle-down');
+// 	$('.city').find('i').removeClass('fa-angle-up');
+// })
+// $(".city li").click(function(){
+// 	// $('.jiage').find('i').addClass('fa-angle-down');
+// 	// $('.jiage').find('i').removeClass('fa-angle-up');
+// 	$(this).css("background","#e1e1e1");
+// 	$(this).siblings().css("background","transparent");
+// 	$(this).parents(".city-show").fadeOut();
+// 	$('.service_list_bg1').fadeOut();
+// 	$(this).parents(".city").find('i').addClass('fa-angle-down');
+// 	$(this).parents(".city").find('i').removeClass('fa-angle-up');
+// })
+// $('.haoping').click(function(){
+// 	$('.haoping-show').css("display","block");
+// 	$('.service_list_bg1').show();
+// 	$(this).find('i').removeClass('fa-angle-down');
+// 	$(this).find('i').addClass('fa-angle-up');
+// })
+// $('.service_list_bg1').click(function(){
+// 	$(this).hide();
+//     $('.haoping-show').hide();
+//     $('.haoping').find('i').addClass('fa-angle-down');
+// 	$('.haoping').find('i').removeClass('fa-angle-up');
+// })
+// $(".haoping li").click(function(){
+// 	// $('.jiage').find('i').addClass('fa-angle-down');
+// 	// $('.jiage').find('i').removeClass('fa-angle-up');
+// 	$(this).css("background","#e1e1e1");
+// 	$(this).siblings().css("background","transparent");
+// 	$(this).parents(".haoping-show").fadeOut();
+// 	$('.service_list_bg1').fadeOut();
+// 	$(this).parents(".haoping").find('i').addClass('fa-angle-down');
+// 	$(this).parents(".haoping").find('i').removeClass('fa-angle-up');
+// })
 
   
 })  

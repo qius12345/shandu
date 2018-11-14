@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -64,24 +64,24 @@
 <div class="mySet">
     <div class="mySet1 mySet3 clearfix">
         <span class="fl">联系人</span>
-        <input type="text" v-model="message.consignee" placeholder="请输入" class="fr">
+        <input type="text" v-model="message.consignee" placeholder="请输入联系人" class="fr">
     </div>
     <div class="mySet1 mySet3 clearfix">
         <span class="fl">联系电话</span>
         <input type="text" v-model="message.telephone" placeholder="请输入电话" class="fr">
     </div>
     <div class="mySet1 mySet3 clearfix">
-            <span class="fl">联系地址</span>
-            <div class="add_address">
-                <div class="form-item item-line service_inner1_area" id="select_contact">               
-                    <div class="pc-box">                     
-                        <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">                     
-                        <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">请选择地址</span> 
-                    </div>             
-                </div>
-                <!-- <img src="images/service_map.png" width="20"> -->
+        <span class="fl">联系地址</span>
+        <div class="add_address">
+            <div class="form-item item-line service_inner1_area" id="select_contact">               
+                <div class="pc-box">                     
+                    <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">                     
+                    <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">请选择省市区</span> 
+                </div>             
             </div>
-            <img src="images/right-1.png" alt="" class="fr">
+            <!-- <img src="images/service_map.png" width="20"> -->
+        </div>
+        <img src="images/right-1.png" alt="" class="fr" style="margin-top:0.02rem;">
     </div>
     <div class="mySet1 mySet3 mySet4 clearfix">
         <span class="fl">详细地址信息</span>

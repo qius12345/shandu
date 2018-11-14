@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -42,6 +42,107 @@
       overflow: hidden;
       padding-right: 0.2rem;
   }
+  .pinglun1_show{
+    display: block;
+  }
+  .lianxi_show{
+    display: block;
+  }
+  .pinglun1_show_con{
+    padding:0;
+  }
+  .pinglun1_show_con h5{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    background: #eeedf3;
+    margin: 0;
+    padding: 0.24rem 0 0.16rem;
+    position: relative;
+    color:#222;
+  }
+  .pinglun1_show_con h4{
+    text-align: center;
+    font-size: 0.16rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.24rem 0.24rem 0.1rem;
+    position: relative;
+    color: #222;
+    text-align: left;
+  }
+  .pinglun1_show_con h5 img{
+    position: absolute;
+    top: 0.08rem;
+    right: 0.08rem;
+  }
+  .pinglun1_show_con_f1 {
+    position: relative;
+    text-align: left;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f4 {
+    position: relative;
+    text-align: right;
+    padding: 0.16rem 0.18rem;
+  }
+  .pinglun1_show_con_f1_left{
+    float:left;
+    width:48%;
+  }
+  .pinglun1_show_con_f1_right{
+    float: right;
+    padding-right: 0.2rem;
+  }
+  .pinglun1_show_con_f1_left img{
+    margin-right:0.12rem;
+    vertical-align: middle;
+  }
+  .pinglun1_show_con_f1_left span{
+    font-size:0.14rem;
+    color:#222;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+  .pinglun1_show_con_f1_right span{
+    font-size: 0.16rem;
+    font-weight: bold;
+    color: #f57618;
+    vertical-align: middle;
+    display: block;
+    height: 0.25rem;
+    line-height: 0.25rem;
+  }
+  .pinglun1_show_con_f2{
+    border-bottom: 0.1rem solid #eeedf3;
+  }
+  .pinglun1_show_con_f3{
+    border-bottom: 1px solid #ebebeb;
+  }
+  .pinglun1_show_con_btn{
+    height:0.56rem;
+    line-height: 0.56rem;
+    width:100%;
+    background:#20b7fe;
+    color:#ff0000;
+    font-size:0.16rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .energetic1-title3{
+    position: relative;
+  }
+  .energetic1-title3 span.energetic1-title3_btn{
+    position: absolute;
+    top: 0.13rem;
+    right: 0.10rem;
+    font-size: 0.12rem;
+    color: #e60012;
+    border: 1px solid #e60012;
+    padding: 0.02rem 0.04rem;
+    border-radius: 0.03rem;
+  }
 </style>
 
 </head>
@@ -50,16 +151,65 @@
 
 <div id="app" v-cloak>
 
-<div class="pinglun1_show">
+<div class="pinglun1_show" v-show="flag1">
     <div class="pinglun1_show_bg"></div>
     <div class="pinglun1_show_con">
-        <h5>确认取消订单？</h5>
-        <div class="pinglun1_show_con_f1">
-            <a href="##">取消</a>
-            <a href="##">确认</a>
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="hideZhifu()"> </h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_yue.jpg" alt="" width="20">
+              <span>钱包支付</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>{{wallet.wallet}} 元</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_weixin.jpg" alt="" width="20">
+              <span>微信支付</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
+    </div>
+</div>
+
+<div class="pinglun1_show" v-show="flag3">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h4 v-html="btnTxt">确认取消订单？</h4>
+        <div class="pinglun1_show_con_f1 pinglun1_show_con_f4">
+            <a href="javascript:void(0);" @click="cancleHide()">取消</a>
+            <a href="javascript:void(0);" @click="cancleSureType()">确认</a>
         </div>
     </div>
 </div>
+
+<!-- <div class="pinglun1_show" v-show="flag4">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h4>确认取消订单？</h4>
+        <div class="pinglun1_show_con_f1 pinglun1_show_con_f4">
+            <a href="javascript:void(0);" @click="cancleSure()">好的，知道了</a>
+        </div>
+    </div>
+</div> -->
+
+<div class="lianxi_show" v-show="flag5">
+    <div class="lianxi_show_bg"></div>
+    <div class="lianxi_show_con">
+        <h5>400-808-9949</h5>
+        <div class="lianxi_show_con_f1">
+            <a href="##" @click="cancleHide()">取消</a>
+            <a href="tel:4008089949" class="active">拨打电话</a>
+        </div>
+    </div>
+</div>
+
 <!--  / header  -->
 <div class="stroy_rhead">
   <a href="javascript:history.go(-1)" class="back">
@@ -75,31 +225,42 @@
     <!--有订单-->
     <div class="user_order_list">
       <div class="user_order_list_con" v-for="items1 in TuanOrder_list">
-        <div class="user_order_list_top clearfix">
-          订单编号: {{items1.order_no}} <span class="tx" v-html="items1.order_status==1?'待付款':(items1.order_status==11?'待拼团':(items1.order_status==2?'待发货':(items1.order_status==3?'待收货':(items1.order_status==5?'已完成':'退款/售后'))))">待拼团</span>
+        <!-- <div class="user_order_list_top clearfix">
+          订单编号: {{items1.order_no}} <span class="tx" v-html="items1.order_status==1?'待付款':(items1.order_status==11?'待拼团':(items1.order_status==2?'待发货':(items1.order_status==3?'待收货':(items1.order_status==5?'已完成':(items1.order_status==6?'退款中':'退款/售后')))))">待拼团</span>
+        </div> -->
+        <div class="energetic1-title3">
+            <span>订单编号：<i>{{items1.order_no}}</i></span>
+            <span v-if="items1.order_status==1">下单时间：<i>{{items1.order_time}}</i></span>
+            <span v-else>支付时间：<i>{{items1.pay_time}}</i></span>
+            <span class="energetic1-title3_btn" v-html="items1.order_status==1?'待付款':(items1.order_status==11?'待拼团':(items1.order_status==2?'待发货':(items1.order_status==3?'待收货':(items1.order_status==5?'已完成':(items1.order_status==6?'退款中':'退款/售后')))))">待拼团</span>
         </div>
         <div class="user_order_list_ct clearfix" v-for="items2 in items1.goods">
           <a href="javascript:void(0);" @click="goCollageOrderDetail(items1)">
-            <div class="img"><img :src="items2.goods_pic" width="100%"></div>
+            <div class="img" :style="{backgroundImage: 'url(' + items2.goods_pic + ')', backgroundSize:'cover'}"><!-- <img :src="items2.goods_pic" width="100%"> --></div>
             <div class="user_order_list_tx">
               <div class="title">{{items2.goods_name}}</div>
               <div class="tx">{{items2.goods_des}}</div>
               <div class="text">
                 <div class="now">拼团价</div>
                 <div class="bef">￥{{items2.goods_price}}</div>
-                <div class="num">x<span>1</span></div>
+                <div class="num">x<span>{{items1.goods_nums}}</span></div>
               </div>
               <div class="pintuan">拼团人数: <span>{{items2.salesnum}}/{{items2.tuan}}</span></div>
             </div>
           </a>
         </div>
         <div class="user_order_list_text">
-          共1件商品 合计:￥<span>{{items1.total_price}}</span>(含运费￥0.00)
+          共{{items1.goods_nums}}件商品 实际支付:￥<span>{{items1.total_fee}}</span>(含运费￥0.00)
         </div>
-        <div class="user_order_list_bot clearfix">          
-          <a href="##" class="on" v-if="items1.order_status==2">提醒发货</a>
-          <a href="##" v-if="items1.order_status>2">查看物流</a>
-          <a href="tel:4008001234">联系平台</a>
+        <div class="user_order_list_bot clearfix"> 
+          <a href="javascript:void(0);" class="on" v-if="items1.order_status==1" @click="gozhifu(items1.order_no)">去付款</a> 
+          <a href="javascript:void(0);" class="on" v-if="items1.order_status==11" @click="tuiKuan(items1.order_no,items1.orderid)">申请退款</a>        
+          <a href="javascript:void(0);" class="on" v-if="items1.order_status==3" @click="shouhuo(items1.order_no,items1.orderid)">确认收货</a>
+          <a href="javascript:void(0);" v-if="items1.order_status==3" @click="wuliu(items1.orderid)">查看物流</a>
+          <a href="javascript:void(0)" v-if="items1.order_status==11" @click="contact()">联系平台</a>
+          <a href="javascript:void(0);" v-if="items1.order_status==1" @click="cancle(items1.order_no,items1.orderid)">取消订单</a>
+          <a href="javascript:void(0);" v-if="items1.order_status==6" @click="contact()">服务热线</a>
+          <a href="javascript:void(0);" class="on" v-if="items1.order_status==5 && items1.refundend==0" @click="gorefuse(items1.orderid)">申请退货</a>
         </div>
       </div>
     </div>
@@ -131,11 +292,21 @@ $(window).ready(function(){
           })(),
           TuanOrder_list:[],
           tuan_type:getCookie("tuanType"),
-          tuan_type_txt:"全部订单",        
+          tuan_type_txt:"全部订单",  
+          flag1:false,  
+          flag2:false, 
+          flag3:false,
+          flag5:false, 
+          wallet:[],
+          OrderNo:'',  
+          OrderId:'',
+          btnTxt:'确认取消订单？',
+          btnType:'',
       }
     },
     created: function () {
       var $this = this;
+      // console.log($this.tuan_type);
 
       if($this.tuan_type==1){
         $this.tuan_type_txt="全部订单";
@@ -188,15 +359,248 @@ $(window).ready(function(){
       //跳转团购订单详情
       goCollageOrderDetail:function(obj){
         sessionStorage.setItem('tuanDetail', JSON.stringify(obj));
-        window.location.href = "user_din_in.html";
+        window.location.href = "shopDetail.html?id="+obj.goods_id;
+      },
+
+      //支付订单弹出框显示
+      gozhifu:function(orderNo){
+        $this=this;
+        $this.OrderNo=orderNo;
+        $this.flag1=true;
+
+        //获取钱包余额
+        const data = {
+              
+        }       
+        Axios.post(window.Url.Ucenter_wallet,data).then((res) => {              
+          if(res.result == 1){  
+            // alert("获取钱包余额成功");
+            $this.wallet=res.info.wallet;                                             
+          }else
+          {
+            console.log("获取钱包余额失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("获取钱包余额失败:"+err);
+        })
+      },
+
+      //支付订单弹出框隐藏
+      hideZhifu:function(){
+        $this=this;
+        $this.flag1=false;
+      },
+
+      //选择支付方式
+      selectZhifu:function(state){
+        $this=this;
+        $this.flag2=state;                       
+      },
+
+      //余额支付
+      sureZhifu:function(){
+        $this=this;
+        if(!$this.flag2){
+
+          const data = {
+              orderno:$this.OrderNo,
+              type:2,
+          }
+
+          Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {              
+            if(res.result == 1){  
+              alert("余额支付成功");
+              $this.flag1=false;
+              setCookie("tuanType",3);
+              location.reload();
+                                               
+            }else
+            {
+              console.log("余额支付失败:"+res.info);
+            }
+            
+          }).catch((err) => {
+            console.log("余额支付失败:"+err);
+          })
+
+        }else if($this.flag2){
+          const data = {
+            orderno:$this.OrderNo,
+            type:2,
+            is_wxin:1
+          }
+
+          Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+              if(res.result == 1){  
+                  // alert("res.info");
+                  setCookie("tuanType",3);
+                  sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                  sessionStorage.setItem('error_url', "user.html");
+                  sessionStorage.setItem('success_url', "collage-orders.html");
+                  window.location.href = 'wxpay.html';                                                          
+              }else
+              {
+                console.log("微信支付失败:"+res.info);
+              }
+              
+          }).catch((err) => {
+              console.log("微信支付失败:"+err);
+          })
+
+        }
+      },
+
+      //取消订单弹框显示
+      cancle:function(orderNo,orderId){
+        $this=this;
+        $this.OrderId=orderId;
+        $this.flag3=true;
+        $this.btnTxt="确认取消订单？";
+        $this.btnType=1;
+
+      },
+      //取消订单弹框隐藏(联系平台弹框隐藏)
+      cancleHide:function(){
+        $this=this;
+        $this.flag3=false;
+        $this.flag5=false;
+      },
+
+      //确认取消订单
+      cancleSure1:function(){
+        $this=this;
+        $this.flag3=false;
+
+        //取消订单
+        const data = {
+          orderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.tuanOrderCancel,data).then((res) => {              
+          if(res.result == 1){  
+            alert(res.info);
+            // $this.wallet=res.info.wallet;
+            location.reload();                                             
+          }else
+          {
+            console.log("取消订单失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("取消订单失败:"+err);
+        })
+
+      },
+      //联系平台弹框显示
+      contact:function(){
+        $this=this;
+        $this.flag5=true;
+      },
+
+      //申请退款弹框显示
+      tuiKuan:function(orderNo,orderId){
+        $this=this;
+        $this.OrderId=orderId;
+        $this.flag3=true;
+        $this.btnTxt="确定取消订单并退款？";
+        $this.btnType=2;
+      },
+
+      //确认退款
+      cancleSure2:function(){
+        $this=this;
+        $this.flag3=false;
+
+        //确认退款
+        const data = {
+          orderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.tuanOrderApplyRefunds,data).then((res) => {              
+          if(res.result == 1){  
+            alert(res.info);
+            // $this.wallet=res.info.wallet;
+            location.reload();                                             
+          }else
+          {
+            console.log("退款失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("退款失败:"+err);
+        })
+
+      },
+
+      //查看物流
+      wuliu:function(orderId){
+        sessionStorage.setItem("orderId",orderId);
+        window.location.href="user_wul.html";
+      },
+      //申请退货
+      gorefuse:function(orderId){
+        var $_this = this;
+        const data = {
+            orderid:orderId
+        }
+        Axios.post(window.Url.orderDetails,data).then((res) => {
+          
+          if(res.result == 1){
+            sessionStorage.setItem("orderId",orderId);
+            window.location.href="refuse.html";                              
+          }else{
+            alert(res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("全部老故事列表:"+err);
+        })
+        
+      },
+
+      //确认收货弹框显示
+      shouhuo:function(orderNo,orderId){
+        $this=this;
+        $this.OrderId=orderId;
+        $this.flag3=true;
+        $this.btnTxt="确定收货？";
+        $this.btnType=3;
+      },
+
+      //确认收货
+      cancleSure3:function(){
+        $this=this;
+        $this.flag3=false;
+        const data = {
+          orderid:$this.OrderId              
+        }       
+        Axios.post(window.Url.tuanOrderReceived,data).then((res) => {              
+          if(res.result == 1){  
+            alert(res.info);
+            location.reload();                                             
+          }else
+          {
+            console.log("确认收货失败:"+res.info);
+          }
+          
+        }).catch((err) => {
+          console.log("确认收货失败:"+err);
+        })
+
+      },
+      cancleSureType:function(){
+        $this=this;
+        if($this.btnType==1){
+          $this.cancleSure1();
+        }else if($this.btnType==2){
+          $this.cancleSure2();
+        }else if($this.btnType==3){
+          $this.cancleSure3();
+        }
       }
+      
     }
 
   })  
-
-  $('.pinglun1_show_con_f1 a').click(function(){
-    $('.pinglun1_show').css('display','none');
-  });
 
 })
  

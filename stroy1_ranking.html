@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -32,18 +32,24 @@
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
 
+<style>
+  .search1_show{
+    display: block;
+  }
+</style>
+
 </head>
 
 <body class="body_bg">
 
 <div id="app" v-cloak>
 
-<div class="search1_show">
+<div class="search1_show" v-if="flag1">
     <div class="search1_show_bg"></div>
     <div class="search1_show_con">
-        <input type="text" placeholder="请输入故事标题、姓名、编号...">
+        <input type="text" placeholder="请输入故事标题、姓名、编号..." v-model="title1">
         <div class="search1_show_con_f1">
-            <a href="##">搜索</a>
+            <a href="javascript:void(0);" @click="goSearch()">搜索</a>
         </div>
     </div>
 </div>
@@ -53,7 +59,7 @@
   <a href="javascript:history.go(-1)" class="back">
     <img src="images/hl.png"> 返回
   </a>
-  <span class="search"><img src="images/search.png" width="100%"></span>
+  <span class="search" @click="flag1=true;"><img src="images/search.png" width="100%"></span>
   <h5>定期活动</h5>
   <a class="offside" href="stroy1_rules.html">活动规则</a>
 </div>
@@ -92,7 +98,7 @@
             排名
           </th>
         </tr>
-        <tr v-for="(items1,index) in stroy_ranking1" :class="index % 3==0?'bg1':(index % 3==1?'bg1':'bg3')">
+        <tr v-for="(items1,index) in stroy_ranking1" :class="index == 0 ? 'bg1' : (index == 1 ? 'bg2' : (index == 2 ? 'bg3' : 'bg4'))">
           <td>{{items1.user_name}}</td>
           <td>{{items1.title}}</td>
           <td class="num1">{{items1.popularity}}</td>
@@ -120,11 +126,13 @@ $(window).ready(function(){
         stroy_ranking1:[],
         stroy_ranking2:[],
         stroy_ranking3:[],
+        title1:'',
+        flag1:false
       }
     },
     created:function(){
-      var $this = this;
-      $this.getCate();
+      var $_this = this;
+      $_this.getCate($_this.title1);
       
                             
     },
@@ -133,10 +141,10 @@ $(window).ready(function(){
     },
     methods:{
       //老故事排名
-      getCate:function(){
+      getCate:function(title){
         var $this = this;
         const data = {
-        
+          title:title
         }
         Axios.post(window.Url.stroy_ranking,data).then((res) => {
           
@@ -146,6 +154,7 @@ $(window).ready(function(){
             $this.stroy_ranking3 = res.time;                                   
           }else
           {
+            $this.stroy_ranking1 = [];
             console.log("老故事排名:"+res.info);
           }
           
@@ -154,21 +163,17 @@ $(window).ready(function(){
         })
       
       },
+      goSearch:function(){
+        var $_this=this;
+        if($_this.title1 == '' || $_this.title1 == null || $_this.title1 == undefined){
+          alert("请输入故事标题、姓名、编号");
+        }else{
+          $_this.getCate($_this.title1);
+          $_this.flag1 = false;
+        }
+      }
      
     }
-
-  })
-
-  $(window).load(function(){
-    $('.search').click(function(){
-      $('.search1_show').css('display','block');
-    })
-    $('.search1_show_con_f1').click(function(){
-      $('.search1_show').css('display','none');
-    })
-  })
-
-  $(window).resize(function(){
 
   })
 })  

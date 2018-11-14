@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -27,20 +27,27 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 <body>
+<div id="app" v-cloak>
 
     <div class="stroy_rhead">
 	  <a href="javascript:history.go(-1)" class="back">
 	    <img src="images/hl.png"> 返回
 	  </a>
-	  <h5>物流状态</h5>
+	  <h5>查看物流</h5>
 	</div>
 
 	<!--  / warpper  -->
 	<div class="warpper">
 
-		<div class="logistics clearfix">
+		<!-- <div class="logistics clearfix">
 			<div class="logi_img">
 
 				<img src="images/wuliu.jpg" width="100%">
@@ -54,21 +61,21 @@
 				<p>官方电话：95554</p>
 			</div>
 
-		</div>
-		<div class="provide clearfix">
+		</div> -->
+		<!-- <div class="provide clearfix">
 			<img src="images/cain.png" width="20">	<h5>本数据有<span>菜鸟裹裹</span>提供</h5>
 
-		</div>
+		</div> -->
 		<div class="logis_infor">
-			<div class="infor1 infor1_1">
+			<div class="infor1" v-for="(items1,index) in logisticsInfo" :class="index == 0 ? 'infor1_1' : ''">
 				<div class="infor1_bodd">
-					<h5>本人已签收，拍照确认</h5>
-					<p>2017-11-17 14:34:09</p>
+					<h5>{{items1.AcceptStation}}</h5>
+					<p>{{items1.AcceptTime}}</p>
 				</div>
 				<div class="infor1_on"></div>
 			</div>
 
-			<div class="infor1">
+			<!-- <div class="infor1">
 				<div class="infor1_bodd">
 					<h5>到达小区，等待派送。派件员：小星<span>1316027885</span></h5>
 					<p>2017-11-16 14:34:09</p>
@@ -85,18 +92,64 @@
 					<h5>中国邮政集团公司上海市青浦区大宗处理中心，下一站【上海王港】</h5>
 					<p>2017-11-14 14:34:09</p>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 
 	</div>
 	<!--  / warpper  -->
 
+</div>
 </body>
 <script>
 $( document ).ready( function()
 {
 	$( ".logi_img" ).height( $( ".logi_img" ).width() )
+
+	var vm = new Vue({
+        el:"#app",
+        data(){
+          return{
+            order_id:sessionStorage.getItem('orderId'),
+            logisticsInfo:[],
+          }
+        },
+        created:function(){
+          var $this = this;
+          // $this.order_id=sessionStorage.getItem('orderId');
+          $this.getLogistics();
+                                       
+        },
+        mounted:function(){
+            var $this = this;          
+        },
+        methods:{   
+
+        	//获取订单物流信息  
+        	getLogistics:function(){
+        		$this=this;
+		        const data = {
+		          orderid:$this.order_id              
+		        }       
+		        Axios.post(window.Url.tuanOrderLogistics,data).then((res) => {              
+		          if(res.result == 1){  
+		          	$this.logisticsInfo=res.info;
+		          	console.log($this.logisticsInfo);		                                                         
+		          }else
+		          {
+		            console.log("获取订单物流信息失败:"+res.info);
+		          }
+		          
+		        }).catch((err) => {
+		          console.log("获取订单物流信息失败:"+err);
+		        })
+        	}
+
+               
+          
+        }
+
+    })
 } )
 
 </script>

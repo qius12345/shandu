@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -93,11 +93,13 @@ $(window).ready(function(){
     		
     		Axios.post(window.Url.feedback, data).then((res) => {
     			
-    			if(res.result == 1){
-    				alert(res.info);
-    				
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/suggestion.html');
+                if(res.result == 1){
+    				// alert(res.info); 
+                    sessionStorage.setItem('tabType',5);
+                    window.location.href = "user.html"; 				
     			}
-    			else{
+    			else if(res.result == 0){
     				alert('提交反馈'+res.info)
     			}
     			
@@ -119,7 +121,8 @@ var mySwiper_banner = new Swiper ('.swiper-container-banner', {
 	autoplayDisableOnInteraction : false,
 })
 $('.header_map_longevity').click(function(){
-    history.go(-1);
+    window.location.href = "user.html";
+    // history.go(-1);
 });
 $('.longevity1 li').click(function(){
     window.location.href = "InformationDetails.html";

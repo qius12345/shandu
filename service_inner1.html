@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -24,6 +24,115 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+
+<style>
+      .service_inner1_list{
+        position: relative;
+      }
+
+      .pinglun1_show{
+        display: block;
+      }
+      .service_show{
+        display: block;
+      }
+      .pinglun1_show_con{
+        padding:0;
+      }
+      .pinglun1_show_con h5{
+        text-align: center;
+        font-size: 0.16rem;
+        font-weight: bold;
+        background: #eeedf3;
+        margin: 0;
+        padding: 0.24rem 0 0.16rem;
+        position: relative;
+        color:#222;
+      }
+      .pinglun1_show_con h4{
+        text-align: center;
+        font-size: 0.16rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 0.24rem 0.24rem 0.1rem;
+        position: relative;
+        color: #222;
+        text-align: left;
+      }
+      .pinglun1_show_con h5 img{
+        position: absolute;
+        top: 0.08rem;
+        right: 0.08rem;
+      }
+      .pinglun1_show_con_f1 {
+        position: relative;
+        text-align: left;
+        padding: 0.16rem 0.18rem;
+      }
+      .pinglun1_show_con_f4 {
+        position: relative;
+        text-align: right;
+        padding: 0.16rem 0.18rem;
+      }
+      .pinglun1_show_con_f1_left{
+        float:left;
+        width:48%;
+      }
+      .pinglun1_show_con_f1_right{
+        float: right;
+        padding-right: 0.2rem;
+      }
+      .pinglun1_show_con_f1_left img{
+        margin-right:0.12rem;
+        vertical-align: middle;
+      }
+      .pinglun1_show_con_f1_left span{
+        font-size:0.14rem;
+        color:#222;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .pinglun1_show_con_f1_right span{
+        font-size: 0.16rem;
+        font-weight: bold;
+        color: #f57618;
+        vertical-align: middle;
+        display: block;
+        height: 0.25rem;
+        line-height: 0.25rem;
+      }
+      .pinglun1_show_con_f2{
+        border-bottom: 0.1rem solid #eeedf3;
+      }
+      .pinglun1_show_con_f3{
+        border-bottom: 1px solid #ebebeb;
+      }
+      .pinglun1_show_con_btn{
+        height:0.56rem;
+        line-height: 0.56rem;
+        width:100%;
+        background:#20b7fe;
+        color:#ff0000;
+        font-size:0.16rem;
+        text-align: center;
+        font-weight: 600;
+      }
+      .service_show_con p{
+        padding-left:0;
+      }
+      .service_inner1_list_content1{
+        float:left;
+      }
+      .service_inner1_list_content2{
+        float:right;
+      }
+      .service_inner_list input{
+        width:100%;
+        border:none;
+        color:#000;
+      }
+
+</style>
 
 
 <script>
@@ -48,13 +157,50 @@
 
 <body style="background:#f3f5f9;">
 	
-<div id="app">
-<div class="chakan_show">
+<div id="app" v-cloak>
+
+<div class="pinglun1_show" v-show="flag1">
+    <div class="pinglun1_show_bg"></div>
+    <div class="pinglun1_show_con">
+        <h5>选择支付方式 <img src="images/order_sure_cha.png" alt="" width="25" class="zhifu_close" @click="hideZhifu()"> </h5>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f2" @click="selectZhifu(false)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_yue.jpg" alt="" width="20">
+              <span>钱包支付</span>
+            </div>
+            <div class="pinglun1_show_con_f1_right">
+              <span>{{mywallet.wallet}} 元</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_f1 clearfix pinglun1_show_con_f3" @click="selectZhifu(true)">
+            <div class="pinglun1_show_con_f1_left">
+              <img src="images/order_sure_1.jpg" alt="" width="16" v-show="!flag2">
+              <img src="images/order_sure_2.jpg" alt="" width="16" v-show="flag2">
+              <img src="images/order_sure_weixin.jpg" alt="" width="20">
+              <span>微信支付</span>
+            </div>
+        </div>
+        <div class="pinglun1_show_con_btn" @click="sureZhifu()">确认支付</div>
+    </div>
+</div>
+
+<div class="service_show" v-show="flag3">
+    <div class="service_show_bg"></div>
+    <div class="service_show_con">
+        <h5>温馨提示 </h5>
+        <p>您下单支付预约服务订金后，服务人员将准时到达服务地点并根据实际工作量沟通最终服务价格，双方认可价格后，您可点击开始工作按钮，服务人员开始提供服务。服务完成后您支付服务尾款，并可对服务满意度进行评价，评价完成后系统将自动赠送一张优惠券到你的钱包里。为保障双方权益，请尽量线上支付尾款</p>
+        <h4><a href="javascript:void(0);" @click="closeTishi()"><b>好的,知道了</b></a></h4>
+    </div>
+</div>
+
+<!-- <div class="chakan_show">
     <div class="chakan_show_bg"></div>
     <div class="chakan_show_con">
         <h5>用户下单后可查看联系电话</h5>
     </div>
-</div>
+</div> -->
 <!--  / header  -->
 <div class="header_longevity">
      <div class="header_map_longevity">   
@@ -70,21 +216,52 @@
 	
 	
 	<div class="service_inner1">
-		<a href="myAddress.html">
-           <div class="service_inner1_list">
-            <h5>服务地址 :</h5>
-            <p class="service_inner1_dizhi">请选择服务地址 <i class="fa fa-angle-right"></i></p>            
-        </div> 
-        </a>
+        <div v-if="service_details.is_company == 2">
+    		<a href="javascript:void(0);" v-if="addressList==''" @click="goAddress()">
+                <div class="service_inner1_list">
+                    <h5>服务地址 :</h5>
+                    <p class="service_inner1_dizhi">请选择服务地址<i class="fa fa-angle-right"></i></p>            
+                </div> 
+            </a>        
+            <a href="javascript:void(0);" v-else @click="goAddress()">
+                <div class="service_inner1_list">
+                    <div class="service_inner1_list_title">服务地址</div>
+                    <div class="service_inner1_list_content">
+                        <div class="service_inner1_list_contents clearfix">
+                            <div class="service_inner1_list_content1">{{addressList.consignee}}</div>
+                            <div class="service_inner1_list_content2">{{addressList.telephone}}</div>
+                        </div>                    
+                        <div class="service_inner1_list_content3" v-if="service_details.is_company==2">{{addressList.province}}{{addressList.city}}{{addressList.district}}{{addressList.address}}</div>
+                    </div>           
+                </div> 
+            </a>
+        </div>
+        <div v-if="service_details.is_company == 1">
+            <div class="service_inner_list" style="padding-left:1.4rem;text-align:left;background:#fff;">
+                <span style="font-size:0.15rem;font-weight:normal;color:#000;">公司(门市)地址 :</span>
+                {{service_details.province}}
+                {{service_details.city}}
+                {{service_details.district}}
+                {{service_details.address}}
+            </div>
+            <div class="service_inner_list" style="padding-left:1.4rem;text-align:left;background:#fff;">
+                <span style="font-size:0.15rem;font-weight:normal;color:#000;">用户姓名 :</span>
+                <input type="text" placeholder="请输入用户姓名" v-model="name1">
+            </div>
+            <div class="service_inner_list" style="padding-left:1.4rem;text-align:left;background:#fff;">
+                <span style="font-size:0.15rem;font-weight:normal;color:#000;">联系电话 :</span>
+                <input type="text" placeholder="请输入联系电话" v-model="tel1">
+            </div>
+        </div>
 		<div class="service_inner1_list no_border service_inner1_list3">
 			<h5>服务内容 :</h5>
 		</div>
 		<div class="service_inner1_list_txt no_border">
-			<textarea placeholder="如:洗衣,扫地,带小孩(限60字)"></textarea>
+			<textarea placeholder="如:洗衣,扫地,带小孩(限60字)" v-model="content1" style="resize:none;"></textarea>
 		</div>
 		<div class="service_sp1"></div>
-		<div class="service_inner1_list">
-			<h5>是否找别人替代 :</h5>
+		<div class="service_inner1_list" v-if="isCompany==2">
+			<h5>是否允许他人代替服务 :</h5>
 			<div class="yes_btn">
 				<span></span>
 			</div>
@@ -94,7 +271,7 @@
 			<h5>其他说明 :</h5>
 		</div>
 		<div class="service_inner1_list_txt no_border">
-			<textarea v-model="explain" placeholder="对服务人员的要求,无要求可不填(限120字)"></textarea>
+			<textarea v-model="special" placeholder="对服务人员的要求,无要求可不填(限120字)"></textarea>
 		</div>
 		
 		<!-- <div class="service_inner1_list">
@@ -130,31 +307,21 @@
 		<div class="service_inner1_time_show">
 			<p>点击以下方格选择时间24小时制，若要取消选择请您再次点击该方格</p>
 			<div class="row">
-				<div class="col-xs-2 col-time1">1:00</div>
-				<div class="col-xs-2 col-time1">2:00</div>
-				<div class="col-xs-2 col-time1">3:00</div>
-				<div class="col-xs-2 col-time1">4:00</div>
-				<div class="col-xs-2 col-time1">5:00</div>
-				<div class="col-xs-2 col-time1">6:00</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-time1">7:00</div>
-				<div class="col-xs-2 col-time1">8:00</div>
-				<div class="col-xs-2 col-time1">9:00</div>
-				<div class="col-xs-2 col-time1">10:00</div>
-				<div class="col-xs-2 col-time1">11:00</div>
-				<div class="col-xs-2 col-time1">12:00</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-time1">13:00</div>
-				<div class="col-xs-2 col-time1">14:00</div>
+				<div class="col-xs-2 col-time1" v-for="(hour,index) in allHours" :data-id="index">{{hour}}</div>
 			</div>
 		</div>
 		
-		<div class="service_inner1_list no_border">
+		<div class="service_inner1_list">
 			<h5>预约时长 :</h5>
-			<input v-model="time_length" type="text" placeholder="">
+			<p>{{duration1}}小时</p>
 		</div>
+
+        <div class="service_inner1_list" v-if="isCompany==1">
+            <h5>是否0元预约 :</h5>
+            <div class="yes_btn">
+                <span></span>
+            </div>
+        </div>
 		
 		
 		<!-- <div class="service_inner1_list_txt">
@@ -163,8 +330,8 @@
 		
 		
 		<div class="service_inner_zf">
-			预约服务费 <span> ￥00.00</span>
-			<a href="##" @click="service_is_subscribe">支付</a>
+			预约服务费 <span> ￥{{service_details.price*duration1}}.00</span>
+			<a href="javascript:void(0);" @click="service_is_subscribe">支付</a>
 		</div>
 		
 	</div>
@@ -189,22 +356,48 @@
 	el:"#app",
 	data() {
         return {
-            city_name:getCookie("cityLocation"),
+            city_name:sessionStorage.getItem("cityLocation"),
             Service_list:[],
             Province_list:'',
             time_length:'',
-            explain:'',
-            
+            content1:'',
+            special:'',
+            isCompany:getCookie("service_is_company"),
+            addressList:[],
+            service_details:[],
+            duration1:'',
+            selDuration1:[],
+            subscribe1:'',
+            endsubscribe1:'',
+            timing1:'',
+            endtiming1:'',
+            hours:'',
+            allHours:["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],               
+            selHours:[], 
+            flag1:false,  
+            flag2:false, 
+            flag3:false,
+            mywallet:[],
+            OrderNo:[],
+            is_take1:'',
+            name1:'',
+            tel1:''
         }
 	},
     created: function () {
 		var $this = this;
-//  	$this.submit_service_order();
-//        $this.userLogin();
-        
+        if(JSON.parse(sessionStorage.getItem('addressDetail'))){
+            $this.addressList=JSON.parse(sessionStorage.getItem('addressDetail'));
+        }
+
+        $this.getService_details();  
+        $this.getWallet();
+          
     },
     mounted:function(){
-    	
+        var $this=this;
+        Timer();   
+        $this.selTiming(); 	
     },
     methods:{
     	//判断是否能提交
@@ -212,16 +405,15 @@
     		var $this = this;
     		
     		const data = {
-				service_id:getCookie('stage_deploy_id')
+				service_id:getCookie('service_details_id')
     		}
     		
     		Axios.post(window.Url.service_is_subscribe, data).then((res) => {
-    			
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/service_inner1.html');
     			if(res.result == 1){
-//  				$this.Service_list = res.info.service;
+ 				    // $this.Service_list = res.info.service;
 					$this.submit_service_order();
-    			}
-    			else{
+    			}else if(res.result == 0){
     				alert('判断是否能提交：'+res.info)
     			}
     			
@@ -232,23 +424,88 @@
     	//提交预约订单
     	submit_service_order:function(){
     		var $this = this;
+            var selDate=$("#showDate").html();
+            var selDate1=$("#showDate1").html();
+            if(selDate=="请选择"){
+                $this.subscribe1='';
+            }else{
+                $this.subscribe1=selDate;
+            }
+
+            if(selDate1=="请选择"){
+                $this.endsubscribe1='';
+            }else{
+                $this.endsubscribe1=selDate1;
+            }
+
+            $this.timing1=$this.selHours[0];
+            $this.endtiming1=$this.selHours[1];
+            
+            // console.log($this.timing1,$this.endtiming1,$this.duration1);
+            if($('.yes_btn').hasClass("on")){
+                $this.is_take1=1;
+            }else{
+                $this.is_take1=0;
+            }
+            if($this.service_details.is_company == 2){
+                if($this.addressList==''  || !$this.addressList || $this.addressList==null || $this.addressList==undefined){
+                    alert("请选择联系地址");
+                    return;
+                }
+            }
+            
+            if($this.service_details.is_company == 1){
+                if($this.tel1 == ""){
+                    alert("请输入您的电话");
+                    return false;
+                }else{
+                    var reg= /^[1][3456789][0-9]{9}$/;
+                    var r = $this.tel1.match(reg);
+                    if(r==null) {
+                        alert("手机号格式不正确");
+                        return  false;
+                    }
+                }
+            }
+            
+
+            if($this.service_details.is_company == 1){
+                $this.addressList.consignee=$this.name1;
+                $this.addressList.telephone=$this.tel1;
+                $this.addressList.province=$this.service_details.province;
+                $this.addressList.city=$this.service_details.city;
+                $this.addressList.district=$this.service_details.district;
+                $this.addressList.address=$this.service_details.address;
+            }
     		
     		const data = {
-//  			type:1
-//				city:getCookie("cityLocation"),
-//				city:$this.city_name,
-//				type_id:getCookie('service_type_id'),
-//				is_company:getCookie('service_is_company')
-//				time_length
-//				explain
+                service_id:getCookie("service_details_id"),
+                service_type:getCookie("service_type_id"),
+                contacts:$this.addressList.consignee,
+                tel:$this.addressList.telephone,
+                duration:$this.duration1,
+                subscribe:$this.subscribe1,
+                endsubscribe:$this.endsubscribe1,
+                // subscribe:'2018-9-1',
+                // endsubscribe:'2018-9-1',
+                timing:$this.timing1,
+                endtiming:$this.endtiming1,
+                province:$this.addressList.province,
+                city:$this.addressList.city,
+                district:$this.addressList.district,
+                address:$this.addressList.address,
+                is_take:$this.is_take1,
+                content:$this.content1,
+                special:$this.special
     		}
     		
     		Axios.post(window.Url.service_order, data).then((res) => {
-    			
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/service_inner1.html');
     			if(res.result == 1){
-    				$this.Service_list = res.info.service;
-    			}
-    			else{
+    				// alert('提交预约订单：'+res.info)
+                    $this.flag3=true;
+                    $this.OrderNo=res.info;
+    			}else if(res.result == 0){
     				alert('提交预约订单：'+res.info)
     			}
     			
@@ -256,13 +513,165 @@
 	          console.log('提交预约订单：'+err)
 	        })
     	},
-    	//跳转详情页
-    	jump:function(type_id){
-    		setCookie('service_details_id',type_id);
-    	}
+    	//跳转地址列表选择地址
+    	goAddress:function(){
+    		setCookie('what',1);
+            window.location.href="myAddress.html";
+    	},
+        //服务详情
+        getService_details:function(){
+            var $this = this;
+            
+            const data = {
+                service_id:getCookie("service_details_id")
+            }
+            
+            Axios.post(window.Url.service_details, data).then((res) => {
+                tt(res.result,'http://shandu.unohacha.com/wx_shandu/service_inner1.html');
+                if(res.result == 1){
+                    $this.service_details = res.info.service;
+                    // console.log($this.service_details);
+                    $this.$nextTick(function(){
+                       $this.content1=$this.service_details.service_content;
+                    })
+                }else if(res.result == 0){
+                    alert('服务详情：'+res.info)
+                }
+                
+            }).catch((err) => {
+              console.log('服务详情：'+err)
+            })
+        },
+        //获取服务时间点
+        selTiming:function(){
+            var $this=this;
+            var count=0;
+            $('.col-time1').click(function(){
+                if($(this).hasClass("active")){
+                    $(this).removeClass("active");
+                    count=count-1;
+                    // console.log(3);
+                }else{
+                    if(count>=2){
+                        // console.log(2);
+                        return;
+                    }else{
+                        $(this).addClass("active");
+                        count=count+1;
+                        // console.log(1);
+                    }
+                }
+
+                var result=[];
+                var result1=[];
+                $(".active").each(function(){
+                    // result=result+ $(this).html()+',';
+                    result.push($(this).html());
+                    result1.push($(this).attr("data-id"));
+                });
+            
+                $this.selHours=result;
+                $this.selDuration1=result1
+                // console.log($this.selHours,$this.selDuration1);
+                if($this.selDuration1.length>=2){
+                    $this.duration1=$this.selDuration1[1]-$this.selDuration1[0];
+                }
+                // console.log($this.duration1);
+            })           
+        },
+        //支付订单弹出框隐藏
+        hideZhifu:function(){
+            $this=this;
+            $this.flag1=false;
+        },
+        //选择支付方式
+        selectZhifu:function(state){
+            $this=this;
+            $this.flag2=state;                       
+        },
+
+        //温馨提示弹框关闭，余额支付弹框打开
+        closeTishi:function(){
+            $this=this;
+            $this.flag3=false;
+            $this.flag1=true;
+        },
+
+        //余额和微信支付
+        sureZhifu:function(){
+            $this=this;
+            if(!$this.flag2){
+                const data = {
+                    orderno:$this.OrderNo,
+                    type:4,
+                }
+
+                Axios.post(window.Url.tuanOrder_alipay,data).then((res) => {  
+                    tt(res.result,'http://shandu.unohacha.com/wx_shandu/service_inner1.html');        
+                    if(res.result == 1){  
+                      // alert("余额支付成功");
+                      $this.flag1=false;
+                      sessionStorage.setItem('tabType',4);
+                      window.location.href="orderList.html";                                                      
+                    }else if(res.result == 0){
+                      alert("余额支付失败:"+res.info);
+                    }
+                    
+                }).catch((err) => {
+                    console.log("余额支付失败:"+err);
+                })
+            }else if($this.flag2){
+                const data = {
+                  orderno:$this.OrderNo,
+                  type:4,
+                  is_wxin:1
+                }
+
+                Axios.post(window.Url.order_WeixinPay,data).then((res) => {              
+                    if(res.result == 1){  
+                        // alert("res.info");
+                        sessionStorage.setItem('tabType',4);
+                        sessionStorage.setItem('weixins', JSON.stringify(res.jsApiParameters));
+                        sessionStorage.setItem('error_url', "user.html");
+                        sessionStorage.setItem('success_url', "orderList.html");
+                        window.location.href = 'wxpay.html';                                                          
+                    }else
+                    {
+                      console.log("微信支付失败:"+res.info);
+                    }
+                    
+                }).catch((err) => {
+                    console.log("微信支付失败:"+err);
+                })
+
+            }
+        },
+
+        //获取钱包余额
+        getWallet:function(){
+            var $this=this;
+            const data = {
+                  
+            }       
+            Axios.post(window.Url.Ucenter_wallet,data).then((res) => {  
+              tt(res.result,'http://shandu.unohacha.com/wx_shandu/service_inner1.html');        
+              if(res.result == 1){  
+                // alert("获取钱包余额成功");
+                $this.mywallet=res.info.wallet;                                             
+              }else if(res.result == 0){
+                console.log("获取钱包余额失败:"+res.info);
+              }
+              
+            }).catch((err) => {
+              console.log("获取钱包余额失败:"+err);
+            })
+
+        }
 	}
 })
-	
+
+//获取服务日期
+function Timer(){
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
     var selectDate1Dom = $('#selectDate1');
@@ -275,9 +684,6 @@
     showDateDom.attr('data-year', nowYear);
     showDateDom.attr('data-month', nowMonth);
     showDateDom.attr('data-date', nowDate);
-    showDate1Dom.attr('data-year', nowYear);
-    showDate1Dom.attr('data-month', nowMonth);
-    showDate1Dom.attr('data-date', nowDate);
     // 数据初始化
     function formatYear (nowYear) {
         var arr = [];
@@ -371,75 +777,27 @@
                     showDateDom.attr('data-month', selectTwoObj.id);
                     showDateDom.attr('data-date', selectThreeObj.id);
                     showDateDom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                    showDate1Dom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
+                    $('.service_inner1_time_show').css('display','block');
                 }
         });
     });
 
     selectDate1Dom.bind('click', function () {
-        var oneLevelId1 = showDate1Dom.attr('data-year');
-        var twoLevelId1 = showDate1Dom.attr('data-month');
-        var threeLevelId1 = showDate1Dom.attr('data-date');
-        var iosSelect = new IosSelect(3, 
-            [yearData, monthData, dateData],
-            {
-                title: '请选择时间',
-                itemHeight: 35,
-                oneLevelId: oneLevelId1,
-                twoLevelId: twoLevelId1,
-                threeLevelId: threeLevelId1,
-                showLoading: true,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    showDate1Dom.attr('data-year', selectOneObj.id);
-                    showDate1Dom.attr('data-month', selectTwoObj.id);
-                    showDate1Dom.attr('data-date', selectThreeObj.id);
-                    showDate1Dom.html(parseInt(selectOneObj.value) + '-' + parseInt(selectTwoObj.value) + '-' +  parseInt(selectThreeObj.value));
-                }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    var selectContactDom = $('#select_contact');
-    var showContactDom = $('#show_contact');
-    var contactProvinceCodeDom = $('#contact_province_code');
-    var contactCityCodeDom = $('#contact_city_code');
-    selectContactDom.bind('click', function () {
-        var sccode = showContactDom.attr('data-city-code');
-        var scname = showContactDom.attr('data-city-name');
-
-        var oneLevelId = showContactDom.attr('data-province-code');
-        var twoLevelId = showContactDom.attr('data-city-code');
-        var threeLevelId = showContactDom.attr('data-district-code');
-        var iosSelect = new IosSelect(3, 
-            [iosProvinces, iosCitys, iosCountys],
-            {
-                title: '',
-                itemHeight: 35,
-                relation: [1, 1],
-                oneLevelId: oneLevelId,
-                twoLevelId: twoLevelId,
-                threeLevelId: threeLevelId,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    contactProvinceCodeDom.val(selectOneObj.id); 
-                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
-                    contactCityCodeDom.val(selectTwoObj.id);
-                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
-
-                    showContactDom.attr('data-province-code', selectOneObj.id);
-                    showContactDom.attr('data-city-code', selectTwoObj.id);
-                    showContactDom.attr('data-district-code', selectThreeObj.id);
-                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
-                }
-        });
-    });
+        if(showDate1Dom.html()=="请选择"){
+            alert("请选择开始时间");
+        }else{
+            return;
+        }
+    })
+}
+	
+    
 </script>
 
 <script>
 $(window).ready(function(){
 	var flag=true;
-
-$('.banner').height($(window).width()*400/750);
-
 
 $('.yes_btn').click(function(){
 	if($(this).hasClass('on')){
@@ -449,53 +807,19 @@ $('.yes_btn').click(function(){
 	}
 })
 
-
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
-$('.collage1').click(function(){
-    window.location.href = "shopDetail.html";
-});
-$('.ind_share_btn').click(function(){
-	  window.location.href = "bigStage.html";
-});
-$('#goOrder').click(function(){
-	  window.location.href = "orderList.html";
-});
-$('.order1').click(function(){
-	  window.location.href = "payment-orders.html";
-});
-$('.order3').click(function(){
-	  window.location.href = "energetic-orders.html";
-});
+
 $('.service_inner1_list_time').click(function(){
 	
-	if(flag){
-		$('.service_inner1_time_show').css('display','block');
-		$(this).addClass('service_inner1_list2');
-		flag=false;
-	}else{
-		$('.service_inner1_time_show').css('display','none');
-		$(this).removeClass('service_inner1_list2');
-		flag=true;
-	}	
+	if($('#showDate').html()=="请选择"){
+        alert("请选择开始和结束时间")
+    }else{
+        return;
+    }
 });
-$('.go-chakan').click(function(){
-    $('.chakan_show').css('display','block');
-});
-$('.chakan_show_bg').click(function(){
-    $('.chakan_show').css('display','none');
-})
-  
+
 })  
 </script>
 

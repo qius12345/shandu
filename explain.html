@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -74,13 +74,12 @@ var vm = new Vue({
 	        userId: (() => {
 	                
 	            })(),
-	        help_details:'',
-	        help_id:getCookie('help_id')
+	        help_details:JSON.parse(sessionStorage.getItem('help_id')),
+	        // help_id:getCookie('help_id')
 	    }
 		},
     created: function () {
 		var $this = this;
-    	$this.gethelp_details();
         
     },
     mounted:function(){
@@ -88,36 +87,6 @@ var vm = new Vue({
     },
     methods:{
     	
-    	//问题解答
-    	gethelp_details:function(){
-    		var $this = this;
-    		
-    		const data = {
-//  			type:1
-    		}
-    		
-    		Axios.post(window.Url.Ucenter_help, data).then((res) => {
-    			
-    			if(res.result == 1){
-    				$this.help_list = res.info;
-    				
-    				$($this.help_list).each(function(index,value){
-    					console.log($this.help_id);
-    					if(value.id == $this.help_id){
-    						$this.help_details = value;
-    					}
-    				})
-    				
-    			}
-    			else{
-    				alert('问题解答'+res.info)
-    			}
-    			
-        }).catch((err) => {
-          console.log('问题解答'+err)
-        })
-        
-    	}
 	}
 })
 

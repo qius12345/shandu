@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -49,15 +49,17 @@
 <!--  / header  -->
 <!--  / warpper  -->
 <div class="myCollect">
-    <div class="myCollect1 clearfix" v-for="collect in collect_list">
+    <div class="myCollect1 clearfix" v-for="collect in collect_list" @click="jump(collect.cheats_id)">
     	  <div class="myCollect_img">
-    	  	<img :src="collect.pic" width="100%">
+    	  	
+            <img src="images/logo1.jpg" alt="" v-if="collect.pic == '' || collect.pic == null || collect.pic == undefined" width="100%">
+            <img :src="collect.pic" width="100%" v-else>
     	  </div>
     	  <div class="myCollect_zi">
         	<div class="myCollect1-txt1"> <span>收藏时间 <i>{{collect.add_time}}</i></span></div>
         	<div class="myCollect1-txt2">{{collect.title}}</div>
         	<div class="myCollect1-txt1"><span>收藏数 <i>{{collect.collect}}</i></span></div>
-       </div>
+          </div>
     </div>
    <!-- <div class="myCollect1 clearfix">
     	<div class="myCollect_img">
@@ -89,6 +91,8 @@
 </div>
 </body>
 <script>
+var url = location.href;
+isToken(url);
 $(window).ready(function(){
 	
 	var vm = new Vue({
@@ -116,24 +120,27 @@ $(window).ready(function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.Ucenter_collect, data).then((res) => {
     			
-    			if(res.result == 1){
+    			tt(res.result,'http://shandu.unohacha.com/wx_shandu/myCollect.html');
+
+                if(res.result == 1){
     				$this.collect_list = res.info.collect;
     				
-    			}
-    			else{
-    				alert('我的收藏'+res.info)
     			}
     			
         }).catch((err) => {
           console.log('我的收藏'+err)
         })
         
-    	}
+    	},
+        jump: function(cheats_id) {
+            setCookie('cheats_details_id', cheats_id)
+            window.location.href = "InformationDetails.html";
+        }
 	}
 })
 	

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<meta name="format-detection" content="telephone=no" /> 
+<link rel="shortcut icon" href="images/logo.ico" />
+<title>闪度生活</title>
+<meta name="keywords" content=" " />
+<meta name="description" content=" " />
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/swiper-3.4.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/main.js"></script>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=v8wgbPeQSqvk2dioLqdDG6E8x9WWHolL"></script>
+</head>
+
+<body>
+<div id="app" v-cloak>
+	
+<!--  / header  -->
+<div class="header">
+  <a href="search.html">
+  <div class="header_map">
+    <span></span><img src="images/xia.png" width="15">
+  </div>
+  </a>
+  <div class="header_shop">扫一扫<img src="images/erweima.png" width="20"></div>
+</div>
+<!--  / header  -->
+
+<div class="banner">
+	
+  <div class="swiper-container swiper-container-banner">
+    <div class="swiper-wrapper">
+    	
+        <div class="swiper-slide" v-for="(item,index) in banner">
+        	
+        	<img :src="item.pic" width="100%">
+        
+        </div>
+        
+        
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination swiper-pagination-banner"></div>
+  </div>
+</div>
+
+<!--  / warpper  -->
+<div class="warpper" style="margin-bottom:0.55rem;">
+
+<div class="index_active">
+	<img src="images/index_active.jpg" width="100%">
+  <!-- <a href="pingtai_news.html">
+	<div class="index_active_icon">
+		<img src="images/huanghuangde.gif">
+		<span>尚阳</span>
+	</div>
+  </a>
+	<a href="sign.html">
+	<div class="index_active_icon1">
+		<img src="images/liwu.png">
+		<br>
+		<span>签到</span>
+	</div>
+	</a> -->
+</div>
+
+<div class="index_sec1 clearfix">
+	<div class="index_sec1_list">
+		<img src="images/img_home_bg2.png" width="100%">
+		<a href="service_fwsj.html">
+		<h4>服务商家</h4>
+		</a>
+		<div class="index_sec1_list_zi">
+			<h5>健康养老</h5>
+			<p>颐养天年 乐享生活</p>
+			<img src="images/img_home_logo2.png">
+		</div>
+	</div>
+	<div class="index_sec1_list" id="index_sec1_list1">
+		<img src="images/img_home_bg1.png" width="100%">
+		<a href="service.html">
+		<h4>劳务市场</h4>
+		</a>
+		<a href="longevity.html">
+		<div class="index_sec1_list_zi">
+			<h5>长寿秘籍</h5>
+			<p>养生秘方 让你百岁</p>
+			<img src="images/img_home_logo1.png">
+		</div>
+		<div class="index_sec1_list_tishi"><span>11</span></div>
+		</a>
+	</div>
+	<div class="index_sec1_list last" id="index_sec1_list2">
+		<img src="images/img_home_bg1.png" width="100%">
+		<h4>更多服务</h4>
+		<div class="index_sec1_list_zi">
+			<h5>活力健身</h5>
+			<p>游遍山水 活出精彩</p>
+			<img src="images/img_home_logo1.png">
+		</div>
+	</div>
+</div>
+
+<div class="index_sec2">
+	<img src="images/index_tg_bg.png" width="100%">
+</div>
+
+
+</div>
+<!--  / warpper  -->
+
+
+<!--  / footer  -->
+<div class="footer">
+  <ul class="clearfix">
+    <a href="index.html">
+    <li class="on">
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_home_gray.png">
+      		  <img src="images/ic_home_home_yellow.png">
+        </div>
+        <span>主页</span>
+    </li>
+    </a>
+    <a href="stroy1.html">
+    <li>
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_yishu_gray.png">
+      		  <img src="images/ic_home_yishu_yellow.png">
+        </div>
+        <span>老故事</span>
+    </li>
+	</a>
+	<a href="bigStage.html">
+    <li class="ind_share_btn">
+    	  <div class="footer_img footer_img2">
+    	  	  <img src="images/ic_dibutiao_shandu_gray.png">
+    	  	  <img src="images/ic_dibutiao_shandu_yellow.png">
+    	  </div>
+	</li>
+	</a>
+	
+	<a href="orderList.html">
+    <li id="goOrder">
+    	  <div class="footer_img footer_img1">
+      		  <img src="images/ic_home_dingdan_gray.png">
+      		  <img src="images/ic_home_dingdan_yellow.png">
+        </div>
+        <span>订单</span>
+	</li>
+    </a>
+    
+    <a href="user.html">
+    <li>
+    	<div class="footer_img footer_img1">
+    	      <img src="images/ic_home_geren_gray.png">	
+    	      <img src="images/ic_home_geren_yellow.png">	
+    	</div>	
+        <span>我的</span>
+    </li>
+    </a>
+  </ul>
+</div>
+<!--  / footer  -->
+</div>
+</body>
+
+<script>
+$(window).ready(function(){
+	
+	var vm = new Vue({
+		el:"#app",
+		data() {
+            return {
+                userId: (() => {
+                        
+                    })(),
+                banner:[]
+            }
+		},
+    created: function () {
+		var $this = this;
+    	$this.getBanner();
+        $this.userLogin();
+        
+    },
+    mounted:function(){
+    	
+    },
+    methods:{
+    	
+    	//banner
+    	getBanner:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			type:1
+    		}
+    		
+    		Axios.post(window.Url.home_banner, data).then((res) => {
+    			
+    			if(res.result == 1){
+    				$this.banner = res.info.banner;
+    				$('.banner').height($(window).width()*380/750);
+						$this.$nextTick(function(){
+							mySwiper_banner = new Swiper ('.swiper-container-banner', {
+							    loop: true,
+							    pagination: '.swiper-pagination-banner',
+								autoplay : 5000,
+								autoplayDisableOnInteraction : false
+							})
+						}
+					)
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+        
+    	},
+    	//login
+    	userLogin:function(){
+    		var $this = this;
+    		
+    		const data = {
+    			mobile:'15858296249',
+    			password:'123456'
+    		}
+    		
+    		Axios.post(window.Url.user_login, data).then((res) => {
+    			console.log(res)
+    			if(res.result == 1){
+    				console.log(res);
+    				window.userInfo.token = res.token;
+    				window.userInfo.mobile = res.mobile;
+    				window.userInfo.forbidden = res.forbidden;
+    				window.userInfo.audit = res.audit;
+    				window.userInfo.type = res.type
+    				
+    				setCookie("token",res.token)  ;
+    				
+    				setCookie("userInfo",window.userInfo)
+    				
+    				
+					
+    			}
+    			else{
+    				alert(res.info)
+    			}
+    			
+        }).catch((err) => {
+          console.log(err)
+        })
+    	
+    	
+    	}
+	}
+})
+
+
+//定位
+if(sessionStorage.getItem("cityLocation") == "" || sessionStorage.getItem("cityLocation") == null){
+	var geolocation = new BMap.Geolocation();
+		geolocation.getCurrentPosition(function(r){
+			if(this.getStatus() == BMAP_STATUS_SUCCESS){
+				//以指定的经度与纬度创建一个坐标点
+				var pt = new BMap.Point(r.point.lng,r.point.lat);
+				//创建一个地理位置解析器
+				var geoc = new BMap.Geocoder();
+				geoc.getLocation(pt, function(rs){//解析格式：城市，区县，街道
+					var addComp = rs.addressComponents;
+					//$("#load_geolocation").html(addComp.city + ", " + addComp.district + ", " + addComp.street);
+					$(".header_map span").html(addComp.city)
+					setCookie("cityLocation",addComp.city)
+				});    
+			}
+			else {
+				$(ev.currentTarget).text('定位失败');
+			}        
+		},{enableHighAccuracy: true})//指示浏览器获取高精度的位置，默认false
+}else{
+	$(".header_map span").html(sessionStorage.getItem("cityLocation"))
+}		
+//定位
+
+
+
+//$('#index_sec1_list1').click(function(){
+//	window.location.href = "longevity.html";
+//});
+$('#index_sec1_list2').click(function(){
+	window.location.href = "energetic.html";
+});
+$('.index_sec2').click(function(){
+	window.location.href = "collage.html";
+});
+$('.ind_share_btn').click(function(){
+	window.location.href = "bigStage.html";
+});
+$('#goOrder').click(function(){
+	window.location.href = "orderList.html";
+});
+  
+})  
+</script>
+</html>

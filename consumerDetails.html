@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -31,6 +31,13 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<style>
+    .myRemain3 .fr{
+        float: inherit;
+        position: absolute;
+        right: 0.1rem;
+    }
+</style>
 
 </head>
 
@@ -38,24 +45,33 @@
 <div id="app" v-cloak>
 <!--  / header  -->
 <div class="header_longevity">
-        <div class="header_map_longevity">   
-            <img src="images/jiantou.png" alt="">
-            <span>返回</span>
-        </div>
-        <div class="logo_longevity">消费明细</div>   
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">消费明细</div>   
 </div>
 <!--  / header  -->
 
 
 <div class="myRemain">
     <div class="myRemain3">
-        <div class="myRemain3_f1 clearfix">
+        <div class="myRemain3_f1 clearfix" v-for="items1 in list">
+            <div class="fl">
+                <p class="myRemain3_fl_top">{{items1.way_name}}</p>
+                <p class="myRemain3_fl_bottom">订单时间 : {{items1.time}} <span style="margin-left:0.05rem;"> 余额：{{items1.balance}}</span></p>
+            </div>
+            <div class="fr">
+                {{items1.amount}}
+            </div>
+        </div>
+        <!-- <div class="myRemain3_f1 clearfix">
             <div class="fl">
                 <p class="myRemain3_fl_top">活力订单尾号 : 41652660 收入</p>
                 <p class="myRemain3_fl_bottom">订单时间 : 2018-01-08 &nbsp;&nbsp;14 : 16</p>
             </div>
             <div class="fr">
-                -100.00
+                +100.00
             </div>
         </div>
         <div class="myRemain3_f1 clearfix">
@@ -66,16 +82,7 @@
             <div class="fr">
                 +100.00
             </div>
-        </div>
-        <div class="myRemain3_f1 clearfix">
-            <div class="fl">
-                <p class="myRemain3_fl_top">活力订单尾号 : 41652660 收入</p>
-                <p class="myRemain3_fl_bottom">订单时间 : 2018-01-08 &nbsp;&nbsp;14 : 16</p>
-            </div>
-            <div class="fr">
-                +100.00
-            </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -91,7 +98,8 @@ var vm = new Vue({
 	        userId: (() => {
 	                
 	            })(),
-	        collect_list:''
+	        collect_list:'',
+            list:[],
 	    }
 		},
     created: function () {
@@ -103,20 +111,41 @@ var vm = new Vue({
     	
     },
     methods:{
+
+        string8:function(strings){
+            // console.log(strings);
+            var num1=strings.replace(/[^0-9]/ig,"");
+            var num2=num1.substring(num1.length-6, num1.length);
+            var num3=strings.substring(strings.length-2, strings.length);
+            var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+            if(reg.test(num3)){
+                var num=strings.slice(0,4)+"尾号 : "+num2+num3;
+            }else{
+                var num=strings.slice(0,4)+"尾号 : "+num2;
+            }
+            // console.log(num);
+            return num;
+        },
     	
     	//我的收藏
     	getMoney_details:function(){
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.Money_details, data).then((res) => {
     			
     			if(res.result == 1){
-    				$this.collect_list = res.info.collect;
-    				
+    				$this.collect_list = res.info;
+                    $this.collect_list.map( (obj,index)=>{
+                        $this.$set(
+                            obj,"way_name",$this.string8(obj.way_name)
+                        );
+                    })   
+                   $this.list = $this.collect_list; 
+                   console.log($this.list);				
     			}
     			else{
     				alert('消费明细'+res.info)

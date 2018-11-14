@@ -2214,6 +2214,7 @@ ul {
     line-height: 40px;
     font-size: 14px;
     color: #000;
+    position: relative;
 }
 
 .show_xza h5 span {
@@ -2254,7 +2255,7 @@ ul {
    /* border-bottom: 1px solid #e8e8e8;*/
 }
 .show_sure a{
-      width: 90%;
+    width: 90%;
     display: block;
     margin: 0 auto;
     height: 0.5rem;
@@ -2264,7 +2265,10 @@ ul {
     background: #ff5114;
     font-size: 0.14rem;
     color: #fefeff;
-    margin-top: 0.2rem;
+    margin-top: 0.6rem;
+}
+.show_sure a.enable{
+    background:#cacaca;
 }
 .show_xzb p {
     font-size: 13px;
@@ -2304,16 +2308,18 @@ ul {
 .show_xzc h5 {
     margin: 0;
     line-height: 30px;
-    padding: 10px 0;
+    padding: 0.15rem 0;
     color: #000;
     font-size: 14px;
+    position: relative;
 }
 
 .pro_jian {
     font-weight: 600;
     cursor: pointer;
     color: #666 !important;
-        background: #eee;
+    background: #eee;
+    margin-left:0.1rem;
 }
 
 .show_xzc h5 span {
@@ -2324,11 +2330,27 @@ ul {
     font-size: 18px;
     width: 30px;
     color: #ccc;
-    float: right;
+    /*float: right;*/
     font-weight: normal !important;
     height: 30px;
     text-align: center;
     border-radius: 0.03rem;
+}
+.show_xzc h5 span.kucun{
+    float: right;
+    width: auto;
+    display: inline-block;
+    border: none !important;
+    font-size: 0.14rem;
+    color: #000;
+    line-height: 0.3rem;
+}
+.show_xzc h5 .kucun_title{
+    position: absolute;
+    bottom: -0.2rem;
+    left: 0;
+    font-size: 0.13rem;
+    color: #fd020f;
 }
 
 .show_xzc h5 .pro_num {
@@ -3793,7 +3815,9 @@ ul {
 .infor1_1 h5 {
     color: #64c78d;
 }
-
+.infor1_1 p {
+    color: #64c78d;
+}
 .infor1_1:before {
     content: '';
     border: 3px solid #b3e3c8;

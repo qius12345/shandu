@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -71,6 +71,8 @@
 </div>
 </body>
 <script>
+var url = location.href;
+isToken(url);
 $(window).ready(function(){
 	
 	
@@ -103,14 +105,12 @@ $(window).ready(function(){
     		}
     		
     		Axios.post(window.Url.Ucenter_wallet, data).then((res) => {
-    			
+
+                tt(res.result,'http://shandu.unohacha.com/wx_shandu/myWallet.html');
     			if(res.result == 1){
-    				$this.wallet = res.info.wallet;
-    				
+    				$this.wallet = res.info.wallet;    				
     			}
-    			else{
-    				alert('我的余额'+res.info)
-    			}
+    			
     			
         }).catch((err) => {
           console.log('我的余额'+err)
@@ -135,7 +135,7 @@ $('.longevity1 li').click(function(){
     window.location.href = "InformationDetails.html";
 });
 $('.date12').click(function(){
-    window.location.href = "remain.html";
+    window.location.href = "tixianChoose.html";
 })
 $('.date13').click(function(){
     window.location.href = "myCoupon.html";

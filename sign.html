@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/sign2.css">
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -31,6 +32,7 @@
 <script src="./js/axios-config.js"></script>
 <script src="./js/js.cookie.js"></script>
 <script src="./js/utils.js"></script>
+<script src="./js/calendar2.js"></script>
 
 </head>
 
@@ -39,18 +41,18 @@
 
 <!--  / header  -->
 <div class="header_longevity">
-        <div class="header_map_longevity">   
-            <img src="images/jiantou.png" alt="">
-            <span>返回</span>
-        </div>
-        <div class="logo_longevity">签到</div>   
+    <div class="header_map_longevity">   
+        <img src="images/jiantou.png" alt="">
+        <span>返回</span>
+    </div>
+    <div class="logo_longevity">签到</div>   
 </div>
 <!--  / header  -->
 
 
 <div class="mySet">
     <div class="sign1">
-        <table>
+        <!-- <table>
             <thead>
                 <tr>
                     <th>日</th>
@@ -111,11 +113,12 @@
                         <td></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
+        <div style="" id="calendar"></div>
     </div>
     <div class="sign2">
         <span class="fl">{{newDate.Year}}年{{newDate.Month}}月{{newDate.Date}}日</span>
-        <button v-if="qiandao.yiqian" class="fr go_qiandao" style="background-color: #E9E9E9;color: #FFFFFF;">已签到</button>
+        <button v-if="qiandao.yiqian && qiandao.yiqian !=0 " class="fr go_qiandao" style="background-color: #E9E9E9;color: #FFFFFF;" @click="tishi()">已签到</button>
         <button v-else class="fr go_qiandao" @click="setAddqiandao">签到</button>
     </div>
     <div class="sign3">
@@ -126,6 +129,7 @@
         <p>1.连续签到3天，可获得一张优惠券</p>
         <p>2.优惠券可在团购商城里使用</p>
         <p>3.优惠券有效期1个月，过期作废</p>
+        <p>4.优惠券不可兑换现金使用</p>
     </div>
 </div>
 
@@ -173,17 +177,15 @@ var vm = new Vue({
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.addqiandao, data).then((res) => {
     			
     			if(res.result == 1){
-//  				$this.wallet = res.info.wallet;
-					alert(res.info);
-    				
-    			}
-    			else{
+                    // alert(res.info);
+                    window.location.reload();    				
+    			}else{
     				alert('设置我的签到'+res.info)
     			}
     			
@@ -197,7 +199,7 @@ var vm = new Vue({
     		var $this = this;
     		
     		const data = {
-//  			type:1
+
     		}
     		
     		Axios.post(window.Url.qiandao_index, data).then((res) => {
@@ -206,7 +208,7 @@ var vm = new Vue({
     				$this.qiandao = res.info;
     				
     				console.log(typeof($('td')));
-    				var td = document.getElementsByTagName('td');
+    				var td = document.getElementsByClassName('calendar_record');
 					var qiandao_day = res.info.qiandao;
 					
 					$(td).each(function(index,value){
@@ -218,7 +220,7 @@ var vm = new Vue({
 					});
     			}
     			else{
-    				alert('签到列表'+res.info)
+    				console.log('签到列表'+res.info)
     			}
     			
         }).catch((err) => {
@@ -231,11 +233,12 @@ var vm = new Vue({
 		   var myDate = new Date();
 		   $this.newDate.Year = myDate.getFullYear(); 
 		   $this.newDate.Month = myDate.getMonth()+1;
-		   $this.newDate.Date = myDate.getDate(); 
-		   
-		  
-		    
-		}
+		   $this.newDate.Date = myDate.getDate(); 		   		  		    
+		},
+        tishi:function(){
+            $('.pinglun1_show').css('display','block');
+            $('.pinglun1_show h5').html('今天你签到过了');
+        }
 	}
 })
 
@@ -260,23 +263,20 @@ $(".remain").click(function(){
 $(".coupon").click(function(){
     window.location.href = "myCoupon.html";
 })
-$('.go_qiandao').click(function(){
-    if(flag){
-        $('.pinglun1_show').css('display','block');
-        $('.pinglun1_show h5').html('签到成功');
-        flag=false;
-        $(this).html('已签到');
-        $(this).css("background",'#e9e9e9');
-        $(this).css("color",'#ffffff');
-    }else{
-        $('.pinglun1_show').css('display','block');
-        $('.pinglun1_show h5').html('今天你签到过了');
-    }
-})
+
 $('.pinglun1_show_con_f1 a').click(function(){
     $('.pinglun1_show').css('display','none');
 })
   
 })  
+</script>
+
+<script type="text/javascript">
+$(function(){
+  //ajax获取日历json数据
+  // var signList=[{"signDay":"09"},{"signDay":"11"},{"signDay":"12"},{"signDay":"13"}];
+   var signList=[];
+   calUtil.init(signList);
+});
 </script>
 </html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
 <meta name="format-detection" content="telephone=no" /> 
 <link rel="shortcut icon" href="images/logo.ico" />
-<title>中科家政</title>
+<title>闪度生活</title>
 <meta name="keywords" content=" " />
 <meta name="description" content=" " />
 
@@ -26,9 +26,17 @@
 <script src="js/index.js"></script>
 <script src="js/main.js"></script>
 
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/axios-config.js"></script>
+<script src="./js/js.cookie.js"></script>
+<script src="./js/utils.js"></script>
+
 </head>
 
 <body class="body_bg2">
+
+<div id="app" v-cloak>
 
 <!--  / header  -->
 <div class="header_longevity">
@@ -36,7 +44,7 @@
             <img src="images/jiantou.png" alt="">
             <span>返回</span>
         </div>
-        <div class="logo_longevity">余额提现</div>   
+        <div class="logo_longevity">提现</div>   
 </div>
 <!--  / header  -->
 
@@ -44,51 +52,183 @@
 <div class="myRemain">
     <div class="myRemain1">
         <div class="myRemain1_list">
-            <div class="clearfix myRemain1-txt1">
-                <span class="fl">我的银行卡</span>
+            <div class="clearfix myRemain1-txt1" v-if="zfbInfo == '' || zfbInfo == null || zfbInfo == undefined" @click="goZhbList()">
+                <span class="fl">选择支付宝账号</span>
                 <img src="images/right1.png" alt="" class="fr">
             </div>
+            <div class="clearfix myRemain1-txt1" @click="goZhbList()" v-if="zfbInfo && zfbInfo != ''">
+                <img src="images/zfb.png" alt="" width="24">
+                <span class="name">{{zfbInfo.name}}</span>
+                <span class="num">{{zfbInfo.account}}</span>
+                <img src="images/right1.png" alt="" class="fr jiantou">
+            </div>
             <div class="myRemain1-txt2">
-                <p>请输入提现金额:</p>
-                <input type="text">
+                <p>实际到账： <i>{{true_money}}</i> 元 <span>手续费 <em>{{sx}}</em> 元</span></p>
+                <input type="text" v-model="money" onkeyup="value=value.replace(/[^\d]/g,'') ">
                 <span>￥</span>
             </div>
             <div class="myRemain1-txt3 clearfix">
-                <span class="fl">可用余额为：260.7元</span>
-               <!--  <span class="fr">全部提现</span> -->
+                <span>可提现{{wallet.wallet}}元 , 今日上限{{txList.day_money}}元</span><br/>
+                <span v-if="flag1" style="color:#f16114;display:block;margin-top:0.04rem;">{{title}}</span>
+                <!-- <span class="fl">{{txList.title}}</span> -->
+            </div>
+            <div class="myRemain2_tixian" @click="tixian()">
+                <button :class="flag2?'enable':''">提现</button>
             </div>
         </div>        
     </div>
-    <div class="myRemain2">
+    <!-- <div class="myRemain2">
         <button>提现</button>
-    </div>
+    </div> -->
 </div>
 
-
+</div>
 </body>
 <script>
 $(window).ready(function(){
 
-$('.banner').height($(window).width()*400/750);
+  var vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+       userInfo:[],
+       zfbInfo:'',
+       txList:[],
+       money:'',
+       sx:'0.00',
+       true_money:'0.00',
+       flag1:false,
+       wallet:'',
+       title:'',
+       flag2:true   
+      }
+    },
+    created:function(){
+        var $this = this; 
+        $this.getCashInfo();
+        $this.getWallet();
+        if(sessionStorage.getItem('zfbInfo')){
+            $this.zfbInfo=JSON.parse(sessionStorage.getItem('zfbInfo'));
+        }                                                               
+    },
+    mounted:function(){
+      var $this = this;                                         
+    },
+    watch:{
+       money:function(newValue,oldValue){
+          this.sx=parseFloat(newValue*0.005).toFixed(2);
+          if(parseFloat(this.sx) >= parseFloat(this.txList.service_charge_max)){
+            this.sx='5.00';
+            // this.flag1=true;
+            // this.title="最高提现金额:"+this.txList.max_money
+          }else if(parseFloat(this.sx)<=parseFloat(this.txList.service_charge)){
+            this.sx='0.70';
+            // this.flag1=true;
+            // this.title="最低提现金额:"+this.txList.min_money
+          }
 
-var mySwiper_banner = new Swiper ('.swiper-container-banner', {
-    loop: true,
-    pagination: '.swiper-pagination-banner',
-	autoplay : 5000,
-	autoplayDisableOnInteraction : false,
-})
+          if(parseFloat(newValue) > parseFloat(this.txList.max_money)){
+            this.flag1=true;
+            this.flag2=this.flag1;
+            this.title="最高提现金额:"+this.txList.max_money+"元";
+          }else if(parseFloat(newValue) < parseFloat(this.txList.min_money)){
+            this.flag1=true;
+            this.flag2=this.flag1;
+            this.title="最低提现金额:"+this.txList.min_money+"元";
+          }else{
+            this.flag1=false;
+            this.flag2=this.flag1;
+          }
+          this.true_money=parseFloat(newValue-this.sx).toFixed(2);
+          // console.log(this.sx);
+       }
+    },
+    methods:{
+        goZhbList:function(){
+            window.location.href = "zfb_list.html";
+        },
+        //支付宝提现信息
+        getCashInfo:function(){
+            var $this = this;
+            
+            const data = {
+
+            }  
+
+            Axios.post(window.Url.getCashInfo, data).then((res) => {
+              // tt(res.result,'http://shandu.unohacha.com/wx_shandu/zfb_list.html');
+              if(res.result == 1){
+                $this.txList = res.info;        
+              }else if(res.result == 0){
+                console.log('支付宝提现信息:'+res.info)
+              }
+              
+              
+            }).catch((err) => {
+              console.log('支付宝提现信息:'+err)
+            })
+            
+        },
+        //支付宝提现提交
+        tixian:function(){
+            var $this = this;
+            if($this.zfbInfo=='' || $this.zfbInfo==null || $this.zfbInfo == undefined){
+                alert("请选择支付宝账号");
+                return;
+            }
+            
+            const data = {
+                price:$this.money,
+                bank_id:'',
+                alipay_id:$this.zfbInfo.alipay_id,
+                type:2
+            }  
+
+            Axios.post(window.Url.cashMoney, data).then((res) => {
+              tt(res.result,'http://shandu.unohacha.com/wx_shandu/remain.html');
+              if(res.result == 1){
+                alert(res.info);
+                location.reload();        
+              }else if(res.result == 0){
+                console.log('支付宝提现信息:'+res.info)
+              }
+              
+              
+            }).catch((err) => {
+              console.log('支付宝提现信息:'+err)
+            })
+            
+        },
+        //获取钱包余额
+        getWallet:function(){
+          var $this = this;
+            
+          const data = {
+
+          }  
+
+          Axios.post(window.Url.Ucenter_wallet, data).then((res) => {
+            // tt(res.result,'http://shandu.unohacha.com/wx_shandu/zfb_list.html');
+            if(res.result == 1){
+              $this.wallet = res.info.wallet;        
+            }else if(res.result == 0){
+              console.log('获取钱包余额:'+res.info)
+            }
+            
+            
+          }).catch((err) => {
+            console.log('获取钱包余额:'+err)
+          })
+        }
+      
+    }
+
+  })
+
 $('.header_map_longevity').click(function(){
     history.go(-1);
 });
-$('.longevity1 li').click(function(){
-    window.location.href = "InformationDetails.html";
-});
-$(".remain").click(function(){
-    window.location.href = "remain.html";
-})
-$(".coupon").click(function(){
-    window.location.href = "myCoupon.html";
-})
+
 
   
 })  
